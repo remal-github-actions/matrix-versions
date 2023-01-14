@@ -1,5 +1,5 @@
-name: Template action
-description: Template action description
+name: Matrix versions
+description: Matrix versions
 
 inputs:
   githubToken:

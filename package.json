@@ -1,6 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/package",
-  "name": "template-typescript",
+  "name": "matrix-versions",
   "version": "1.0.0",
   "engines": {
     "node": ">=16"
@@ -20,7 +20,8 @@
     "@octokit/plugin-request-log": "1.0.4",
     "@octokit/plugin-retry": "4.0.3",
     "@octokit/plugin-throttling": "4.3.2",
-    "console-log-level": "1.4.1"
+    "console-log-level": "1.4.1",
+    "json5": "1.0.2"
   },
   "devDependencies": {
     "@tsconfig/node12": "1.0.11",
