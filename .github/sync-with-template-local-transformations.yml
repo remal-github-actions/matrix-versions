@@ -3,4 +3,6 @@ repositories:
 
 transformations:
 - name: LICENSE
+  includes:
+  - 'LICENSE'
   ignore: true
