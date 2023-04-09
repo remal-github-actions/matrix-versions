@@ -1,0 +1,6 @@
+repositories:
+- remal-github-actions/matrix-versions
+
+transformations:
+- name: LICENSE
+  ignore: true
