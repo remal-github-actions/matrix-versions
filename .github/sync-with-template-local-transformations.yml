@@ -5,4 +5,5 @@ transformations:
 - name: LICENSE
   includes:
   - 'LICENSE'
+  format: text
   ignore: true
