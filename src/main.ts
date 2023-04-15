@@ -1,16 +1,33 @@
 import * as core from '@actions/core'
+import { run } from './run'
 
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+const githubToken = core.getInput('githubToken', { required: true })
 
-async function run(): Promise<void> {
-    try {
-        core.info('action logic')
+const configFiles = core.getInput('files', { required: false })
+    .split(/[\n\r,;]+/)
+    .map(it => it.trim())
+    .filter(it => it.length)
 
-    } catch (error) {
-        core.setFailed(error instanceof Error ? error : (error as object).toString())
-        throw error
+const configContent = (function() {
+    const matrixString = core.getInput('matrix', { required: false, trimWhitespace: false })
+    const authString = core.getInput('auth', { required: false, trimWhitespace: false })
+
+    const lines: string[] = []
+    if (matrixString.trim().length) {
+        lines.push('matrix:')
+        matrixString.split(/(\r\n)|(\n\r)|\n|\r/)
+            .forEach(line => lines.push(`  ${line}`))
     }
-}
+    if (authString.trim().length) {
+        lines.push('auth:')
+        matrixString.split(/(\r\n)|(\n\r)|\n|\r/)
+            .forEach(line => lines.push(line))
+    }
+    return lines.join('\n')
+})()
 
-//noinspection JSIgnoredPromiseFromCall
-run()
+run(
+    githubToken,
+    configFiles,
+    configContent
+)

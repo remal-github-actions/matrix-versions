@@ -1,0 +1,205 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Config",
+  "description": "Config for matrix-version GitHub action",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "matrix": {
+      "description": "Property to dependency mappings",
+      "type": "object",
+      "additionalProperties": false,
+      "patternProperties": {
+        "^[a-z]([a-zA-Z0-9._-]*[a-zA-Z0-9])?$": {
+          "$ref": "#/definitions/matrix-item"
+        }
+      }
+    },
+    "auth": {
+      "description": "Repository authorizations",
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/host-auth"
+      }
+    }
+  },
+  "definitions": {
+    "matrix-item": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "dependency": {
+          "description": "Dependency ID in format of `<datasource>:<dependency>`",
+          "type": "string",
+          "minLength": 1,
+          "x-with-supported-dependency-types-pattern": true,
+          "pattern": "^(artifactory|aws-machine-image|aws-rds|azure-bicep-resource|azure-pipelines-tasks|bitbucket-tags|cdnjs|clojure|conan|conda|cpan|crate|dart|dart-version|deno|docker|dotnet-version|flutter-version|galaxy|galaxy-collection|git-refs|git-tags|github-release-attachments|github-releases|github-tags|gitlab-packages|gitlab-releases|gitlab-tags|go|golang-version|gradle-version|helm|hermit|hex|hexpm-bob|java-version|jenkins-plugins|kubernetes-api|maven|node|npm|nuget|orb|packagist|pod|puppet-forge|pypi|repology|ruby-version|rubygems|sbt-package|sbt-plugin|terraform-module|terraform-provider)(:.+)?$"
+        },
+        "versioning": {
+          "description": "Dependency versioning (see https://docs.renovatebot.com/modules/versioning/)",
+          "type": "string",
+          "x-with-supported-version-types-enum": true,
+          "enum": [
+            "aws-machine-image",
+            "azure-rest-api",
+            "cargo",
+            "composer",
+            "conan",
+            "deb",
+            "debian",
+            "docker",
+            "git",
+            "go-mod-directive",
+            "gradle",
+            "hashicorp",
+            "helm",
+            "hermit",
+            "hex",
+            "ivy",
+            "kubernetes-api",
+            "loose",
+            "maven",
+            "nixpkgs",
+            "node",
+            "npm",
+            "nuget",
+            "pep440",
+            "perl",
+            "poetry",
+            "python",
+            "redhat",
+            "regex",
+            "rez",
+            "ruby",
+            "semver",
+            "semver-coerced",
+            "swift",
+            "ubuntu"
+          ]
+        },
+        "repository": {
+          "description": "Repository URL",
+          "type": "string",
+          "minLength": 1
+        },
+        "compatibilities": {
+          "description": "Compatibilities with other dependencies",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/compatibility-item"
+          }
+        }
+      },
+      "required": [
+        "dependency"
+      ]
+    },
+    "host-auth": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "host": {
+          "description": "Repository host",
+          "type": "string",
+          "minLength": 1
+        },
+        "type": {
+          "description": "Repository type",
+          "type": "string",
+          "x-with-supported-dependency-types-enum": true,
+          "enum": [
+            "artifactory",
+            "aws-machine-image",
+            "aws-rds",
+            "azure-bicep-resource",
+            "azure-pipelines-tasks",
+            "bitbucket-tags",
+            "cdnjs",
+            "clojure",
+            "conan",
+            "conda",
+            "cpan",
+            "crate",
+            "dart",
+            "dart-version",
+            "deno",
+            "docker",
+            "dotnet-version",
+            "flutter-version",
+            "galaxy",
+            "galaxy-collection",
+            "git-refs",
+            "git-tags",
+            "github-release-attachments",
+            "github-releases",
+            "github-tags",
+            "gitlab-packages",
+            "gitlab-releases",
+            "gitlab-tags",
+            "go",
+            "golang-version",
+            "gradle-version",
+            "helm",
+            "hermit",
+            "hex",
+            "hexpm-bob",
+            "java-version",
+            "jenkins-plugins",
+            "kubernetes-api",
+            "maven",
+            "node",
+            "npm",
+            "nuget",
+            "orb",
+            "packagist",
+            "pod",
+            "puppet-forge",
+            "pypi",
+            "repology",
+            "ruby-version",
+            "rubygems",
+            "sbt-package",
+            "sbt-plugin",
+            "terraform-module",
+            "terraform-provider"
+          ]
+        },
+        "token": {
+          "description": "Token for the repository",
+          "type": "string"
+        },
+        "username": {
+          "description": "Username for the repository",
+          "type": "string"
+        },
+        "password": {
+          "description": "Password for the repository",
+          "type": "string"
+        }
+      },
+      "required": [
+        "host"
+      ]
+    },
+    "compatibility-item": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "dependency": {
+          "description": "Dependency ID",
+          "type": "string",
+          "minLength": 1
+        },
+        "versionRange": {
+          "description": "Version range",
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "dependency",
+        "versionRange"
+      ]
+    }
+  }
+}

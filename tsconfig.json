@@ -1,11 +1,12 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
-  "extends": "@tsconfig/node16/tsconfig.json",
+  "extends": "@tsconfig/node18/tsconfig.json",
   "compilerOptions": {
     "alwaysStrict": true,
     "strict": true,
     "strictNullChecks": true,
     "noImplicitAny": false,
+    "resolveJsonModule": true,
     "esModuleInterop": true,
     "moduleResolution": "Node",
     "removeComments": true,
@@ -15,6 +16,7 @@
     ]
   },
   "include": [
-    "src/**/*.ts"
+    "src/**/*.ts",
+    "*.schema.json"
   ]
 }
