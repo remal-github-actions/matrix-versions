@@ -15,25 +15,27 @@
         }
       }
     },
-    "compatibilities": {
+    "auth": {
+      "description": "Repository authorizations",
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/definitions/host-auth"
+      }
+    },
+    "globalCompatibilities": {
       "description": "Compatibilities with other dependencies",
       "type": "object",
       "additionalProperties": false,
       "x-with-supported-dependency-key-types-pattern": true,
       "patternProperties": {
-        "^(gradle-wrapper|java(:(lts|jre|jre-lts))?|maven:.+|node(:lts)?)$": {
+        "^(gradle-wrapper|java|maven:.+|node)$": {
           "type": "array",
+          "uniqueItems": true,
           "items": {
             "$ref": "#/definitions/compatibility-item"
           }
         }
-      }
-    },
-    "auth": {
-      "description": "Repository authorizations",
-      "type": "array",
-      "items": {
-        "$ref": "#/definitions/host-auth"
       }
     }
   },
@@ -46,25 +48,77 @@
           "description": "Dependency ID in format of `<datasource>:<dependency>`",
           "$ref": "#/definitions/dependency-id"
         },
-        "static-versioning": {
+        "only": {
+          "description": "Only versions match to all of these filters are included",
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/definitions/version-only-filter"
+          }
+        },
+        "include": {
+          "description": "Versions match to any of these filters are excluded",
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/definitions/version-filter"
+          }
+        },
+        "exclude": {
+          "description": "Versions match to any of these filters are excluded",
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/definitions/version-filter"
+          }
+        },
+        "versioning": {
           "$ref": "#/definitions/versioning"
         },
-        "repository": {
-          "description": "Repository URL",
-          "type": "string",
-          "minLength": 1
+        "repositories": {
+          "description": "Repository URLs",
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
         },
         "compatibilities": {
           "description": "Dependency compatibilities with other dependencies",
           "type": "array",
+          "uniqueItems": true,
           "items": {
             "$ref": "#/definitions/compatibility-item"
           }
+        },
+        "withoutGlobalCompatibilities": {
+          "description": "Set to `true` to disable using global compatibilities for this matrix item",
+          "type": "boolean"
         }
       },
       "required": [
         "dependency"
       ]
+    },
+    "version-only-filter": {
+      "type": "string",
+      "enum": [
+        "lts",
+        "stable",
+        "stable+current-unstable",
+        "stable-majors",
+        "stable-majors+current-unstable",
+        "stable-minors",
+        "stable-minors+current-unstable",
+        "stable-patches",
+        "stable-patches+current-unstable",
+        "current-unstable"
+      ]
+    },
+    "version-filter": {
+      "type": "string",
+      "minLength": 1
     },
     "versioning": {
       "description": "Dependency versioning (see https://docs.renovatebot.com/modules/versioning/)",
@@ -182,12 +236,11 @@
       "type": "string",
       "minLength": 1,
       "x-with-supported-dependency-types-pattern": true,
-      "pattern": "^(gradle-wrapper|java(:(lts|jre|jre-lts))?|maven:.+|node(:lts)?)$"
+      "pattern": "^(gradle-wrapper|java|maven:.+|node)$"
     },
     "version-range": {
       "type": "string",
-      "minLength": 1,
-      "pattern": "^([\\[(]\\s*[^\\[\\](),;]+\\s*[,;]\\s*[^\\[\\](),;]+\\s*[)\\]]|\\(\\s*[,;]\\s*[^\\[\\](),;]+\\s*[)\\]]|[\\[(]\\s*[^\\[\\](),;]+\\s*[,;]\\s*\\)|[^\\[(].*[^)\\]])$"
+      "minLength": 1
     }
   }
 }

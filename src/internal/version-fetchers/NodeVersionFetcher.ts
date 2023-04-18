@@ -1,8 +1,8 @@
 import { NodeVersionDatasource } from 'renovate/dist/modules/datasource/node-version'
-import { RenovateReleaseFilter, RenovateVersionFetcherDelegate } from '../RenovateVersionFetcherDelegate'
-import { VersionFetcherSupport, VersionFetchParams } from '../VersionFetcher'
+import { VersionFetchParams } from '../VersionFetcher'
+import { RenovateReleaseFilter, VersionFetcherRenovateDatasource } from '../VersionFetcherRenovateDatasource'
 
-export class NodeVersionFetcher extends RenovateVersionFetcherDelegate {
+export class NodeVersionFetcher extends VersionFetcherRenovateDatasource {
 
     constructor() {
         super(new NodeVersionDatasource())
@@ -10,29 +10,15 @@ export class NodeVersionFetcher extends RenovateVersionFetcherDelegate {
 
     protected createRenovateReleaseFilter(params: VersionFetchParams): RenovateReleaseFilter {
         const defaultFilter = super.createRenovateReleaseFilter(params)
-        if (params.dependency === 'lts') {
+        if (params.only?.includes('lts')) {
             return release => defaultFilter(release) && !!release.isStable
 
         }
         return defaultFilter
     }
 
-    protected normalizeParams(params: VersionFetchParams) {
-        params.dependency = undefined
-    }
-
-    get supportDependencies(): VersionFetcherSupport {
-        return 'optional'
-    }
-
-    get supportedOnlyDependencies(): string[] {
-        return [
-            'lts',
-        ]
-    }
-
-    get supportRepositories(): VersionFetcherSupport {
-        return 'no'
+    get withDependencies() {
+        return false
     }
 
 }

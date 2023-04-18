@@ -5,6 +5,18 @@
  * and run json-schema-to-typescript to regenerate this file.
  */
 
+export type VersionOnlyFilter =
+  | "lts"
+  | "stable"
+  | "stable+current-unstable"
+  | "stable-majors"
+  | "stable-majors+current-unstable"
+  | "stable-minors"
+  | "stable-minors+current-unstable"
+  | "stable-patches"
+  | "stable-patches+current-unstable"
+  | "current-unstable";
+export type VersionFilter = string;
 /**
  * Dependency versioning (see https://docs.renovatebot.com/modules/versioning/)
  */
@@ -54,19 +66,19 @@ export interface Config {
     [k: string]: MatrixItem;
   };
   /**
-   * Compatibilities with other dependencies
-   */
-  compatibilities?: {
-    /**
-     * This interface was referenced by `undefined`'s JSON-Schema definition
-     * via the `patternProperty` "^(gradle-wrapper|java(:(lts|jre|jre-lts))?|maven:.+|node(:lts)?)$".
-     */
-    [k: string]: CompatibilityItem[];
-  };
-  /**
    * Repository authorizations
    */
   auth?: HostAuth[];
+  /**
+   * Compatibilities with other dependencies
+   */
+  globalCompatibilities?: {
+    /**
+     * This interface was referenced by `undefined`'s JSON-Schema definition
+     * via the `patternProperty` "^(gradle-wrapper|java|maven:.+|node)$".
+     */
+    [k: string]: CompatibilityItem[];
+  };
 }
 /**
  * This interface was referenced by `undefined`'s JSON-Schema definition
@@ -77,15 +89,31 @@ export interface MatrixItem {
    * Dependency ID in format of `<datasource>:<dependency>`
    */
   dependency: string;
-  "static-versioning"?: Versioning;
   /**
-   * Repository URL
+   * Only versions match to all of these filters are included
    */
-  repository?: string;
+  only?: VersionOnlyFilter[];
+  /**
+   * Versions match to any of these filters are excluded
+   */
+  include?: VersionFilter[];
+  /**
+   * Versions match to any of these filters are excluded
+   */
+  exclude?: VersionFilter[];
+  versioning?: Versioning;
+  /**
+   * Repository URLs
+   */
+  repositories?: string[];
   /**
    * Dependency compatibilities with other dependencies
    */
   compatibilities?: CompatibilityItem[];
+  /**
+   * Set to `true` to disable using global compatibilities for this matrix item
+   */
+  withoutGlobalCompatibilities?: boolean;
 }
 export interface CompatibilityItem {
   /**

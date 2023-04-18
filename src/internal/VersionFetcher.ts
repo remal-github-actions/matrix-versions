@@ -1,18 +1,10 @@
-import { Versioning } from './config'
-
-export type VersionFetcherSupport = 'required' | 'optional' | 'no'
+import { Versioning, VersionOnlyFilter } from './config'
 
 export abstract class VersionFetcher {
 
     abstract fetchVersions(params: VersionFetchParams): Promise<string[]>
 
-    abstract get supportDependencies(): VersionFetcherSupport
-
-    get supportedOnlyDependencies(): string[] {
-        return []
-    }
-
-    abstract get supportRepositories(): VersionFetcherSupport
+    abstract get withDependencies(): boolean
 
     get defaultVersioning(): Versioning {
         return 'loose'
@@ -22,5 +14,6 @@ export abstract class VersionFetcher {
 
 export interface VersionFetchParams {
     dependency?: string
-    repository?: string
+    repositories?: string[]
+    only?: VersionOnlyFilter[]
 }

@@ -2,13 +2,13 @@ import is from '@sindresorhus/is'
 import { Datasource } from 'renovate/dist/modules/datasource/datasource'
 import { Release, ReleaseResult } from 'renovate/dist/modules/datasource/types'
 import { Versioning } from './config'
-import { isEmpty, isNotEmpty } from './utils'
+import { isNotEmpty } from './utils'
 import { VersionFetcher, VersionFetchParams } from './VersionFetcher'
 
 export type RenovateDatasourceFactory = ((params: VersionFetchParams) => Datasource)
 export type RenovateReleaseFilter = (release: Release) => boolean
 
-export abstract class RenovateVersionFetcherDelegate extends VersionFetcher {
+export abstract class VersionFetcherRenovateDatasource extends VersionFetcher {
 
     protected constructor(
         private readonly renovateDatasourceApi: Datasource | RenovateDatasourceFactory
@@ -29,48 +29,31 @@ export abstract class RenovateVersionFetcherDelegate extends VersionFetcher {
         return release => release.isDeprecated !== true
     }
 
-    protected normalizeParams(params: VersionFetchParams) {
-        // do nothing
-    }
-
     async fetchVersions(params: VersionFetchParams): Promise<string[]> {
         params = { ...params }
-        if (this.supportDependencies === 'no') params.dependency = undefined
-        if (this.supportRepositories === 'no') params.repository = undefined
 
-        const supportedOnlyDependencies = this.supportedOnlyDependencies
-        if (supportedOnlyDependencies.length
-            && isNotEmpty(params.dependency)
-            && !supportedOnlyDependencies.includes(params.dependency)
-        ) {
-            throw new Error(`Unsupported dependency: ${params.dependency}`)
+        if (!this.withDependencies) {
+            params.dependency = undefined
+        } else if (!isNotEmpty(params.dependency)) {
+            throw new Error('Empty dependency')
         }
+        const dependency = params.dependency
 
         const renovateDatasource = this.getRenovateDatasource(params)
-
         const renovateReleaseFilter = this.createRenovateReleaseFilter(params)
-        this.normalizeParams(params)
 
-        const dependency = params.dependency
-        if (this.supportDependencies === 'required' && isEmpty(dependency)) throw new Error('Empty dependency')
-
-        const repository = params.repository
-        let repositories: (string | undefined)[]
-        if (repository != null) {
-            repositories = [repository]
-        } else {
+        let repositories = params.repositories ?? []
+        if (!repositories.length) {
             const defaultRepositories = renovateDatasource.defaultRegistryUrls
             if (defaultRepositories == null) {
-                repositories = [undefined]
+                repositories = []
             } else if (is.function_(defaultRepositories)) {
                 repositories = defaultRepositories()
             } else {
                 repositories = defaultRepositories
             }
         }
-
-        const notEmptyRepositories = repositories.filter(isNotEmpty)
-        if (this.supportRepositories === 'required' && isEmpty(notEmptyRepositories)) {
+        if (!isNotEmpty(repositories)) {
             throw new Error('No repositories passed')
         }
 
@@ -98,15 +81,13 @@ export abstract class RenovateVersionFetcherDelegate extends VersionFetcher {
         if (isNotEmpty(dependency)) {
             message += ` of '${dependency}'`
         }
-        if (notEmptyRepositories.length) {
-            message += ` in ${notEmptyRepositories.join(', ')}`
-        }
+        message += ` in ${repositories.join(', ')}`
         throw new Error(message)
     }
 
     get defaultVersioning(): Versioning {
         const renovateDatasource = this.getRenovateDatasource()
-        return renovateDatasource.defaultVersioning || super.defaultVersioning
+        return renovateDatasource.defaultVersioning ?? super.defaultVersioning
     }
 
 }

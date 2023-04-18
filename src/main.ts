@@ -1,27 +1,28 @@
 import * as core from '@actions/core'
+import { Config } from './internal/config'
+import { byNewLineAndComma, indent, isNotEmpty, normalizeSpaces } from './internal/utils'
 import { run } from './run'
 
-const githubToken = core.getInput('githubToken', { required: true })
+const githubToken = core.getInput('githubToken', { required: false })
 
 const configFiles = core.getInput('files', { required: false })
-    .split(/[\n\r,;]+/)
+    .split(byNewLineAndComma)
     .map(it => it.trim())
-    .filter(it => it.length)
+    .filter(isNotEmpty)
 
 const configContent = (function() {
-    const matrixString = core.getInput('matrix', { required: false, trimWhitespace: false })
-    const authString = core.getInput('auth', { required: false, trimWhitespace: false })
+    const strings: Partial<Record<keyof Config, string>> = {
+        matrix: core.getInput('matrix', { required: false, trimWhitespace: false }),
+        auth: core.getInput('auth', { required: false, trimWhitespace: false }),
+        globalCompatibilities: core.getInput('globalCompatibilities', { required: false, trimWhitespace: false }),
+    }
 
     const lines: string[] = []
-    if (matrixString.trim().length) {
-        lines.push('matrix:')
-        matrixString.split(/(\r\n)|(\n\r)|\n|\r/)
-            .forEach(line => lines.push(`  ${line}`))
-    }
-    if (authString.trim().length) {
-        lines.push('auth:')
-        matrixString.split(/(\r\n)|(\n\r)|\n|\r/)
-            .forEach(line => lines.push(line))
+    for (const [property, string] of Object.entries(strings)) {
+        if (string.trim().length) {
+            lines.push(`${property}:`)
+            lines.push(indent(normalizeSpaces(string), 2))
+        }
     }
     return lines.join('\n')
 })()

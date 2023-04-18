@@ -1,20 +1,16 @@
-import { getError, NoErrorThrownError } from '../utils'
+import { getErrorOf, NoErrorThrownError } from '../utils'
 import { MavenVersionFetcher } from './MavenVersionFetcher'
 
 describe('MavenVersionFetcher', () => {
 
     const fetcher = new MavenVersionFetcher()
 
+    it('defaultVersioning', () => {
+        expect(fetcher.defaultVersioning).toEqual('maven')
+    })
+
     it('supportDependencies', () => {
-        expect(fetcher.supportDependencies).toEqual('required')
-    })
-
-    it('supportedOnlyDependencies', () => {
-        expect(fetcher.supportedOnlyDependencies).toEqual([])
-    })
-
-    it('supportRepositories', () => {
-        expect(fetcher.supportRepositories).toEqual('optional')
+        expect(fetcher.withDependencies).toEqual(true)
     })
 
     it('without repository', async () => {
@@ -32,7 +28,7 @@ describe('MavenVersionFetcher', () => {
     it('with repository', async () => {
         const versions = await fetcher.fetchVersions({
             dependency: 'org.springframework.boot:spring-boot-dependencies',
-            repository: 'https://repo.spring.io/milestone',
+            repositories: ['https://repo.spring.io/milestone'],
         })
         expect(versions).toContain('3.0.0-RC1')
         expect(versions).toContain('2.7.0-M1')
@@ -40,7 +36,7 @@ describe('MavenVersionFetcher', () => {
     })
 
     it('unknown dependency', async () => {
-        const error = await getError(async () => fetcher.fetchVersions({
+        const error = await getErrorOf(async () => fetcher.fetchVersions({
             dependency: 'unknown:unknown',
         }))
         expect(error).not.toBeInstanceOf(NoErrorThrownError)

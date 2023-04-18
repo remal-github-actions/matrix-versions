@@ -2,7 +2,7 @@ import { run } from './run'
 
 describe('run', () => {
     it('simple', async () => {
-        return run('test', [], `
+        return run(undefined, [], `
 
 matrix:
   spring-boot:

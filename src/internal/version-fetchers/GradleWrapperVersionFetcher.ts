@@ -1,19 +1,14 @@
 import { GradleVersionDatasource } from 'renovate/dist/modules/datasource/gradle-version'
-import { RenovateVersionFetcherDelegate } from '../RenovateVersionFetcherDelegate'
-import { VersionFetcherSupport } from '../VersionFetcher'
+import { VersionFetcherRenovateDatasource } from '../VersionFetcherRenovateDatasource'
 
-export class GradleWrapperVersionFetcher extends RenovateVersionFetcherDelegate {
+export class GradleWrapperVersionFetcher extends VersionFetcherRenovateDatasource {
 
     constructor() {
         super(new GradleVersionDatasource())
     }
 
-    get supportDependencies(): VersionFetcherSupport {
-        return 'no'
-    }
-
-    get supportRepositories(): VersionFetcherSupport {
-        return 'no'
+    get withDependencies() {
+        return false
     }
 
 }

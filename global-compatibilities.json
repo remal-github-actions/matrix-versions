@@ -1,0 +1,67 @@
+{
+  "$schema": "https://raw.githubusercontent.com/remal-github-actions/matrix-versions/main/config.schema.json",
+  "globalCompatibilities": {
+    "gradle-wrapper": [
+      {
+        "versionRange": "[2,)",
+        "dependency": "java",
+        "dependencyVersionRange": "8"
+      },
+      {
+        "versionRange": "[4.3,)",
+        "dependency": "java",
+        "dependencyVersionRange": "[8,9]"
+      },
+      {
+        "versionRange": "[4.7,)",
+        "dependency": "java",
+        "dependencyVersionRange": "[8,10]"
+      },
+      {
+        "versionRange": "[5.0,)",
+        "dependency": "java",
+        "dependencyVersionRange": "[8,11]"
+      },
+      {
+        "versionRange": "[5.4,)",
+        "dependency": "java",
+        "dependencyVersionRange": "[8,12]"
+      },
+      {
+        "versionRange": "[6.0,)",
+        "dependency": "java",
+        "dependencyVersionRange": "[8,13]"
+      },
+      {
+        "versionRange": "[6.3,)",
+        "dependency": "java",
+        "dependencyVersionRange": "[8,14]"
+      },
+      {
+        "versionRange": "[6.7,)",
+        "dependency": "java",
+        "dependencyVersionRange": "[8,15]"
+      },
+      {
+        "versionRange": "[7.0,)",
+        "dependency": "java",
+        "dependencyVersionRange": "[8,16]"
+      },
+      {
+        "versionRange": "[7.3,)",
+        "dependency": "java",
+        "dependencyVersionRange": "[8,17]"
+      },
+      {
+        "versionRange": "[7.5,)",
+        "dependency": "java",
+        "dependencyVersionRange": "[8,18]"
+      },
+      {
+        "versionRange": "[7.6,)",
+        "dependency": "java",
+        "dependencyVersionRange": "[8,19]"
+      }
+    ]
+  }
+}

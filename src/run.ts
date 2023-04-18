@@ -4,71 +4,46 @@ import os from 'node:os'
 import { GlobalConfig } from 'renovate/dist/config/global'
 import { AllConfig } from 'renovate/dist/config/types'
 import { logger as renovateLogger } from 'renovate/dist/logger/index'
-import { bootstrap as bootstrapRenovate } from 'renovate/dist/proxy'
+import { bootstrap as initProxyForRenovate } from 'renovate/dist/proxy'
 import { HostRule } from 'renovate/dist/types/host-rules'
 import * as renovateHostRules from 'renovate/dist/util/host-rules'
 import { hostRulesFromEnv } from 'renovate/dist/workers/global/config/parse/host-rules-from-env'
-import { mergeConfigs } from './internal/mergeConfigs'
-import { parseConfigContent } from './internal/parseConfigContent'
-import { parseConfigFiles } from './internal/parseConfigFiles'
-import { isNotEmpty, processObjectFieldsRecursively } from './internal/utils'
+import { Config } from './internal/config'
+import {
+    mergeConfigs,
+    parseConfigContent,
+    parseConfigFiles,
+    populateGlobalCompatibilities,
+    validateConfig
+} from './internal/config-functions'
+import { indent, isNotEmpty, normalizeSpaces, processObjectFieldsRecursively } from './internal/utils'
+
+const defaultCompatibilitiesConfig = validateConfig(
+    require('../global-compatibilities.json'),
+    'builtin:global-compatibilities.json'
+)
 
 export async function run(
-    githubToken,
+    githubToken: string | undefined | null,
     configFiles: string[],
     configContent: string
 ) {
     try {
-        // Init the action's config:
-        let config = await parseConfigFiles(...configFiles)
-        config = mergeConfigs(parseConfigContent(configContent), config)
+        // Init config:
+        const config = mergeConfigs(
+            parseConfigContent(configContent),
+            await parseConfigFiles(...configFiles),
+            defaultCompatibilitiesConfig
+        )
+        populateGlobalCompatibilities(config)
 
 
         // Init Renovate:
         process.env.RENOVATE_X_IGNORE_RE2 = 'true'
         process.env.TMPDIR = process.env.RENOVATE_TMPDIR ?? os.tmpdir()
         initRenovateLogging()
-        bootstrapRenovate()
-
-
-        // Init Renovate config:
-        const renovateConfig: AllConfig = {}
-        renovateConfig.githubTokenWarn = true
-        renovateConfig.fetchReleaseNotes = false
-        renovateConfig.repositoryCache = 'disabled'
-        renovateConfig.dryRun = 'full'
-
-        const defaultHostRule: HostRule = {
-            timeout: 10_000,
-            abortOnError: true,
-        }
-        const hostRules: HostRule[] = renovateConfig.hostRules = [defaultHostRule]
-        hostRules.push(...hostRulesFromEnv(process.env))
-        config.auth?.forEach(hostAuth => {
-            const hostRule: HostRule = {
-                matchHost: hostAuth.host,
-                hostType: hostAuth.type,
-                token: hostAuth.token,
-                username: hostAuth.username,
-                password: hostAuth.password,
-            }
-            hostRules.push(hostRule)
-        })
-        hostRules.push({
-            matchHost: new URL(process.env.GITHUB_SERVER_URL || 'https://github.com/').hostname,
-            token: githubToken,
-        })
-        hostRules.push({
-            matchHost: new URL(process.env.GITHUB_API_URL || 'https://api.github.com/').hostname,
-            token: githubToken,
-        })
-        hostRules.forEach(hostRule => {
-            hostRule.timeout = defaultHostRule.timeout
-            hostRule.abortOnError = defaultHostRule.abortOnError
-        })
-
-        hostRules.forEach((rule) => renovateHostRules.add(rule))
-        GlobalConfig.set(renovateConfig)
+        initRenovateConfig(config, githubToken)
+        initProxyForRenovate()
 
     } catch (error) {
         core.setFailed(error instanceof Error ? error : (error as object).toString())
@@ -115,7 +90,7 @@ function initRenovateLogging() {
                     return metaFieldsToMask.includes(key) ? '****' : value
                 })
 
-                msg = JSON.stringify(meta) + ' ' + msg
+                msg = msg + '\n' + indent(normalizeSpaces(JSON.stringify(meta, null, 2)), 2)
             }
 
             msg = msg.trim()
@@ -132,7 +107,7 @@ function initRenovateLogging() {
             } else if (loggerLevel === 'warn') {
                 core.warning(msg)
             } else {
-                core.error(msg)
+                throw new Error(msg)
             }
         }
     }
@@ -140,4 +115,54 @@ function initRenovateLogging() {
     for (const loggerLevel of loggerLevels) {
         renovateLogger.once[loggerLevel] = renovateLogger[loggerLevel]
     }
+}
+
+function initRenovateConfig(config: Config, githubToken?: string | null) {
+    const renovateConfig: AllConfig = {}
+    renovateConfig.githubTokenWarn = true
+    renovateConfig.fetchReleaseNotes = false
+    renovateConfig.repositoryCache = 'disabled'
+    renovateConfig.dryRun = 'full'
+
+
+    const defaultHostRule: HostRule = {
+        timeout: 10_000,
+        abortOnError: true,
+    }
+    const hostRules: HostRule[] = renovateConfig.hostRules = [defaultHostRule]
+
+    config.auth?.forEach(hostAuth => {
+        const hostRule: HostRule = {
+            matchHost: hostAuth.host,
+            hostType: hostAuth.type,
+            token: hostAuth.token,
+            username: hostAuth.username,
+            password: hostAuth.password,
+        }
+        hostRules.push(hostRule)
+    })
+    delete config.auth
+
+    hostRules.push(...hostRulesFromEnv(process.env))
+
+    if (isNotEmpty(githubToken)) {
+        hostRules.push({
+            matchHost: new URL(process.env.GITHUB_SERVER_URL ?? 'https://github.com/').hostname,
+            token: githubToken,
+        })
+        hostRules.push({
+            matchHost: new URL(process.env.GITHUB_API_URL ?? 'https://api.github.com/').hostname,
+            token: githubToken,
+        })
+    }
+
+    hostRules.forEach(hostRule => {
+        hostRule.timeout = defaultHostRule.timeout
+        hostRule.abortOnError = defaultHostRule.abortOnError
+    })
+
+    hostRules.forEach((rule) => renovateHostRules.add(rule))
+
+
+    GlobalConfig.set(renovateConfig)
 }

@@ -4,16 +4,12 @@ describe('NodeVersionFetcher', () => {
 
     const fetcher = new NodeVersionFetcher()
 
+    it('defaultVersioning', () => {
+        expect(fetcher.defaultVersioning).toEqual('node')
+    })
+
     it('supportDependencies', () => {
-        expect(fetcher.supportDependencies).toEqual('optional')
-    })
-
-    it('supportedOnlyDependencies', () => {
-        expect(fetcher.supportedOnlyDependencies).toEqual(['lts'])
-    })
-
-    it('supportRepositories', () => {
-        expect(fetcher.supportRepositories).toEqual('no')
+        expect(fetcher.withDependencies).toEqual(false)
     })
 
     it('default', async () => {
@@ -26,7 +22,7 @@ describe('NodeVersionFetcher', () => {
     })
 
     it('lts', async () => {
-        const versions = await fetcher.fetchVersions({ dependency: 'lts' })
+        const versions = await fetcher.fetchVersions({ only: ['lts'] })
         expect(versions).not.toContain('v19.9.0')
         expect(versions).not.toContain('v19.8.1')
         expect(versions).toContain('v18.16.0')

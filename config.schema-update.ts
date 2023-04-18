@@ -43,18 +43,8 @@ const dependencyTypesPattern = (function() {
             return type
         }
 
-        const supportedOnlyDependencies = fetcher.supportedOnlyDependencies
-        let supportedOnlyDependenciesPattern = '.+'
-        if (supportedOnlyDependencies.length === 1) {
-            supportedOnlyDependenciesPattern = supportedOnlyDependencies[0]
-        } else if (supportedOnlyDependencies.length >= 2) {
-            supportedOnlyDependenciesPattern = `(${supportedOnlyDependencies.join('|')})`
-        }
-
-        if (fetcher.supportDependencies === 'required') {
-            return `${type}:${supportedOnlyDependenciesPattern}`
-        } else if (fetcher.supportDependencies === 'optional') {
-            return `${type}(:${supportedOnlyDependenciesPattern})?`
+        if (fetcher.withDependencies) {
+            return `${type}:.+`
         } else {
             return type
         }
