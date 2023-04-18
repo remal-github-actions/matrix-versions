@@ -1,0 +1,10 @@
+{
+  "$schema": "https://raw.githubusercontent.com/remal-github-actions/matrix-versions/main/config.schema.json",
+  "compatibilities": {
+    "gradle-wrapper": [
+      {
+
+      }
+    ]
+  }
+}

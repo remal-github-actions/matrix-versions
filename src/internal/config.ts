@@ -6,6 +6,44 @@
  */
 
 /**
+ * Dependency versioning (see https://docs.renovatebot.com/modules/versioning/)
+ */
+export type Versioning = StaticVersioning | string;
+export type StaticVersioning =
+  | "aws-machine-image"
+  | "azure-rest-api"
+  | "cargo"
+  | "composer"
+  | "conan"
+  | "deb"
+  | "debian"
+  | "docker"
+  | "git"
+  | "go-mod-directive"
+  | "gradle"
+  | "hashicorp"
+  | "helm"
+  | "hex"
+  | "ivy"
+  | "kubernetes-api"
+  | "loose"
+  | "maven"
+  | "node"
+  | "npm"
+  | "nuget"
+  | "pep440"
+  | "perl"
+  | "poetry"
+  | "python"
+  | "redhat"
+  | "rez"
+  | "ruby"
+  | "semver"
+  | "semver-coerced"
+  | "swift"
+  | "ubuntu";
+
+/**
  * Config for matrix-version GitHub action
  */
 export interface Config {
@@ -14,6 +52,16 @@ export interface Config {
    */
   matrix?: {
     [k: string]: MatrixItem;
+  };
+  /**
+   * Compatibilities with other dependencies
+   */
+  compatibilities?: {
+    /**
+     * This interface was referenced by `undefined`'s JSON-Schema definition
+     * via the `patternProperty` "^(gradle-wrapper|java(:(lts|jre|jre-lts))?|maven:.+|node(:lts)?)$".
+     */
+    [k: string]: CompatibilityItem[];
   };
   /**
    * Repository authorizations
@@ -29,63 +77,29 @@ export interface MatrixItem {
    * Dependency ID in format of `<datasource>:<dependency>`
    */
   dependency: string;
-  /**
-   * Dependency versioning (see https://docs.renovatebot.com/modules/versioning/)
-   */
-  versioning?:
-    | "aws-machine-image"
-    | "azure-rest-api"
-    | "cargo"
-    | "composer"
-    | "conan"
-    | "deb"
-    | "debian"
-    | "docker"
-    | "git"
-    | "go-mod-directive"
-    | "gradle"
-    | "hashicorp"
-    | "helm"
-    | "hermit"
-    | "hex"
-    | "ivy"
-    | "kubernetes-api"
-    | "loose"
-    | "maven"
-    | "nixpkgs"
-    | "node"
-    | "npm"
-    | "nuget"
-    | "pep440"
-    | "perl"
-    | "poetry"
-    | "python"
-    | "redhat"
-    | "regex"
-    | "rez"
-    | "ruby"
-    | "semver"
-    | "semver-coerced"
-    | "swift"
-    | "ubuntu";
+  "static-versioning"?: Versioning;
   /**
    * Repository URL
    */
   repository?: string;
   /**
-   * Compatibilities with other dependencies
+   * Dependency compatibilities with other dependencies
    */
   compatibilities?: CompatibilityItem[];
 }
 export interface CompatibilityItem {
   /**
-   * Dependency ID
+   * Dependency version range
+   */
+  versionRange: string;
+  /**
+   * Compatibility dependency ID
    */
   dependency: string;
   /**
-   * Version range
+   * Compatibility dependency range
    */
-  versionRange: string;
+  dependencyVersionRange: string;
 }
 export interface HostAuth {
   /**
@@ -95,61 +109,7 @@ export interface HostAuth {
   /**
    * Repository type
    */
-  type?:
-    | "artifactory"
-    | "aws-machine-image"
-    | "aws-rds"
-    | "azure-bicep-resource"
-    | "azure-pipelines-tasks"
-    | "bitbucket-tags"
-    | "cdnjs"
-    | "clojure"
-    | "conan"
-    | "conda"
-    | "cpan"
-    | "crate"
-    | "dart"
-    | "dart-version"
-    | "deno"
-    | "docker"
-    | "dotnet-version"
-    | "flutter-version"
-    | "galaxy"
-    | "galaxy-collection"
-    | "git-refs"
-    | "git-tags"
-    | "github-release-attachments"
-    | "github-releases"
-    | "github-tags"
-    | "gitlab-packages"
-    | "gitlab-releases"
-    | "gitlab-tags"
-    | "go"
-    | "golang-version"
-    | "gradle-version"
-    | "helm"
-    | "hermit"
-    | "hex"
-    | "hexpm-bob"
-    | "java-version"
-    | "jenkins-plugins"
-    | "kubernetes-api"
-    | "maven"
-    | "node"
-    | "npm"
-    | "nuget"
-    | "orb"
-    | "packagist"
-    | "pod"
-    | "puppet-forge"
-    | "pypi"
-    | "repology"
-    | "ruby-version"
-    | "rubygems"
-    | "sbt-package"
-    | "sbt-plugin"
-    | "terraform-module"
-    | "terraform-provider";
+  type?: "gradle-wrapper" | "java" | "maven" | "node";
   /**
    * Token for the repository
    */

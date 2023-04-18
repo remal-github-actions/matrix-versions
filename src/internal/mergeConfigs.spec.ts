@@ -4,12 +4,12 @@ import { newEmptyConfig } from './newEmptyConfig'
 
 describe('mergeConfigs', () => {
 
-    it('empty', function() {
+    it('empty', () => {
         expect(mergeConfigs())
             .toEqual(newEmptyConfig())
     })
 
-    it('merge objects', function() {
+    it('merge matrix', () => {
         const config1: Config = {
             matrix: {
                 'name': {
@@ -41,7 +41,7 @@ describe('mergeConfigs', () => {
             })
     })
 
-    it('merge arrays', function() {
+    it('merge auth', () => {
         const config1: Config = {
             auth: [
                 {
@@ -70,6 +70,48 @@ describe('mergeConfigs', () => {
                         token: 'token',
                     }
                 ]
+            })
+    })
+
+    it('merge compatibilities', () => {
+        const config1: Config = {
+            compatibilities: {
+                dep: [
+                    {
+                        versionRange: '[1,2)',
+                        dependency: 'other',
+                        dependencyVersionRange: '[1,2)',
+                    }
+                ]
+            }
+        }
+        const config2: Config = {
+            compatibilities: {
+                dep: [
+                    {
+                        versionRange: '[2,3)',
+                        dependency: 'other',
+                        dependencyVersionRange: '[2,3)',
+                    }
+                ]
+            }
+        }
+        expect(mergeConfigs(config1, config2))
+            .toEqual({
+                compatibilities: {
+                    dep: [
+                        {
+                            versionRange: '[1,2)',
+                            dependency: 'other',
+                            dependencyVersionRange: '[1,2)',
+                        },
+                        {
+                            versionRange: '[2,3)',
+                            dependency: 'other',
+                            dependencyVersionRange: '[2,3)',
+                        }
+                    ]
+                }
             })
     })
 

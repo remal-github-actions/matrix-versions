@@ -15,6 +15,20 @@
         }
       }
     },
+    "compatibilities": {
+      "description": "Compatibilities with other dependencies",
+      "type": "object",
+      "additionalProperties": false,
+      "x-with-supported-dependency-key-types-pattern": true,
+      "patternProperties": {
+        "^(gradle-wrapper|java(:(lts|jre|jre-lts))?|maven:.+|node(:lts)?)$": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/compatibility-item"
+          }
+        }
+      }
+    },
     "auth": {
       "description": "Repository authorizations",
       "type": "array",
@@ -30,52 +44,10 @@
       "properties": {
         "dependency": {
           "description": "Dependency ID in format of `<datasource>:<dependency>`",
-          "type": "string",
-          "minLength": 1,
-          "x-with-supported-dependency-types-pattern": true,
-          "pattern": "^(artifactory|aws-machine-image|aws-rds|azure-bicep-resource|azure-pipelines-tasks|bitbucket-tags|cdnjs|clojure|conan|conda|cpan|crate|dart|dart-version|deno|docker|dotnet-version|flutter-version|galaxy|galaxy-collection|git-refs|git-tags|github-release-attachments|github-releases|github-tags|gitlab-packages|gitlab-releases|gitlab-tags|go|golang-version|gradle-version|helm|hermit|hex|hexpm-bob|java-version|jenkins-plugins|kubernetes-api|maven|node|npm|nuget|orb|packagist|pod|puppet-forge|pypi|repology|ruby-version|rubygems|sbt-package|sbt-plugin|terraform-module|terraform-provider)(:.+)?$"
+          "$ref": "#/definitions/dependency-id"
         },
-        "versioning": {
-          "description": "Dependency versioning (see https://docs.renovatebot.com/modules/versioning/)",
-          "type": "string",
-          "x-with-supported-version-types-enum": true,
-          "enum": [
-            "aws-machine-image",
-            "azure-rest-api",
-            "cargo",
-            "composer",
-            "conan",
-            "deb",
-            "debian",
-            "docker",
-            "git",
-            "go-mod-directive",
-            "gradle",
-            "hashicorp",
-            "helm",
-            "hermit",
-            "hex",
-            "ivy",
-            "kubernetes-api",
-            "loose",
-            "maven",
-            "nixpkgs",
-            "node",
-            "npm",
-            "nuget",
-            "pep440",
-            "perl",
-            "poetry",
-            "python",
-            "redhat",
-            "regex",
-            "rez",
-            "ruby",
-            "semver",
-            "semver-coerced",
-            "swift",
-            "ubuntu"
-          ]
+        "static-versioning": {
+          "$ref": "#/definitions/versioning"
         },
         "repository": {
           "description": "Repository URL",
@@ -83,7 +55,7 @@
           "minLength": 1
         },
         "compatibilities": {
-          "description": "Compatibilities with other dependencies",
+          "description": "Dependency compatibilities with other dependencies",
           "type": "array",
           "items": {
             "$ref": "#/definitions/compatibility-item"
@@ -92,6 +64,58 @@
       },
       "required": [
         "dependency"
+      ]
+    },
+    "versioning": {
+      "description": "Dependency versioning (see https://docs.renovatebot.com/modules/versioning/)",
+      "oneOf": [
+        {
+          "$ref": "#/definitions/static-versioning"
+        },
+        {
+          "type": "string",
+          "minLength": 1,
+          "x-with-supported-dynamic-versionings-pattern": true,
+          "pattern": "^(hermit|nixpkgs|regex)(:[^:]+)*$"
+        }
+      ]
+    },
+    "static-versioning": {
+      "type": "string",
+      "x-with-supported-static-versionings-enum": true,
+      "enum": [
+        "aws-machine-image",
+        "azure-rest-api",
+        "cargo",
+        "composer",
+        "conan",
+        "deb",
+        "debian",
+        "docker",
+        "git",
+        "go-mod-directive",
+        "gradle",
+        "hashicorp",
+        "helm",
+        "hex",
+        "ivy",
+        "kubernetes-api",
+        "loose",
+        "maven",
+        "node",
+        "npm",
+        "nuget",
+        "pep440",
+        "perl",
+        "poetry",
+        "python",
+        "redhat",
+        "rez",
+        "ruby",
+        "semver",
+        "semver-coerced",
+        "swift",
+        "ubuntu"
       ]
     },
     "host-auth": {
@@ -108,60 +132,10 @@
           "type": "string",
           "x-with-supported-dependency-types-enum": true,
           "enum": [
-            "artifactory",
-            "aws-machine-image",
-            "aws-rds",
-            "azure-bicep-resource",
-            "azure-pipelines-tasks",
-            "bitbucket-tags",
-            "cdnjs",
-            "clojure",
-            "conan",
-            "conda",
-            "cpan",
-            "crate",
-            "dart",
-            "dart-version",
-            "deno",
-            "docker",
-            "dotnet-version",
-            "flutter-version",
-            "galaxy",
-            "galaxy-collection",
-            "git-refs",
-            "git-tags",
-            "github-release-attachments",
-            "github-releases",
-            "github-tags",
-            "gitlab-packages",
-            "gitlab-releases",
-            "gitlab-tags",
-            "go",
-            "golang-version",
-            "gradle-version",
-            "helm",
-            "hermit",
-            "hex",
-            "hexpm-bob",
-            "java-version",
-            "jenkins-plugins",
-            "kubernetes-api",
+            "gradle-wrapper",
+            "java",
             "maven",
-            "node",
-            "npm",
-            "nuget",
-            "orb",
-            "packagist",
-            "pod",
-            "puppet-forge",
-            "pypi",
-            "repology",
-            "ruby-version",
-            "rubygems",
-            "sbt-package",
-            "sbt-plugin",
-            "terraform-module",
-            "terraform-provider"
+            "node"
           ]
         },
         "token": {
@@ -185,21 +159,35 @@
       "type": "object",
       "additionalProperties": false,
       "properties": {
-        "dependency": {
-          "description": "Dependency ID",
-          "type": "string",
-          "minLength": 1
-        },
         "versionRange": {
-          "description": "Version range",
-          "type": "string",
-          "minLength": 1
+          "description": "Dependency version range",
+          "$ref": "#/definitions/version-range"
+        },
+        "dependency": {
+          "description": "Compatibility dependency ID",
+          "$ref": "#/definitions/dependency-id"
+        },
+        "dependencyVersionRange": {
+          "description": "Compatibility dependency range",
+          "$ref": "#/definitions/version-range"
         }
       },
       "required": [
+        "versionRange",
         "dependency",
-        "versionRange"
+        "dependencyVersionRange"
       ]
+    },
+    "dependency-id": {
+      "type": "string",
+      "minLength": 1,
+      "x-with-supported-dependency-types-pattern": true,
+      "pattern": "^(gradle-wrapper|java(:(lts|jre|jre-lts))?|maven:.+|node(:lts)?)$"
+    },
+    "version-range": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^([\\[(]\\s*[^\\[\\](),;]+\\s*[,;]\\s*[^\\[\\](),;]+\\s*[)\\]]|\\(\\s*[,;]\\s*[^\\[\\](),;]+\\s*[)\\]]|[\\[(]\\s*[^\\[\\](),;]+\\s*[,;]\\s*\\)|[^\\[(].*[^)\\]])$"
     }
   }
 }

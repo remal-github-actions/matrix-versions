@@ -1,6 +1,5 @@
 import * as core from '@actions/core'
 import { LogLevelString } from 'bunyan'
-import fs from 'fs-extra'
 import os from 'node:os'
 import { GlobalConfig } from 'renovate/dist/config/global'
 import { AllConfig } from 'renovate/dist/config/types'
@@ -9,7 +8,6 @@ import { bootstrap as bootstrapRenovate } from 'renovate/dist/proxy'
 import { HostRule } from 'renovate/dist/types/host-rules'
 import * as renovateHostRules from 'renovate/dist/util/host-rules'
 import { hostRulesFromEnv } from 'renovate/dist/workers/global/config/parse/host-rules-from-env'
-import upath from 'upath'
 import { mergeConfigs } from './internal/mergeConfigs'
 import { parseConfigContent } from './internal/parseConfigContent'
 import { parseConfigFiles } from './internal/parseConfigFiles'
@@ -27,6 +25,7 @@ export async function run(
 
 
         // Init Renovate:
+        process.env.RENOVATE_X_IGNORE_RE2 = 'true'
         process.env.TMPDIR = process.env.RENOVATE_TMPDIR ?? os.tmpdir()
         initRenovateLogging()
         bootstrapRenovate()
@@ -34,19 +33,17 @@ export async function run(
 
         // Init Renovate config:
         const renovateConfig: AllConfig = {}
-        await fs.ensureDir(renovateConfig.baseDir = upath.join(process.env.TMPDIR, 'renovate'))
-        await fs.ensureDir(renovateConfig.cacheDir = upath.join(renovateConfig.baseDir, 'cache'))
-        await fs.ensureDir(renovateConfig.containerbaseDir = upath.join(renovateConfig.baseDir, 'containerbase'))
         renovateConfig.githubTokenWarn = true
         renovateConfig.fetchReleaseNotes = false
         renovateConfig.repositoryCache = 'disabled'
-
+        renovateConfig.dryRun = 'full'
 
         const defaultHostRule: HostRule = {
             timeout: 10_000,
             abortOnError: true,
         }
-        const hostRules = renovateConfig.hostRules = [defaultHostRule]
+        const hostRules: HostRule[] = renovateConfig.hostRules = [defaultHostRule]
+        hostRules.push(...hostRulesFromEnv(process.env))
         config.auth?.forEach(hostAuth => {
             const hostRule: HostRule = {
                 matchHost: hostAuth.host,
@@ -57,7 +54,6 @@ export async function run(
             }
             hostRules.push(hostRule)
         })
-        hostRules.push(...hostRulesFromEnv(process.env))
         hostRules.push({
             matchHost: new URL(process.env.GITHUB_SERVER_URL || 'https://github.com/').hostname,
             token: githubToken,
@@ -72,7 +68,6 @@ export async function run(
         })
 
         hostRules.forEach((rule) => renovateHostRules.add(rule))
-
         GlobalConfig.set(renovateConfig)
 
     } catch (error) {
@@ -91,29 +86,6 @@ function initRenovateLogging() {
         'warn',
         'error',
         'fatal',
-    ]
-
-    const disabledMessages: RegExp[] = [
-        /^Converting .+ into a global host rule$/,
-        /^Found valid .+ version: .+$/,
-        /^Using default .+ endpoint: .+$/,
-        /^Adding token authentication for .+ to hostRules$/,
-    ]
-
-    const enabledTraceMessages: RegExp[] = [
-        /^Host disabled$/,
-        /^Url not found$/,
-        /^go-source header prefix not match$/,
-        /^go-import header prefix not match$/,
-        /^datasource hunt failure$/,
-        /^datasource merge failure$/,
-        /^S3 url not found$/,
-        /^pip package not found$/,
-
-        /^Can't get datasource for .+$/,
-        /^Can't obtain data from .+$/,
-        /^Failed to retrieve .+$/,
-        /^No builds found for .+$/,
     ]
 
     const metaFieldsToMask = [
@@ -136,18 +108,6 @@ function initRenovateLogging() {
                 msg = msg.toString()
             }
 
-            if (disabledMessages.some(regex => regex.test(msg))) {
-                return
-            }
-
-            if (loggerLevel === 'trace') {
-                if (enabledTraceMessages.some(regex => regex.test(msg))) {
-                    // do nothing
-                } else {
-                    return
-                }
-            }
-
             if (isNotEmpty(meta)) {
                 const metaJson = JSON.stringify(meta)
                 meta = JSON.parse(metaJson)
@@ -159,8 +119,20 @@ function initRenovateLogging() {
             }
 
             msg = msg.trim()
-            if (msg.length) {
-                throw new Error(`Renovate ${loggerLevel.toUpperCase()}: ${msg}`)
+            if (!msg.length) {
+                return
+            }
+
+            msg = `Renovate ${loggerLevel.toUpperCase()}: ${msg}`
+
+            if (loggerLevel === 'trace' || loggerLevel === 'debug') {
+                core.debug(msg)
+            } else if (loggerLevel === 'info') {
+                core.info(msg)
+            } else if (loggerLevel === 'warn') {
+                core.warning(msg)
+            } else {
+                core.error(msg)
             }
         }
     }

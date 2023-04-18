@@ -19,5 +19,8 @@ module.exports = {
         'src/**',
     ],
     errorOnDeprecated: true,
-    verbose: true
+    verbose: true,
+    setupFiles: [
+        '<rootDir>/jest-setup-env.js'
+    ]
 }
