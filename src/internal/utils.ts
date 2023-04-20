@@ -1,4 +1,5 @@
 import is from '@sindresorhus/is'
+import * as merge from 'deepmerge'
 
 export const byNewLineAndComma: RegExp = /[\n\r,;]+/g
 
@@ -13,11 +14,26 @@ export function indent(string: string, indention: string | number): string {
     return indention + string.replaceAll(/(\r\n)|(\n\r)|\n|\r/g, '$1' + indention)
 }
 
-export function removeFromArray<T>(array: T[], elementToRemove: T) {
-    const index = array.indexOf(elementToRemove, 0)
-    if (index >= 0) {
-        array.splice(index, 1)
+export function clone<T>(value: T): T {
+    return merge.all([value])
+}
+
+export function removeFromArrayIf<T>(array: T[], predicate: (element: T) => boolean): void {
+    for (let index = 0; index < array.length; ++index) {
+        const element = array[index]
+        if (predicate(element)) {
+            array.splice(index, 1)
+            --index
+        }
     }
+}
+
+export function removeFromArray<T>(array: T[], elementToRemove: T): void {
+    removeFromArrayIf(array, element => element === elementToRemove)
+}
+
+export function onlyUnique(value: any, index: number, array: Array<any>): boolean {
+    return array.indexOf(value) === index
 }
 
 export function isNotEmpty<Type>(object: Type | null | undefined): object is Type {
@@ -57,9 +73,6 @@ export function processObjectFieldsRecursively(object: any, action: (key: string
 }
 
 
-export function onlyUnique(value: any, index: number, array: Array<any>): boolean {
-    return array.indexOf(value) === index
-}
 
 
 export function shuffleArray<T>(array: T[]): T[] {

@@ -1,7 +1,7 @@
 import { getErrorOf, NoErrorThrownError } from '../utils'
 import { MavenVersionFetcher } from './MavenVersionFetcher'
 
-describe('MavenVersionFetcher', () => {
+describe(MavenVersionFetcher.name, () => {
 
     const fetcher = new MavenVersionFetcher()
 

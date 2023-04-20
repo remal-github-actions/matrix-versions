@@ -1,7 +1,7 @@
 import { Config, VersionOnlyFilter } from './config'
 import { mergeConfigs, newEmptyConfig, validateConfig } from './config-functions'
 
-describe('validateConfig', () => {
+describe(validateConfig.name, () => {
 
     it('empty', () => {
         expect(() => validateConfig({})).not.toThrow()
@@ -57,7 +57,7 @@ describe('validateConfig', () => {
 
 })
 
-describe('mergeConfigs', () => {
+describe(mergeConfigs.name, () => {
 
     it('empty', () => {
         expect(mergeConfigs())

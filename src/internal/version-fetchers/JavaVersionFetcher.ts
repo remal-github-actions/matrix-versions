@@ -1,4 +1,6 @@
 import { JavaVersionDatasource } from 'renovate/dist/modules/datasource/java-version'
+import { onlyUnique } from '../utils'
+import { VersionFetchParams } from '../VersionFetcher'
 import { RenovateDatasourceFactory, VersionFetcherRenovateDatasource } from '../VersionFetcherRenovateDatasource'
 
 const defaultDatasource = new JavaVersionDatasource()
@@ -36,3 +38,4 @@ export class JavaVersionFetcher extends VersionFetcherRenovateDatasource {
     }
 
 }
+

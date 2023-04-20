@@ -1,6 +1,6 @@
 import { JavaVersionFetcher } from './JavaVersionFetcher'
 
-describe('JavaVersionFetcher', () => {
+describe(JavaVersionFetcher.name, () => {
 
     const fetcher = new JavaVersionFetcher()
 

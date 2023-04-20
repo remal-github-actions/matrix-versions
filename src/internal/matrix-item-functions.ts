@@ -5,12 +5,22 @@ import { configRegexPredicate } from 'renovate/dist/util/regex'
 import { MatrixItem, VersionOnlyFilter } from './config'
 import { getVersionFetcher } from './version-fetcher-api'
 
-type FilterRegexPredicate = (s: string) => boolean
-
-
-export interface FetchedMatrixItem extends Partial<MatrixItem> {
+export interface FetchedMatrixItem extends MatrixItem {
     fetchedVersions: string[]
 }
+
+export type FetchedMatrix = Record<string, FetchedMatrixItem>
+
+export async function fetchMatrix(matrix: Record<string, MatrixItem>): Promise<FetchedMatrix> {
+    const fetchedMatrix: FetchedMatrix = {}
+    for (const [property, matrixItem] of Object.entries(matrix)) {
+        const fetchedMatrixItem = await fetchMatrixItem(matrixItem)
+        fetchedMatrix[property] = fetchedMatrixItem
+    }
+    return Promise.resolve(fetchedMatrix)
+}
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 export async function fetchMatrixItem(matrixItem: MatrixItem): Promise<FetchedMatrixItem> {
     const { fetcherId, dependency } = parseMatrixItemDependency(matrixItem.dependency)
@@ -36,6 +46,8 @@ export async function fetchMatrixItem(matrixItem: MatrixItem): Promise<FetchedMa
 }
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+type FilterRegexPredicate = (s: string) => boolean
 
 export function filterFetchedVersions(fetchedMatrixItem: FetchedMatrixItem): FetchedMatrixItem {
     let fetchedVersions = fetchedMatrixItem.fetchedVersions
@@ -74,7 +86,7 @@ export function filterFetchedVersions(fetchedMatrixItem: FetchedMatrixItem): Fet
         })
     }
 
-    const versioning = versionings.get(fetchedMatrixItem.versioning)!!
+    const versioning = versionings.get(fetchedMatrixItem.versioning)
     fetchedVersions = fetchedVersions.filter(version => {
         if (!versioning.isVersion(version)) {
             core.warning(`Dependency '${fetchedMatrixItem.dependency}': `

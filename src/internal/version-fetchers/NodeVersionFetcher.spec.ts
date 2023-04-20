@@ -1,6 +1,6 @@
 import { NodeVersionFetcher } from './NodeVersionFetcher'
 
-describe('NodeVersionFetcher', () => {
+describe(NodeVersionFetcher.name, () => {
 
     const fetcher = new NodeVersionFetcher()
 

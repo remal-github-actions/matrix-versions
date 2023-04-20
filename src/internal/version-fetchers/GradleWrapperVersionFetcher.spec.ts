@@ -1,6 +1,6 @@
 import { GradleWrapperVersionFetcher } from './GradleWrapperVersionFetcher'
 
-describe('GradleWrapperVersionFetcher', () => {
+describe(GradleWrapperVersionFetcher.name, () => {
 
     const fetcher = new GradleWrapperVersionFetcher()
 
