@@ -1,24 +1,19 @@
-import { NodeVersionDatasource } from 'renovate/dist/modules/datasource/node-version'
+import { onlyUnique } from '../utils'
 import { VersionFetchParams } from '../VersionFetcher'
-import { RenovateReleaseFilter, VersionFetcherRenovateDatasource } from '../VersionFetcherRenovateDatasource'
+import { NodeFullVersionFetcher } from './NodeFullVersionFetcher'
 
-export class NodeVersionFetcher extends VersionFetcherRenovateDatasource {
+export class NodeVersionFetcher extends NodeFullVersionFetcher {
 
     constructor() {
-        super(new NodeVersionDatasource())
+        super()
     }
 
-    protected createRenovateReleaseFilter(params: VersionFetchParams): RenovateReleaseFilter {
-        const defaultFilter = super.createRenovateReleaseFilter(params)
-        if (params.only?.includes('lts')) {
-            return release => defaultFilter(release) && !!release.isStable
-
-        }
-        return defaultFilter
-    }
-
-    get withDependencies() {
-        return false
+    async fetchVersions(params: VersionFetchParams): Promise<string[]> {
+        return super.fetchVersions(params)
+            .then(versions => versions
+                .map(version => version.replace(/^v?(?<major>\d+).*$/, '$<major>'))
+                .filter(onlyUnique),
+            )
     }
 
 }

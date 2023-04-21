@@ -1,7 +1,7 @@
 import {
     FetchedMatrixItem,
     filterFetchedVersions,
-    ParsedMatrixItemDependency,
+    ParsedDependency,
     parseMatrixItemDependency,
 } from './matrix-item-functions'
 import { shuffleArray } from './utils'
@@ -474,7 +474,7 @@ describe(parseMatrixItemDependency.name, () => {
 
     it(`full`, () => {
         const matrixItemDependency = 'fetcher:id'
-        const expected: ParsedMatrixItemDependency = {
+        const expected: ParsedDependency = {
             fetcherId: 'fetcher',
             dependency: 'id',
         }
@@ -484,7 +484,7 @@ describe(parseMatrixItemDependency.name, () => {
 
     it(`fetcherId only`, () => {
         const matrixItemDependency = 'fetcher'
-        const expected: ParsedMatrixItemDependency = {
+        const expected: ParsedDependency = {
             fetcherId: 'fetcher',
             dependency: '',
         }

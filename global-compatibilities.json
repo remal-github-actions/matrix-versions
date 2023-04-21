@@ -5,62 +5,62 @@
       {
         "versionRange": "[2,)",
         "dependency": "java",
-        "dependencyVersionRange": "[8,8.999)"
+        "dependencyVersionRange": "[8,8.9999)"
       },
       {
         "versionRange": "[4.3,)",
         "dependency": "java",
-        "dependencyVersionRange": "[8,9.999)"
+        "dependencyVersionRange": "[8,9.9999)"
       },
       {
         "versionRange": "[4.7,)",
         "dependency": "java",
-        "dependencyVersionRange": "[8,10.999)"
+        "dependencyVersionRange": "[8,10.9999)"
       },
       {
         "versionRange": "[5.0,)",
         "dependency": "java",
-        "dependencyVersionRange": "[8,11.999)"
+        "dependencyVersionRange": "[8,11.9999)"
       },
       {
         "versionRange": "[5.4,)",
         "dependency": "java",
-        "dependencyVersionRange": "[8,12.999)"
+        "dependencyVersionRange": "[8,12.9999)"
       },
       {
         "versionRange": "[6.0,)",
         "dependency": "java",
-        "dependencyVersionRange": "[8,13.999)"
+        "dependencyVersionRange": "[8,13.9999)"
       },
       {
         "versionRange": "[6.3,)",
         "dependency": "java",
-        "dependencyVersionRange": "[8,14.999)"
+        "dependencyVersionRange": "[8,14.9999)"
       },
       {
         "versionRange": "[6.7,)",
         "dependency": "java",
-        "dependencyVersionRange": "[8,15.999)"
+        "dependencyVersionRange": "[8,15.9999)"
       },
       {
         "versionRange": "[7.0,)",
         "dependency": "java",
-        "dependencyVersionRange": "[8,16.999)"
+        "dependencyVersionRange": "[8,16.9999)"
       },
       {
         "versionRange": "[7.3,)",
         "dependency": "java",
-        "dependencyVersionRange": "[8,17.999)"
+        "dependencyVersionRange": "[8,17.9999)"
       },
       {
         "versionRange": "[7.5,)",
         "dependency": "java",
-        "dependencyVersionRange": "[8,18.999)"
+        "dependencyVersionRange": "[8,18.9999)"
       },
       {
         "versionRange": "[7.6,)",
         "dependency": "java",
-        "dependencyVersionRange": "[8,19.999)"
+        "dependencyVersionRange": "[8,19.9999)"
       }
     ]
   }

@@ -29,7 +29,7 @@
       "additionalProperties": false,
       "x-with-supported-dependency-key-types-pattern": true,
       "patternProperties": {
-        "^(gradle-wrapper|java|maven:.+|node)$": {
+        "^(gradle-wrapper|java|java/full|maven:.+|node|node/full)$": {
           "type": "array",
           "uniqueItems": true,
           "items": {
@@ -188,8 +188,10 @@
           "enum": [
             "gradle-wrapper",
             "java",
+            "java/full",
             "maven",
-            "node"
+            "node",
+            "node/full"
           ]
         },
         "token": {
@@ -236,7 +238,7 @@
       "type": "string",
       "minLength": 1,
       "x-with-supported-dependency-types-pattern": true,
-      "pattern": "^(gradle-wrapper|java|maven:.+|node)$"
+      "pattern": "^(gradle-wrapper|java|java/full|maven:.+|node|node/full)$"
     },
     "version-range": {
       "type": "string",

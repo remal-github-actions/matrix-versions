@@ -1,3 +1,6 @@
+process.env.RENOVATE_X_IGNORE_RE2 = 'true'
+
+
 import is from '@sindresorhus/is'
 import * as fs from 'fs'
 import { getVersionings } from 'renovate/dist/modules/versioning'

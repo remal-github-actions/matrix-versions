@@ -3,7 +3,9 @@ import * as versionings from 'renovate/dist/modules/versioning'
 import { VersioningApi } from 'renovate/dist/modules/versioning/types'
 import { configRegexPredicate } from 'renovate/dist/util/regex'
 import { MatrixItem, VersionOnlyFilter } from './config'
-import { getVersionFetcher } from './version-fetcher-api'
+import { isNotEmpty } from './utils'
+import { fullSupportedVersionFetcherSuffix, getVersionFetcher, supportedVersionFetchers } from './version-fetcher-api'
+import { isCompatibleForVersioning } from './version-utils'
 
 export interface FetchedMatrixItem extends MatrixItem {
     fetchedVersions: string[]
@@ -11,9 +13,9 @@ export interface FetchedMatrixItem extends MatrixItem {
 
 export type FetchedMatrix = Record<string, FetchedMatrixItem>
 
-export async function fetchMatrix(matrix: Record<string, MatrixItem>): Promise<FetchedMatrix> {
+export async function fetchMatrix(matrix?: Record<string, MatrixItem>): Promise<FetchedMatrix> {
     const fetchedMatrix: FetchedMatrix = {}
-    for (const [property, matrixItem] of Object.entries(matrix)) {
+    for (const [property, matrixItem] of Object.entries(matrix ?? {})) {
         const fetchedMatrixItem = await fetchMatrixItem(matrixItem)
         fetchedMatrix[property] = fetchedMatrixItem
     }
@@ -99,13 +101,23 @@ export function filterFetchedVersions(fetchedMatrixItem: FetchedMatrixItem): Fet
 
     if (includeRanges.length) {
         fetchedVersions = fetchedVersions.filter(version => {
-            return includeRanges.some(range => versioning.getSatisfyingVersion([version], range) != null)
+            return includeRanges.some(range => isCompatibleForVersioning(
+                versioning,
+                fetchedMatrixItem.dependency,
+                version,
+                range,
+            ))
         })
     }
 
     if (excludeRanges.length) {
         fetchedVersions = fetchedVersions.filter(version => {
-            return !excludeRanges.some(range => versioning.getSatisfyingVersion([version], range) != null)
+            return !excludeRanges.some(range => isCompatibleForVersioning(
+                versioning,
+                fetchedMatrixItem.dependency,
+                version,
+                range,
+            ))
         })
     }
 
@@ -204,16 +216,56 @@ function createNumbersOnlyFilterFactory(
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-export interface ParsedMatrixItemDependency {
+export interface ParsedDependency {
     fetcherId: string
     dependency: string
 }
 
 const dependencyRegex = /^(?<fetcherId>[^:]+)(:(?<dependency>.+))?$/
 
-export function parseMatrixItemDependency(matrixItemDependency: string): ParsedMatrixItemDependency {
+export function parseMatrixItemDependency(dependency: string): ParsedDependency {
     return {
-        fetcherId: matrixItemDependency.replace(dependencyRegex, '$<fetcherId>'),
-        dependency: matrixItemDependency.replace(dependencyRegex, '$<dependency>'),
+        fetcherId: dependency.replace(dependencyRegex, '$<fetcherId>'),
+        dependency: dependency.replace(dependencyRegex, '$<dependency>'),
+    }
+}
+
+export function withoutFullFetcherSuffixDependency(dependency: string): string | undefined {
+    const parsedDependency = parseMatrixItemDependency(dependency)
+    const fetcherId = parsedDependency.fetcherId
+    if (fetcherId.endsWith(fullSupportedVersionFetcherSuffix)) {
+        const notFullFetcherId = fetcherId.substring(0, fetcherId.length - fullSupportedVersionFetcherSuffix.length)
+        return createMatrixItemDependency({
+            fetcherId: notFullFetcherId,
+            dependency: parsedDependency.dependency,
+        })
+    }
+    return undefined
+}
+
+export function withFullFetcherSuffixDependency(dependency: string): string | undefined {
+    const parsedDependency = parseMatrixItemDependency(dependency)
+    const fetcherId = parsedDependency.fetcherId
+    if (!fetcherId.endsWith(fullSupportedVersionFetcherSuffix)) {
+        const fullFetcherId = fetcherId + fullSupportedVersionFetcherSuffix
+        if (supportedVersionFetchers.has(fullFetcherId)) {
+            return createMatrixItemDependency({
+                fetcherId: fullFetcherId,
+                dependency: parsedDependency.dependency,
+            })
+        }
+    }
+    return undefined
+}
+
+export function isFullFetcherDependency(dependency: string): boolean {
+    return parseMatrixItemDependency(dependency).fetcherId.endsWith(fullSupportedVersionFetcherSuffix)
+}
+
+export function createMatrixItemDependency(parsedDependency: ParsedDependency): string {
+    if (isNotEmpty(parsedDependency.dependency)) {
+        return `${parsedDependency.fetcherId}:${parsedDependency.dependency}`
+    } else {
+        return parsedDependency.fetcherId
     }
 }

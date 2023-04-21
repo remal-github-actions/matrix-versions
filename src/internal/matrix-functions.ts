@@ -1,12 +1,21 @@
+import * as core from '@actions/core'
 import * as versionings from 'renovate/dist/modules/versioning'
-import { MatrixItem } from './config'
-import { FetchedMatrix, FetchedMatrixItem } from './matrix-item-functions'
-import { isNotEmpty, removeFromArrayIf } from './utils'
+import { CompatibilityItem, MatrixItem } from './config'
+import {
+    FetchedMatrix,
+    FetchedMatrixItem,
+    isFullFetcherDependency,
+    withFullFetcherSuffixDependency,
+    withoutFullFetcherSuffixDependency,
+} from './matrix-item-functions'
+import { isNotEmpty, onlyUnique, removeFromArrayIf } from './utils'
+import { INCOMPATIBLE_RANGE, isCompatibleForVersioning } from './version-utils'
 
 export type VersionMatrixItem = Record<string, string>
 export type VersionMatrix = VersionMatrixItem[]
 
 export function composeVersionMatrix(fetchedMatrix: FetchedMatrix): VersionMatrix {
+    processFullCompatibilities(Object.values(fetchedMatrix))
     removeUnusedCompatibilities(Object.values(fetchedMatrix))
     reorderCompatibilities(Object.values(fetchedMatrix))
 
@@ -17,6 +26,7 @@ export function composeVersionMatrix(fetchedMatrix: FetchedMatrix): VersionMatri
 
 type VersionMatrixCompatibility = Record<string, string[]>
 type VersionMatrixCompatibilities = VersionMatrixCompatibility[]
+type DependencyCompatibilities = Record<string, CompatibilityItem[]>
 
 function composeVersionMatrixIn(
     matrix: VersionMatrix,
@@ -30,48 +40,104 @@ function composeVersionMatrixIn(
     const fetchedItem = fetchedItems[index]
 
     const versioning = versionings.get(fetchedItem.versioning)
-    eachFetchedVersion: for (const fetchedVersion of fetchedItem.fetchedVersions) {
+    const compatibleFetchVersions = fetchedItem.fetchedVersions.filter(fetchedVersion => {
         for (const compatibility of matrixItemCompatibilities) {
             const compatibilityRanges = compatibility[fetchedItem.dependency]
-            if (compatibilityRanges == null) continue
+            if (!isNotEmpty(compatibilityRanges)) continue
             const isCompatible = compatibilityRanges
-                .some(range => versioning.getSatisfyingVersion([fetchedVersion], range))
+                .some(range => isCompatibleForVersioning(versioning, fetchedItem.dependency, fetchedVersion, range))
             if (!isCompatible) {
-                continue eachFetchedVersion
+                return false
             }
         }
 
+        return true
+    })
 
-        matrixItem[matrixProperty] = fetchedVersion
-
-
-        const matrixCompatibility: VersionMatrixCompatibility = {}
-        fetchedItem.compatibilities
-            ?.filter(compatibility => versioning.getSatisfyingVersion([fetchedVersion], compatibility.versionRange))
-            ?.forEach(compatibility => {
-                const dependency = compatibility.dependency
-                const matrixCompatibilityValue = matrixCompatibility[dependency] = matrixCompatibility[dependency]
-                    ?? []
-                matrixCompatibilityValue.push(compatibility.dependencyVersionRange)
-            })
-        matrixItemCompatibilities.push(matrixCompatibility)
+    for (const fetchedVersion of compatibleFetchVersions) {
+        const fetchedVersionMatrixItem = { ...matrixItem }
+        fetchedVersionMatrixItem[matrixProperty] = fetchedVersion
 
 
         if (index >= fetchedItems.length - 1) { // last matrix item
-            matrix.push(matrixItem)
+            matrix.push(fetchedVersionMatrixItem)
+
         } else {
+            const matrixCompatibility: VersionMatrixCompatibility = {}
+            const dependencyCompatibilities = groupCompatibilitiesByDependency(fetchedItem.compatibilities)
+            for (const [dependency, compatibilities] of Object.entries(dependencyCompatibilities)) {
+                const activeCompatibilities = compatibilities
+                    .filter(compatibility => isCompatibleForVersioning(
+                        versioning,
+                        fetchedItem.dependency,
+                        fetchedVersion,
+                        compatibility.versionRange,
+                    ))
+                if (activeCompatibilities.length) {
+                    activeCompatibilities.forEach(compatibility => {
+                        const matrixCompatibilityValue = matrixCompatibility[dependency] = matrixCompatibility[dependency]
+                            ?? []
+                        matrixCompatibilityValue.push(compatibility.dependencyVersionRange)
+                    })
+                } else {
+                    matrixCompatibility[dependency] = [INCOMPATIBLE_RANGE]
+                }
+            }
+            matrixItemCompatibilities.push(matrixCompatibility)
+
             composeVersionMatrixIn(
                 matrix,
-                matrixItem,
+                fetchedVersionMatrixItem,
                 matrixItemCompatibilities,
                 matrixProperties,
                 fetchedItems,
                 index + 1,
             )
+
+            matrixItemCompatibilities.pop()
         }
+    }
+}
 
+function groupCompatibilitiesByDependency(compatibilities?: CompatibilityItem[]): DependencyCompatibilities {
+    if (compatibilities == null) return {}
 
-        matrixItemCompatibilities.pop()
+    const result: DependencyCompatibilities = {}
+    for (const compatibility of compatibilities) {
+        const dependency = compatibility.dependency
+        const resultValue = (result[dependency] = result[dependency] ?? [])
+        resultValue.push(compatibility)
+    }
+    return result
+}
+
+export function processFullCompatibilities(matrixItems: MatrixItem[]): void {
+    for (const matrixItem of matrixItems) {
+        const compatibilities = matrixItem.compatibilities
+        if (!isNotEmpty(compatibilities)) continue
+
+        const usedFullCompatibilities = new Set<string>()
+        compatibilities
+            .map(it => it.dependency)
+            .filter(isFullFetcherDependency)
+            .filter(onlyUnique)
+            .forEach(fullDependency => {
+                usedFullCompatibilities.add(fullDependency)
+                core.warning(
+                    `Dependency '${matrixItem.dependency}' has '${fullDependency}' compatibility dependency, which is likely a mistake.`
+                    + ` Consider using '${withoutFullFetcherSuffixDependency(fullDependency)}' compatibility dependency.`,
+                )
+            })
+
+        ;[...compatibilities].forEach(compatibility => {
+            const fullDependency = withFullFetcherSuffixDependency(compatibility.dependency)
+            if (fullDependency == null || usedFullCompatibilities.has(fullDependency)) return
+            compatibilities.push({
+                versionRange: compatibility.versionRange,
+                dependency: fullDependency,
+                dependencyVersionRange: compatibility.dependencyVersionRange,
+            })
+        })
     }
 }
 

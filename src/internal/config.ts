@@ -75,7 +75,7 @@ export interface Config {
   globalCompatibilities?: {
     /**
      * This interface was referenced by `undefined`'s JSON-Schema definition
-     * via the `patternProperty` "^(gradle-wrapper|java|maven:.+|node)$".
+     * via the `patternProperty` "^(gradle-wrapper|java|java/full|maven:.+|node|node/full)$".
      */
     [k: string]: CompatibilityItem[];
   };
@@ -137,7 +137,7 @@ export interface HostAuth {
   /**
    * Repository type
    */
-  type?: "gradle-wrapper" | "java" | "maven" | "node";
+  type?: "gradle-wrapper" | "java" | "java/full" | "maven" | "node" | "node/full";
   /**
    * Token for the repository
    */

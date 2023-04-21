@@ -14,13 +14,15 @@ import {
     parseConfigContent,
     parseConfigFiles,
     populateGlobalCompatibilities,
-    validateConfig
+    validateConfig,
 } from './internal/config-functions'
+import { composeVersionMatrix } from './internal/matrix-functions'
+import { fetchMatrix } from './internal/matrix-item-functions'
 import { indent, isNotEmpty, normalizeSpaces, processObjectFieldsRecursively } from './internal/utils'
 
 const defaultCompatibilitiesConfig = validateConfig(
     require('../global-compatibilities.json'),
-    'builtin:global-compatibilities.json'
+    'builtin:global-compatibilities.json',
 )
 
 export async function run(
@@ -44,6 +46,12 @@ export async function run(
         initRenovateLogging()
         initRenovateConfig(config, githubToken)
         initProxyForRenovate()
+
+
+        // Execute logic:
+        const fetchedMatrix = await fetchMatrix(config.matrix)
+        const versionMatrix = composeVersionMatrix(fetchedMatrix)
+        console.log(JSON.stringify(versionMatrix, null, 2))
 
     } catch (error) {
         core.setFailed(error instanceof Error ? error : (error as object).toString())

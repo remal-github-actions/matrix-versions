@@ -1,5 +1,292 @@
 import { MatrixItem } from './config'
-import { removeUnusedCompatibilities, reorderCompatibilities } from './matrix-functions'
+import {
+    composeVersionMatrix,
+    processFullCompatibilities,
+    removeUnusedCompatibilities,
+    reorderCompatibilities,
+    VersionMatrix,
+} from './matrix-functions'
+import { FetchedMatrix } from './matrix-item-functions'
+import { fullSupportedVersionFetcherSuffix } from './version-fetcher-api'
+
+describe(composeVersionMatrix.name, () => {
+
+    it(`one`, () => {
+        const fetchedMatrix: FetchedMatrix = {
+            prop1: {
+                dependency: '1',
+                fetchedVersions: [
+                    '1.1',
+                    '1.2',
+                ],
+            },
+        }
+        const expectedVersionMatrix: VersionMatrix = [
+            {
+                prop1: '1.1',
+            },
+            {
+                prop1: '1.2',
+            },
+        ]
+        expect(composeVersionMatrix(fetchedMatrix))
+            .toEqual(expectedVersionMatrix)
+    })
+
+    it(`two`, () => {
+        const fetchedMatrix: FetchedMatrix = {
+            prop1: {
+                dependency: '1',
+                fetchedVersions: [
+                    '1.1',
+                    '1.2',
+                ],
+            },
+            prop2: {
+                dependency: '2',
+                fetchedVersions: [
+                    '2.1',
+                    '2.2',
+                ],
+            },
+        }
+        const expectedVersionMatrix: VersionMatrix = [
+            {
+                prop1: '1.1',
+                prop2: '2.1',
+            },
+            {
+                prop1: '1.1',
+                prop2: '2.2',
+            },
+            {
+                prop1: '1.2',
+                prop2: '2.1',
+            },
+            {
+                prop1: '1.2',
+                prop2: '2.2',
+            },
+        ]
+        expect(composeVersionMatrix(fetchedMatrix))
+            .toEqual(expectedVersionMatrix)
+    })
+
+    it(`compatibility - partial`, () => {
+        const fetchedMatrix: FetchedMatrix = {
+            prop1: {
+                dependency: '1',
+                fetchedVersions: [
+                    '1.1',
+                    '1.2',
+                ],
+                compatibilities: [
+                    {
+                        versionRange: '>=1.2',
+                        dependency: '2',
+                        dependencyVersionRange: '>=2.2',
+                    },
+                ],
+            },
+            prop2: {
+                dependency: '2',
+                fetchedVersions: [
+                    '2.1',
+                    '2.2',
+                    '2.3',
+                ],
+            },
+        }
+        const expectedVersionMatrix: VersionMatrix = [
+            {
+                prop1: '1.2',
+                prop2: '2.2',
+            },
+            {
+                prop1: '1.2',
+                prop2: '2.3',
+            },
+        ]
+        expect(composeVersionMatrix(fetchedMatrix))
+            .toEqual(expectedVersionMatrix)
+    })
+
+    it(`compatibility - full`, () => {
+        const fetchedMatrix: FetchedMatrix = {
+            prop1: {
+                dependency: '1',
+                fetchedVersions: [
+                    '1.1',
+                    '1.2',
+                ],
+                compatibilities: [
+                    {
+                        versionRange: '<=1.1',
+                        dependency: '2',
+                        dependencyVersionRange: '<=2.1',
+                    },
+                ],
+            },
+            prop2: {
+                dependency: '2',
+                fetchedVersions: [
+                    '2.1',
+                    '2.2',
+                ],
+                compatibilities: [
+                    {
+                        versionRange: '>=2.2',
+                        dependency: '1',
+                        dependencyVersionRange: '>=1.2',
+                    },
+                ],
+            },
+        }
+        const expectedVersionMatrix: VersionMatrix = [
+            {
+                prop1: '1.1',
+                prop2: '2.1',
+            },
+            {
+                prop1: '1.2',
+                prop2: '2.2',
+            },
+        ]
+        expect(composeVersionMatrix(fetchedMatrix))
+            .toEqual(expectedVersionMatrix)
+    })
+
+})
+
+describe(processFullCompatibilities.name, () => {
+
+    it('java', () => {
+        const matrixItems: MatrixItem[] = [
+            {
+                dependency: '1',
+                compatibilities: [
+                    {
+                        versionRange: '1',
+                        dependency: 'java',
+                        dependencyVersionRange: '1',
+                    },
+                ],
+            },
+        ]
+        const expectedMatrixItems: MatrixItem[] = [
+            {
+                dependency: '1',
+                compatibilities: [
+                    {
+                        versionRange: '1',
+                        dependency: 'java',
+                        dependencyVersionRange: '1',
+                    },
+                    {
+                        versionRange: '1',
+                        dependency: 'java' + fullSupportedVersionFetcherSuffix,
+                        dependencyVersionRange: '1',
+                    },
+                ],
+            },
+        ]
+        processFullCompatibilities(matrixItems)
+        expect(matrixItems).toEqual(expectedMatrixItems)
+    })
+
+    it('node', () => {
+        const matrixItems: MatrixItem[] = [
+            {
+                dependency: '1',
+                compatibilities: [
+                    {
+                        versionRange: '1',
+                        dependency: 'node',
+                        dependencyVersionRange: '1',
+                    },
+                ],
+            },
+        ]
+        const expectedMatrixItems: MatrixItem[] = [
+            {
+                dependency: '1',
+                compatibilities: [
+                    {
+                        versionRange: '1',
+                        dependency: 'node',
+                        dependencyVersionRange: '1',
+                    },
+                    {
+                        versionRange: '1',
+                        dependency: 'node' + fullSupportedVersionFetcherSuffix,
+                        dependencyVersionRange: '1',
+                    },
+                ],
+            },
+        ]
+        processFullCompatibilities(matrixItems)
+        expect(matrixItems).toEqual(expectedMatrixItems)
+    })
+
+    it('other', () => {
+        const matrixItems: MatrixItem[] = [
+            {
+                dependency: '1',
+                compatibilities: [
+                    {
+                        versionRange: '1',
+                        dependency: 'other',
+                        dependencyVersionRange: '1',
+                    },
+                ],
+            },
+        ]
+        const expectedMatrixItems: MatrixItem[] = [
+            {
+                dependency: '1',
+                compatibilities: [
+                    {
+                        versionRange: '1',
+                        dependency: 'other',
+                        dependencyVersionRange: '1',
+                    },
+                ],
+            },
+        ]
+        processFullCompatibilities(matrixItems)
+        expect(matrixItems).toEqual(expectedMatrixItems)
+    })
+
+    it('java-full', () => {
+        const matrixItems: MatrixItem[] = [
+            {
+                dependency: '1',
+                compatibilities: [
+                    {
+                        versionRange: '1',
+                        dependency: 'java' + fullSupportedVersionFetcherSuffix,
+                        dependencyVersionRange: '1',
+                    },
+                ],
+            },
+        ]
+        const expectedMatrixItems: MatrixItem[] = [
+            {
+                dependency: '1',
+                compatibilities: [
+                    {
+                        versionRange: '1',
+                        dependency: 'java' + fullSupportedVersionFetcherSuffix,
+                        dependencyVersionRange: '1',
+                    },
+                ],
+            },
+        ]
+        processFullCompatibilities(matrixItems)
+        expect(matrixItems).toEqual(expectedMatrixItems)
+    })
+
+})
 
 describe(removeUnusedCompatibilities.name, () => {
 
