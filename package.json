@@ -3,7 +3,7 @@
   "name": "matrix-versions",
   "version": "1.0.0",
   "engines": {
-    "node": ">=18"
+    "node": ">=16"
   },
   "main": "dist/main.js",
   "scripts": {
