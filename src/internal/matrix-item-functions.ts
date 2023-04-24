@@ -66,17 +66,25 @@ export async function fetchMatrixItem(matrixItem: MatrixItem): Promise<FetchedMa
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-type FilterRegexPredicate = (s: string) => boolean
+interface FilterRegexPredicate {
+    filter: string
+    predicate: (value: string) => boolean
+}
 
 export function filterFetchedVersions(fetchedMatrixItem: FetchedMatrixItem): FetchedMatrixItem {
     let fetchedVersions = fetchedMatrixItem.fetchedVersions
+
+    core.debug(`Processing fetched versions of '${fetchedMatrixItem.dependency}'`)
 
     const includePredicates: FilterRegexPredicate[] = []
     const includeRanges: string[] = []
     fetchedMatrixItem.include?.forEach(filter => {
         const filterRegexPredicate = configRegexPredicate(filter)
         if (filterRegexPredicate != null) {
-            includePredicates.push(filterRegexPredicate)
+            includePredicates.push({
+                filter,
+                predicate: filterRegexPredicate,
+            })
         } else {
             includeRanges.push(filter)
         }
@@ -87,7 +95,10 @@ export function filterFetchedVersions(fetchedMatrixItem: FetchedMatrixItem): Fet
     fetchedMatrixItem.exclude?.forEach(filter => {
         const filterRegexPredicate = configRegexPredicate(filter)
         if (filterRegexPredicate != null) {
-            excludePredicates.push(filterRegexPredicate)
+            excludePredicates.push({
+                filter,
+                predicate: filterRegexPredicate,
+            })
         } else {
             excludeRanges.push(filter)
         }
@@ -95,13 +106,25 @@ export function filterFetchedVersions(fetchedMatrixItem: FetchedMatrixItem): Fet
 
     if (includePredicates.length) {
         fetchedVersions = fetchedVersions.filter(version => {
-            return includePredicates.some(predicate => predicate(version))
+            const filteringPredicate = includePredicates.find(it => it.predicate(version))
+            if (filteringPredicate != null) {
+                core.debug(`  ${version} included by '${filteringPredicate.filter}' filter`)
+                return true
+            } else {
+                return false
+            }
         })
     }
 
     if (excludePredicates.length) {
         fetchedVersions = fetchedVersions.filter(version => {
-            return !excludePredicates.some(predicate => predicate(version))
+            const filteringPredicate = excludePredicates.find(it => it.predicate(version))
+            if (filteringPredicate != null) {
+                core.debug(`  ${version} excluded by '${filteringPredicate.filter}' filter`)
+                return false
+            } else {
+                return true
+            }
         })
     }
 
@@ -109,7 +132,8 @@ export function filterFetchedVersions(fetchedMatrixItem: FetchedMatrixItem): Fet
     fetchedVersions = fetchedVersions.filter(version => {
         if (!versioning.isVersion(version)) {
             core.warning(`Dependency '${fetchedMatrixItem.dependency}': `
-                + `Skipping version '${version}', because it's unsupported by '${fetchedMatrixItem.versioning}' versioning`
+                + `Skipping version '${version}', because it's unsupported by '${fetchedMatrixItem.versioning}' versioning. `
+                + `Check if corrected versioning setting is set for the dependency.`,
             )
             return false
         }
@@ -118,23 +142,35 @@ export function filterFetchedVersions(fetchedMatrixItem: FetchedMatrixItem): Fet
 
     if (includeRanges.length) {
         fetchedVersions = fetchedVersions.filter(version => {
-            return includeRanges.some(range => isCompatibleForVersioning(
+            const filteringRange = includeRanges.find(range => isCompatibleForVersioning(
                 versioning,
                 fetchedMatrixItem.dependency,
                 version,
                 range,
             ))
+            if (filteringRange != null) {
+                core.debug(`  ${version} included by '${filteringRange}' filter`)
+                return true
+            } else {
+                return false
+            }
         })
     }
 
     if (excludeRanges.length) {
         fetchedVersions = fetchedVersions.filter(version => {
-            return !excludeRanges.some(range => isCompatibleForVersioning(
+            const filteringRange = excludeRanges.find(range => isCompatibleForVersioning(
                 versioning,
                 fetchedMatrixItem.dependency,
                 version,
                 range,
             ))
+            if (filteringRange != null) {
+                core.debug(`  ${version} excluded by '${filteringRange}' filter`)
+                return false
+            } else {
+                return true
+            }
         })
     }
 
@@ -148,12 +184,15 @@ export function filterFetchedVersions(fetchedMatrixItem: FetchedMatrixItem): Fet
         }
     })
 
-    const onlyFilters = (fetchedMatrixItem.only ?? [])
-        .map(filter => onlyFilterFactories[filter](versioning))
-    if (onlyFilters.length) {
-        for (const onlyFilter of onlyFilters) {
-            fetchedVersions = onlyFilter(fetchedVersions)
-        }
+    for (const filter of (fetchedMatrixItem.only ?? [])) {
+        const filterFunction = onlyFilterFactories[filter](versioning)
+        const currentFetchedVersions = filterFunction(fetchedVersions)
+        fetchedVersions.forEach(version => {
+            if (!currentFetchedVersions.includes(version)) {
+                core.debug(`  ${version} excluded by '${filter}' only-filter`)
+            }
+        })
+        fetchedVersions = currentFetchedVersions
     }
 
     fetchedMatrixItem.fetchedVersions = fetchedVersions
