@@ -89,7 +89,7 @@ jobs:
         githubToken: ${{github.token}}
         matrix: |
           spring-boot:
-            dependency: 'maven:org.springframework.boot:spring-boot-dependencies'
+            dependency: maven:org.springframework.boot:spring-boot-dependencies
             include:
             - '[2,)'
 

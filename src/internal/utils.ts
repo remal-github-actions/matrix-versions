@@ -11,7 +11,7 @@ export function indent(string: string, indention: string | number): string {
     if (is.number(indention)) {
         indention = ' '.repeat(indention)
     }
-    return indention + string.replaceAll(/(\r\n)|(\n\r)|\n|\r/g, '$1' + indention)
+    return indention + string.replaceAll(/((\r\n)|(\n\r)|\n|\r)/g, '$1' + indention)
 }
 
 export function clone<T>(value: T): T {
