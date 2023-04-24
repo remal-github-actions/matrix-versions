@@ -1,7 +1,11 @@
 import * as core from '@actions/core'
 import { Config } from './internal/config'
 import { byNewLineAndComma, indent, isNotEmpty, normalizeSpaces } from './internal/utils'
-import { run } from './run'
+
+require('./internal/initRenovateLogging').initRenovateLogging()
+
+const batchLimit = 256
+const batchNumbers = 10
 
 const githubToken = core.getInput('githubToken', { required: false })
 
@@ -27,11 +31,10 @@ const configContent = (function() {
     return lines.join('\n')
 })()
 
-const batchLimit = 256
-
-run(
+require('./run').run(
+    batchLimit,
+    batchNumbers,
     githubToken,
     configFiles,
     configContent,
-    batchLimit,
 )

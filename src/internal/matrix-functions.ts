@@ -1,6 +1,8 @@
 import * as core from '@actions/core'
 import * as versionings from 'renovate/dist/modules/versioning'
+import { actionDebug } from './actionDebug'
 import { CompatibilityItem, MatrixItem } from './config'
+import { DEFAULT_VERSIONING } from './constants'
 import {
     FetchedMatrix,
     FetchedMatrixItem,
@@ -38,9 +40,9 @@ function composeVersionMatrixIn(
     const matrixProperty = matrixProperties[index]
     const fetchedItem = fetchedItems[index]
 
-    core.debug(`${' '.repeat(index)}Composing version matrix row for '${matrixProperty}' property ('${fetchedItem.dependency}' dependency)`)
+    actionDebug(`${' '.repeat(index)}Composing version matrix row for '${matrixProperty}' property ('${fetchedItem.dependency}' dependency)`)
 
-    const versioning = versionings.get(fetchedItem.versioning)
+    const versioning = versionings.get(fetchedItem.versioning || DEFAULT_VERSIONING)
     const compatibleFetchVersions = fetchedItem.fetchedVersions.filter(version => {
         for (const compatibility of matrixItemCompatibilities) {
             const compatibilityRanges = compatibility[fetchedItem.dependency]
@@ -48,7 +50,7 @@ function composeVersionMatrixIn(
             const isCompatible = compatibilityRanges
                 .some(range => isCompatibleForVersioning(versioning, fetchedItem.dependency, version, range))
             if (!isCompatible) {
-                core.debug(`${' '.repeat(index)}... filtering-out incompatible version: ${version}`)
+                actionDebug(`${' '.repeat(index)}... filtering-out incompatible version: ${version}`)
                 return false
             }
         }
@@ -57,7 +59,7 @@ function composeVersionMatrixIn(
     })
 
     for (const fetchedVersion of compatibleFetchVersions) {
-        core.debug(`${' '.repeat(index)}... including version: ${fetchedVersion}`)
+        actionDebug(`${' '.repeat(index)}... including version: ${fetchedVersion}`)
 
         const fetchedVersionMatrixItem = { ...matrixItem }
         fetchedVersionMatrixItem[matrixProperty] = fetchedVersion

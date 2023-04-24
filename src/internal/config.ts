@@ -23,7 +23,6 @@ export type VersionFilter = string;
 export type Versioning = StaticVersioning | string;
 export type StaticVersioning =
   | "aws-machine-image"
-  | "azure-rest-api"
   | "cargo"
   | "composer"
   | "conan"

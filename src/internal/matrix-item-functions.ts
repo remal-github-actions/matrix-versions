@@ -2,7 +2,9 @@ import * as core from '@actions/core'
 import * as versionings from 'renovate/dist/modules/versioning'
 import { VersioningApi } from 'renovate/dist/modules/versioning/types'
 import { configRegexPredicate } from 'renovate/dist/util/regex'
+import { actionDebug } from './actionDebug'
 import { MatrixItem, VersionOnlyFilter } from './config'
+import { DEFAULT_VERSIONING } from './constants'
 import { isNotEmpty } from './utils'
 import { fullSupportedVersionFetcherSuffix, getVersionFetcher, supportedVersionFetchers } from './version-fetcher-api'
 import { isCompatibleForVersioning } from './version-utils'
@@ -45,7 +47,7 @@ export async function fetchMatrixItem(matrixItem: MatrixItem): Promise<FetchedMa
                 only: matrixItem.only?.concat(),
                 include: matrixItem.include?.concat(),
                 exclude: matrixItem.exclude?.concat(),
-                versioning: matrixItem.versioning ?? fetcher.defaultVersioning,
+                versioning: matrixItem.versioning || fetcher.defaultVersioning,
                 compatibilities: matrixItem.compatibilities?.concat(),
                 fetchedVersions,
             }
@@ -74,7 +76,7 @@ interface FilterRegexPredicate {
 export function filterFetchedVersions(fetchedMatrixItem: FetchedMatrixItem): FetchedMatrixItem {
     let fetchedVersions = fetchedMatrixItem.fetchedVersions
 
-    core.debug(`Processing fetched versions of '${fetchedMatrixItem.dependency}'`)
+    actionDebug(`Processing fetched versions of '${fetchedMatrixItem.dependency}'`)
 
     const includePredicates: FilterRegexPredicate[] = []
     const includeRanges: string[] = []
@@ -108,7 +110,7 @@ export function filterFetchedVersions(fetchedMatrixItem: FetchedMatrixItem): Fet
         fetchedVersions = fetchedVersions.filter(version => {
             const filteringPredicate = includePredicates.find(it => it.predicate(version))
             if (filteringPredicate != null) {
-                core.debug(`  ${version} included by '${filteringPredicate.filter}' filter`)
+                actionDebug(`  ${version} included by '${filteringPredicate.filter}' filter`)
                 return true
             } else {
                 return false
@@ -120,7 +122,7 @@ export function filterFetchedVersions(fetchedMatrixItem: FetchedMatrixItem): Fet
         fetchedVersions = fetchedVersions.filter(version => {
             const filteringPredicate = excludePredicates.find(it => it.predicate(version))
             if (filteringPredicate != null) {
-                core.debug(`  ${version} excluded by '${filteringPredicate.filter}' filter`)
+                actionDebug(`  ${version} excluded by '${filteringPredicate.filter}' filter`)
                 return false
             } else {
                 return true
@@ -128,12 +130,12 @@ export function filterFetchedVersions(fetchedMatrixItem: FetchedMatrixItem): Fet
         })
     }
 
-    const versioning = versionings.get(fetchedMatrixItem.versioning)
+    const versioning = versionings.get(fetchedMatrixItem.versioning || DEFAULT_VERSIONING)
     fetchedVersions = fetchedVersions.filter(version => {
         if (!versioning.isVersion(version)) {
             core.warning(`Dependency '${fetchedMatrixItem.dependency}': `
                 + `Skipping version '${version}', because it's unsupported by '${fetchedMatrixItem.versioning}' versioning. `
-                + `Check if corrected versioning setting is set for the dependency.`,
+                + `Check that correct versioning setting is set for the dependency.`,
             )
             return false
         }
@@ -149,7 +151,7 @@ export function filterFetchedVersions(fetchedMatrixItem: FetchedMatrixItem): Fet
                 range,
             ))
             if (filteringRange != null) {
-                core.debug(`  ${version} included by '${filteringRange}' filter`)
+                actionDebug(`  ${version} included by '${filteringRange}' filter`)
                 return true
             } else {
                 return false
@@ -166,7 +168,7 @@ export function filterFetchedVersions(fetchedMatrixItem: FetchedMatrixItem): Fet
                 range,
             ))
             if (filteringRange != null) {
-                core.debug(`  ${version} excluded by '${filteringRange}' filter`)
+                actionDebug(`  ${version} excluded by '${filteringRange}' filter`)
                 return false
             } else {
                 return true
@@ -189,7 +191,7 @@ export function filterFetchedVersions(fetchedMatrixItem: FetchedMatrixItem): Fet
         const currentFetchedVersions = filterFunction(fetchedVersions)
         fetchedVersions.forEach(version => {
             if (!currentFetchedVersions.includes(version)) {
-                core.debug(`  ${version} excluded by '${filter}' only-filter`)
+                actionDebug(`  ${version} excluded by '${filter}' only-filter`)
             }
         })
         fetchedVersions = currentFetchedVersions

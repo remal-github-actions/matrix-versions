@@ -136,7 +136,6 @@
       "x-with-supported-static-versionings-enum": true,
       "enum": [
         "aws-machine-image",
-        "azure-rest-api",
         "cargo",
         "composer",
         "conan",

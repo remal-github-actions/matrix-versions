@@ -1,9 +1,7 @@
 import * as core from '@actions/core'
-import { LogLevelString } from 'bunyan'
 import os from 'node:os'
 import { GlobalConfig } from 'renovate/dist/config/global'
 import { AllConfig } from 'renovate/dist/config/types'
-import { logger as renovateLogger } from 'renovate/dist/logger/index'
 import { bootstrap as initProxyForRenovate } from 'renovate/dist/proxy'
 import { HostRule } from 'renovate/dist/types/host-rules'
 import * as renovateHostRules from 'renovate/dist/util/host-rules'
@@ -16,9 +14,10 @@ import {
     populateGlobalCompatibilities,
     validateConfig,
 } from './internal/config-functions'
+import { initRenovateLogging } from './internal/initRenovateLogging'
 import { composeVersionMatrix, VersionMatrixItem } from './internal/matrix-functions'
 import { fetchMatrix } from './internal/matrix-item-functions'
-import { indent, isNotEmpty, normalizeSpaces, processObjectFieldsRecursively } from './internal/utils'
+import { isNotEmpty } from './internal/utils'
 
 const defaultCompatibilitiesConfig = validateConfig(
     require('../global-compatibilities.json'),
@@ -26,17 +25,18 @@ const defaultCompatibilitiesConfig = validateConfig(
 )
 
 export async function run(
+    batchLimit: number,
+    batchNumbers: number,
     githubToken: string | undefined | null,
     configFiles: string[],
     configContent: string,
-    batchLimit: number,
-) {
+): Promise<VersionMatrixItem[]> {
     try {
         // Init config:
         const config = mergeConfigs(
             parseConfigContent(configContent),
             await parseConfigFiles(...configFiles),
-            defaultCompatibilitiesConfig
+            defaultCompatibilitiesConfig,
         )
         populateGlobalCompatibilities(config)
 
@@ -69,7 +69,7 @@ export async function run(
             )
         }
 
-        for (let batchNumber = 1; batchNumber <= 100; ++batchNumber) {
+        for (let batchNumber = 1; batchNumber <= batchNumbers; ++batchNumber) {
             const batchElements: VersionMatrixItem[] = []
             for (
                 let i = batchLimit * (batchNumber - 1);
@@ -81,6 +81,8 @@ export async function run(
             core.setOutput(`batchMatrixIncludes${batchNumber}`, batchElements)
         }
 
+        return versionMatrix
+
     } catch (error) {
         core.setFailed(error instanceof Error ? error : (error as object).toString())
         throw error
@@ -88,70 +90,6 @@ export async function run(
 }
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-
-function initRenovateLogging() {
-    const loggerLevels: LogLevelString[] = [
-        'trace',
-        'debug',
-        'info',
-        'warn',
-        'error',
-        'fatal',
-    ]
-
-    const metaFieldsToMask = [
-        'token',
-        'password',
-    ]
-
-    for (const loggerLevel of loggerLevels) {
-        renovateLogger[loggerLevel.toString()] = (meta, msg) => {
-            if (msg == null) {
-                msg = meta
-                meta = {}
-            }
-            if (meta == null) {
-                meta = {}
-            }
-            if (msg == null) {
-                msg = ''
-            } else {
-                msg = msg.toString()
-            }
-
-            if (isNotEmpty(meta)) {
-                const metaJson = JSON.stringify(meta)
-                meta = JSON.parse(metaJson)
-                processObjectFieldsRecursively(meta, (key, value) => {
-                    return metaFieldsToMask.includes(key) ? '****' : value
-                })
-
-                msg = msg + '\n' + indent(normalizeSpaces(JSON.stringify(meta, null, 2)), 2)
-            }
-
-            msg = msg.trim()
-            if (!msg.length) {
-                return
-            }
-
-            msg = `Renovate ${loggerLevel.toUpperCase()}: ${msg}`
-
-            if (loggerLevel === 'trace' || loggerLevel === 'debug') {
-                core.debug(msg)
-            } else if (loggerLevel === 'info') {
-                core.info(msg)
-            } else if (loggerLevel === 'warn') {
-                core.warning(msg)
-            } else {
-                throw new Error(msg)
-            }
-        }
-    }
-
-    for (const loggerLevel of loggerLevels) {
-        renovateLogger.once[loggerLevel] = renovateLogger[loggerLevel]
-    }
-}
 
 function initRenovateConfig(config: Config, githubToken?: string | null) {
     const renovateConfig: AllConfig = {}

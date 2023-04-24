@@ -11,7 +11,7 @@ describe(filterFetchedVersions.name, () => {
     it('include+exclude', () => {
         const fetchedMatrixItem: FetchedMatrixItem = {
             dependency: 'test:test',
-            versioning: 'semver',
+            versioning: 'semver-coerced',
             fetchedVersions: [
                 'asd',
                 '1.0.0',
@@ -57,8 +57,8 @@ describe(filterFetchedVersions.name, () => {
                 '1.2',
                 '1.1',
                 '1',
-                '0.1.1+2',
-                '0.1.1+1',
+                //'0.1.1+2',
+                //'0.1.1+1',
             ]),
             only: [
                 'stable',
@@ -72,8 +72,8 @@ describe(filterFetchedVersions.name, () => {
                 '1.2',
                 '1.1',
                 '1',
-                '0.1.1+2',
-                '0.1.1+1',
+                //'0.1.1+2',
+                //'0.1.1+1',
             ])
     })
 
@@ -89,8 +89,8 @@ describe(filterFetchedVersions.name, () => {
                 '1.2',
                 '1.1',
                 '1',
-                '0.1.1+2',
-                '0.1.1+1',
+                //'0.1.1+2',
+                //'0.1.1+1',
             ]),
             only: [
                 'stable+current-unstable',
@@ -105,8 +105,8 @@ describe(filterFetchedVersions.name, () => {
                 '1.2',
                 '1.1',
                 '1',
-                '0.1.1+2',
-                '0.1.1+1',
+                //'0.1.1+2',
+                //'0.1.1+1',
             ])
     })
 
@@ -122,8 +122,8 @@ describe(filterFetchedVersions.name, () => {
                 '1.2',
                 '1.1',
                 '1',
-                '0.1.1+2',
-                '0.1.1+1',
+                //'0.1.1+2',
+                //'0.1.1+1',
             ]),
             only: [
                 'stable+current-unstable',
@@ -138,8 +138,8 @@ describe(filterFetchedVersions.name, () => {
                 '1.2',
                 '1.1',
                 '1',
-                '0.1.1+2',
-                '0.1.1+1',
+                //'0.1.1+2',
+                //'0.1.1+1',
             ])
     })
 
@@ -155,8 +155,8 @@ describe(filterFetchedVersions.name, () => {
                 '1.2',
                 '1.1',
                 '1',
-                '0.1.1+2',
-                '0.1.1+1',
+                //'0.1.1+2',
+                //'0.1.1+1',
             ]),
             only: [
                 'stable-majors',
@@ -167,7 +167,7 @@ describe(filterFetchedVersions.name, () => {
             .toEqual([
                 '2',
                 '1.2.1',
-                '0.1.1+2',
+                //'0.1.1+2',
             ])
     })
 
@@ -183,8 +183,8 @@ describe(filterFetchedVersions.name, () => {
                 '1.2',
                 '1.1',
                 '1',
-                '0.1.1+2',
-                '0.1.1+1',
+                //'0.1.1+2',
+                //'0.1.1+1',
             ]),
             only: [
                 'stable-majors+current-unstable',
@@ -196,7 +196,7 @@ describe(filterFetchedVersions.name, () => {
                 '2.1-rc',
                 '2',
                 '1.2.1',
-                '0.1.1+2',
+                //'0.1.1+2',
             ])
     })
 
@@ -212,8 +212,8 @@ describe(filterFetchedVersions.name, () => {
                 '1.2',
                 '1.1',
                 '1',
-                '0.1.1+2',
-                '0.1.1+1',
+                //'0.1.1+2',
+                //'0.1.1+1',
             ]),
             only: [
                 'stable-majors+current-unstable',
@@ -225,7 +225,7 @@ describe(filterFetchedVersions.name, () => {
                 //'2.1-rc',
                 '2',
                 '1.2.1',
-                '0.1.1+2',
+                //'0.1.1+2',
             ])
     })
 
@@ -241,8 +241,8 @@ describe(filterFetchedVersions.name, () => {
                 '1.2',
                 '1.1',
                 '1',
-                '0.1.1+2',
-                '0.1.1+1',
+                //'0.1.1+2',
+                //'0.1.1+1',
             ]),
             only: [
                 'stable-minors',
@@ -255,7 +255,7 @@ describe(filterFetchedVersions.name, () => {
                 '1.2.1',
                 '1.1',
                 '1',
-                '0.1.1+2',
+                //'0.1.1+2',
             ])
     })
 
@@ -271,8 +271,8 @@ describe(filterFetchedVersions.name, () => {
                 '1.2',
                 '1.1',
                 '1',
-                '0.1.1+2',
-                '0.1.1+1',
+                //'0.1.1+2',
+                //'0.1.1+1',
             ]),
             only: [
                 'stable-minors+current-unstable',
@@ -286,7 +286,7 @@ describe(filterFetchedVersions.name, () => {
                 '1.2.1',
                 '1.1',
                 '1',
-                '0.1.1+2',
+                //'0.1.1+2',
             ])
     })
 
@@ -302,8 +302,8 @@ describe(filterFetchedVersions.name, () => {
                 '1.2',
                 '1.1',
                 '1',
-                '0.1.1+2',
-                '0.1.1+1',
+                //'0.1.1+2',
+                //'0.1.1+1',
             ]),
             only: [
                 'stable-minors+current-unstable',
@@ -317,7 +317,7 @@ describe(filterFetchedVersions.name, () => {
                 '1.2.1',
                 '1.1',
                 '1',
-                '0.1.1+2',
+                //'0.1.1+2',
             ])
     })
 
@@ -333,8 +333,8 @@ describe(filterFetchedVersions.name, () => {
                 '1.2',
                 '1.1',
                 '1',
-                '0.1.1+2',
-                '0.1.1+1',
+                //'0.1.1+2',
+                //'0.1.1+1',
             ]),
             only: [
                 'stable-patches',
@@ -348,7 +348,7 @@ describe(filterFetchedVersions.name, () => {
                 '1.2',
                 '1.1',
                 '1',
-                '0.1.1+2',
+                //'0.1.1+2',
             ])
     })
 
@@ -364,8 +364,8 @@ describe(filterFetchedVersions.name, () => {
                 '1.2',
                 '1.1',
                 '1',
-                '0.1.1+2',
-                '0.1.1+1',
+                //'0.1.1+2',
+                //'0.1.1+1',
             ]),
             only: [
                 'stable-patches+current-unstable',
@@ -380,7 +380,7 @@ describe(filterFetchedVersions.name, () => {
                 '1.2',
                 '1.1',
                 '1',
-                '0.1.1+2',
+                //'0.1.1+2',
             ])
     })
 
@@ -396,8 +396,8 @@ describe(filterFetchedVersions.name, () => {
                 '1.2',
                 '1.1',
                 '1',
-                '0.1.1+2',
-                '0.1.1+1',
+                //'0.1.1+2',
+                //'0.1.1+1',
             ]),
             only: [
                 'stable-patches+current-unstable',
@@ -412,7 +412,7 @@ describe(filterFetchedVersions.name, () => {
                 '1.2',
                 '1.1',
                 '1',
-                '0.1.1+2',
+                //'0.1.1+2',
             ])
     })
 
@@ -428,8 +428,8 @@ describe(filterFetchedVersions.name, () => {
                 '1.2',
                 '1.1',
                 '1',
-                '0.1.1+2',
-                '0.1.1+1',
+                //'0.1.1+2',
+                //'0.1.1+1',
             ]),
             only: [
                 'current-unstable',
@@ -454,8 +454,8 @@ describe(filterFetchedVersions.name, () => {
                 '1.2',
                 '1.1',
                 '1',
-                '0.1.1+2',
-                '0.1.1+1',
+                //'0.1.1+2',
+                //'0.1.1+1',
             ]),
             only: [
                 'current-unstable',

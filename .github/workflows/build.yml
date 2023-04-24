@@ -91,7 +91,7 @@ jobs:
           spring-boot:
             dependency: maven:org.springframework.boot:spring-boot-dependencies
             include:
-            - [2,)
+            - '[2,)'
 
     - name: Validate current action
       env:
@@ -108,6 +108,18 @@ jobs:
         else
           echo "::error::Current action output doesn't contain '2.7.11': $ALL_MATRIX_INCLUDES"
           exit 1
+        fi
+        if [ "${{ contains(fromJSON(env.ALL_MATRIX_INCLUDES), '{"spring-boot":"2.3.12.RELEASE"}') }}" == "true" ]; then
+          echo "Valid"
+        else
+          echo "::error::Current action output doesn't contain '2.3.12.RELEASE': $ALL_MATRIX_INCLUDES"
+          exit 1
+        fi
+        if [ "${{ contains(fromJSON(env.ALL_MATRIX_INCLUDES), '{"spring-boot":"1.5.22.RELEASE"}') }}" == "true" ]; then
+          echo "::error::Current action output contains '1.5.22.RELEASE': $ALL_MATRIX_INCLUDES"
+          exit 1
+        else
+          echo "Valid"
         fi
     # $$$sync-with-template-modifiable-end$$$
 

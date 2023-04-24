@@ -1,4 +1,4 @@
-import { NodeVersionDatasource } from 'renovate/dist/modules/datasource/node-version'
+import { NodeDatasource } from 'renovate/dist/modules/datasource/node'
 import { onlyUnique } from '../utils'
 import { VersionFetchParams } from '../VersionFetcher'
 import { RenovateReleaseFilter, VersionFetcherRenovateDatasource } from '../VersionFetcherRenovateDatasource'
@@ -6,7 +6,7 @@ import { RenovateReleaseFilter, VersionFetcherRenovateDatasource } from '../Vers
 export class NodeFullVersionFetcher extends VersionFetcherRenovateDatasource {
 
     constructor() {
-        super(new NodeVersionDatasource())
+        super(new NodeDatasource())
     }
 
     protected createRenovateReleaseFilter(params: VersionFetchParams): RenovateReleaseFilter {

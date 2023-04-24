@@ -4,7 +4,7 @@ import {
     processFullCompatibilities,
     removeUnusedCompatibilities,
     reorderCompatibilities,
-    VersionMatrix,
+    VersionMatrixItem,
 } from './matrix-functions'
 import { FetchedMatrix } from './matrix-item-functions'
 import { fullSupportedVersionFetcherSuffix } from './version-fetcher-api'
@@ -21,7 +21,7 @@ describe(composeVersionMatrix.name, () => {
                 ],
             },
         }
-        const expectedVersionMatrix: VersionMatrix = [
+        const expectedVersionMatrix: VersionMatrixItem[] = [
             {
                 prop1: '1.1',
             },
@@ -50,7 +50,7 @@ describe(composeVersionMatrix.name, () => {
                 ],
             },
         }
-        const expectedVersionMatrix: VersionMatrix = [
+        const expectedVersionMatrix: VersionMatrixItem[] = [
             {
                 prop1: '1.1',
                 prop2: '2.1',
@@ -97,7 +97,7 @@ describe(composeVersionMatrix.name, () => {
                 ],
             },
         }
-        const expectedVersionMatrix: VersionMatrix = [
+        const expectedVersionMatrix: VersionMatrixItem[] = [
             {
                 prop1: '1.2',
                 prop2: '2.2',
@@ -142,7 +142,7 @@ describe(composeVersionMatrix.name, () => {
                 ],
             },
         }
-        const expectedVersionMatrix: VersionMatrix = [
+        const expectedVersionMatrix: VersionMatrixItem[] = [
             {
                 prop1: '1.1',
                 prop2: '2.1',
