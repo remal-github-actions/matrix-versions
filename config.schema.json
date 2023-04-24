@@ -18,7 +18,6 @@
     "auth": {
       "description": "Repository authorizations",
       "type": "array",
-      "uniqueItems": true,
       "items": {
         "$ref": "#/definitions/host-auth"
       }
@@ -31,7 +30,6 @@
       "patternProperties": {
         "^(gradle-wrapper|java|java/full|maven:.+|node|node/full)$": {
           "type": "array",
-          "uniqueItems": true,
           "items": {
             "$ref": "#/definitions/compatibility-item"
           }
@@ -43,6 +41,9 @@
     "matrix-item": {
       "type": "object",
       "additionalProperties": false,
+      "required": [
+        "dependency"
+      ],
       "properties": {
         "dependency": {
           "description": "Dependency ID in format of `<datasource>:<dependency>`",
@@ -87,7 +88,6 @@
         "compatibilities": {
           "description": "Dependency compatibilities with other dependencies",
           "type": "array",
-          "uniqueItems": true,
           "items": {
             "$ref": "#/definitions/compatibility-item"
           }
@@ -96,10 +96,7 @@
           "description": "Set to `true` to disable using global compatibilities for this matrix item",
           "type": "boolean"
         }
-      },
-      "required": [
-        "dependency"
-      ]
+      }
     },
     "version-only-filter": {
       "type": "string",
@@ -175,6 +172,9 @@
     "host-auth": {
       "type": "object",
       "additionalProperties": false,
+      "required": [
+        "host"
+      ],
       "properties": {
         "host": {
           "description": "Repository host",
@@ -206,14 +206,16 @@
           "description": "Password for the repository",
           "type": "string"
         }
-      },
-      "required": [
-        "host"
-      ]
+      }
     },
     "compatibility-item": {
       "type": "object",
       "additionalProperties": false,
+      "required": [
+        "versionRange",
+        "dependency",
+        "dependencyVersionRange"
+      ],
       "properties": {
         "versionRange": {
           "description": "Dependency version range",
@@ -227,12 +229,7 @@
           "description": "Compatibility dependency range",
           "$ref": "#/definitions/version-range"
         }
-      },
-      "required": [
-        "versionRange",
-        "dependency",
-        "dependencyVersionRange"
-      ]
+      }
     },
     "dependency-id": {
       "type": "string",

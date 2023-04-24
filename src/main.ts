@@ -11,7 +11,7 @@ const configFiles = core.getInput('files', { required: false })
     .filter(isNotEmpty)
 
 const configContent = (function() {
-    const strings: Partial<Record<keyof Config, string>> = {
+    const strings: Record<keyof Config, string> = {
         matrix: core.getInput('matrix', { required: false, trimWhitespace: false }),
         auth: core.getInput('auth', { required: false, trimWhitespace: false }),
         globalCompatibilities: core.getInput('globalCompatibilities', { required: false, trimWhitespace: false }),
@@ -27,8 +27,11 @@ const configContent = (function() {
     return lines.join('\n')
 })()
 
+const batchLimit = 256
+
 run(
     githubToken,
     configFiles,
-    configContent
+    configContent,
+    batchLimit,
 )

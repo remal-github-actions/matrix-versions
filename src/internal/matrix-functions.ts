@@ -12,14 +12,13 @@ import { isNotEmpty, onlyUnique, removeFromArrayIf } from './utils'
 import { INCOMPATIBLE_RANGE, isCompatibleForVersioning } from './version-utils'
 
 export type VersionMatrixItem = Record<string, string>
-export type VersionMatrix = VersionMatrixItem[]
 
-export function composeVersionMatrix(fetchedMatrix: FetchedMatrix): VersionMatrix {
+export function composeVersionMatrix(fetchedMatrix: FetchedMatrix): VersionMatrixItem[] {
     processFullCompatibilities(Object.values(fetchedMatrix))
     removeUnusedCompatibilities(Object.values(fetchedMatrix))
     reorderCompatibilities(Object.values(fetchedMatrix))
 
-    const versionMatrix: VersionMatrix = []
+    const versionMatrix: VersionMatrixItem[] = []
     composeVersionMatrixIn(versionMatrix, {}, [], Object.keys(fetchedMatrix), Object.values(fetchedMatrix), 0)
     return versionMatrix
 }
@@ -29,7 +28,7 @@ type VersionMatrixCompatibilities = VersionMatrixCompatibility[]
 type DependencyCompatibilities = Record<string, CompatibilityItem[]>
 
 function composeVersionMatrixIn(
-    matrix: VersionMatrix,
+    matrix: VersionMatrixItem[],
     matrixItem: VersionMatrixItem,
     matrixItemCompatibilities: VersionMatrixCompatibilities,
     matrixProperties: string[],

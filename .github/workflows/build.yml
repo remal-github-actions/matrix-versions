@@ -83,11 +83,32 @@ jobs:
     # $$$sync-with-template-modifiable: validation $$$
 
     - name: Run current action
+      id: current
       uses: ./
       with:
-        dryRun: 'true'
         githubToken: ${{github.token}}
+        matrix: |
+          spring-boot:
+            dependency: maven:org.springframework.boot:spring-boot-dependencies
+            include:
+            - [2,)
 
+    - name: Validate current action
+      env:
+        ALL_MATRIX_INCLUDES: ${{ steps.current.outputs.allMatrixIncludes }}
+      run: |
+        if [ "${{ contains(fromJSON(env.ALL_MATRIX_INCLUDES), '{"spring-boot":"3.0.6"}') }}" == "true" ]; then
+          echo "Valid"
+        else
+          echo "::error::Current action output doesn't contain '3.0.6': $ALL_MATRIX_INCLUDES"
+          exit 1
+        fi
+        if [ "${{ contains(fromJSON(env.ALL_MATRIX_INCLUDES), '{"spring-boot":"2.7.11"}') }}" == "true" ]; then
+          echo "Valid"
+        else
+          echo "::error::Current action output doesn't contain '2.7.11': $ALL_MATRIX_INCLUDES"
+          exit 1
+        fi
     # $$$sync-with-template-modifiable-end$$$
 
 

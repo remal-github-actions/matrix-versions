@@ -16,7 +16,7 @@ import {
     populateGlobalCompatibilities,
     validateConfig,
 } from './internal/config-functions'
-import { composeVersionMatrix } from './internal/matrix-functions'
+import { composeVersionMatrix, VersionMatrixItem } from './internal/matrix-functions'
 import { fetchMatrix } from './internal/matrix-item-functions'
 import { indent, isNotEmpty, normalizeSpaces, processObjectFieldsRecursively } from './internal/utils'
 
@@ -28,7 +28,8 @@ const defaultCompatibilitiesConfig = validateConfig(
 export async function run(
     githubToken: string | undefined | null,
     configFiles: string[],
-    configContent: string
+    configContent: string,
+    batchLimit: number,
 ) {
     try {
         // Init config:
@@ -51,7 +52,34 @@ export async function run(
         // Execute logic:
         const fetchedMatrix = await fetchMatrix(config.matrix)
         const versionMatrix = composeVersionMatrix(fetchedMatrix)
-        console.log(JSON.stringify(versionMatrix, null, 2))
+        core.setOutput('allMatrixIncludes', versionMatrix)
+
+        const versionMatrixLength = versionMatrix.length
+        if (versionMatrixLength > batchLimit) {
+            core.error(
+                `Version, matrix consists of ${versionMatrixLength} elements`
+                + `, which is greater than GitHub supports: ${batchLimit}. `
+                + `Use batching mode.`,
+            )
+        } else if (versionMatrixLength > batchLimit / 2) {
+            core.error(
+                `Version, matrix consists of ${versionMatrixLength} elements`
+                + `, which is more than a half of what GitHub supports: ${batchLimit}. `
+                + `Consider using batching mode.`,
+            )
+        }
+
+        for (let batchNumber = 1; batchNumber <= 100; ++batchNumber) {
+            const batchElements: VersionMatrixItem[] = []
+            for (
+                let i = batchLimit * (batchNumber - 1);
+                i < Math.min(versionMatrix.length, batchLimit * batchNumber);
+                ++i
+            ) {
+                batchElements.push(versionMatrix[i])
+            }
+            core.setOutput(`batchMatrixIncludes${batchNumber}`, batchElements)
+        }
 
     } catch (error) {
         core.setFailed(error instanceof Error ? error : (error as object).toString())

@@ -34,6 +34,12 @@ export async function fetchMatrixItem(matrixItem: MatrixItem): Promise<FetchedMa
         only: matrixItem.only,
     })
         .then(fetchedVersions => {
+            if (!fetchedVersions.length) {
+                throw new Error(`No versions fetched for '${matrixItem.dependency}' dependency`)
+            }
+            return fetchedVersions
+        })
+        .then(fetchedVersions => {
             return {
                 dependency: matrixItem.dependency,
                 only: matrixItem.only?.concat(),
@@ -45,6 +51,17 @@ export async function fetchMatrixItem(matrixItem: MatrixItem): Promise<FetchedMa
             }
         })
         .then(filterFetchedVersions)
+        .then(fetchedMatrixItem => {
+            if (!fetchedMatrixItem.fetchedVersions.length) {
+                const filterStrings: string[] = []
+                if (isNotEmpty(matrixItem.only)) filterStrings.push(`only='${matrixItem.only.join('\', \'')}'`)
+                if (isNotEmpty(matrixItem.include)) filterStrings.push(`include='${matrixItem.include.join('\', \'')}'`)
+                if (isNotEmpty(matrixItem.exclude)) filterStrings.push(`exclude='${matrixItem.exclude.join('\', \'')}'`)
+                const filterString = filterStrings.join('; ')
+                throw new Error(`No versions left for '${matrixItem.dependency}' dependency after applying filters: ${filterString}`)
+            }
+            return fetchedMatrixItem
+        })
 }
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
