@@ -43,4 +43,17 @@ describe(isInVersioningRange.name, () => {
         })
     })
 
+    describe('gradle', () => {
+        const versioning = versionings.get('gradle')
+
+        function isInRange(version: string, range: string): boolean {
+            return isInVersioningRange(versioning, 'test', version, range)
+        }
+
+        it('simple', ()=>{
+            expect(isInRange('1.1', '[0,1]')).toEqual(false)
+            expect(isInRange('1.1', '[1,2)')).toEqual(true)
+        })
+    })
+
 })
