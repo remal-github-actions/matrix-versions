@@ -1,6 +1,6 @@
 import * as core from '@actions/core'
 import { Config } from './internal/config'
-import { byNewLineAndComma, indent, isNotEmpty, normalizeSpaces } from './internal/utils'
+import { byNewLineAndComma, indent, isNotEmpty } from './internal/utils'
 
 require('./internal/initRenovateLogging').initRenovateLogging()
 
@@ -25,7 +25,7 @@ const configContent = (function() {
     for (const [property, string] of Object.entries(strings)) {
         if (string.trim().length) {
             lines.push(`${property}:`)
-            lines.push(indent(normalizeSpaces(string), 2))
+            lines.push(indent(string, 2))
         }
     }
     return lines.join('\n')
