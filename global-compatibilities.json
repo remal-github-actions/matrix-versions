@@ -65,7 +65,7 @@
     ],
     "maven:org.springframework.boot:spring-boot-dependencies": [
       {
-        "versionRange": "[3)",
+        "versionRange": "[3,)",
         "dependency": "java",
         "dependencyVersionRange": "[17,)"
       },
