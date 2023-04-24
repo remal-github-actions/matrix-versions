@@ -3,7 +3,7 @@ import { VersioningApi } from 'renovate/dist/modules/versioning/types'
 
 export const INCOMPATIBLE_RANGE = 'incompatible' as const
 
-export function isCompatibleForVersioning(
+export function isInVersioningRange(
     versioning: VersioningApi,
     dependency: string,
     version: string,

@@ -11,7 +11,7 @@ import {
     withoutFullFetcherSuffixDependency,
 } from './matrix-item-functions'
 import { isNotEmpty, onlyUnique, removeFromArrayIf } from './utils'
-import { INCOMPATIBLE_RANGE, isCompatibleForVersioning } from './version-utils'
+import { INCOMPATIBLE_RANGE, isInVersioningRange } from './version-utils'
 
 export type VersionMatrixItem = Record<string, string>
 
@@ -48,7 +48,7 @@ function composeVersionMatrixIn(
             const compatibilityRanges = compatibility[fetchedItem.dependency]
             if (!isNotEmpty(compatibilityRanges)) continue
             const isCompatible = compatibilityRanges
-                .some(range => isCompatibleForVersioning(versioning, fetchedItem.dependency, version, range))
+                .some(range => isInVersioningRange(versioning, fetchedItem.dependency, version, range))
             if (!isCompatible) {
                 actionDebug(`${' '.repeat(index)}... filtering-out incompatible version: ${version}`)
                 return false
@@ -73,7 +73,7 @@ function composeVersionMatrixIn(
             const dependencyCompatibilities = groupCompatibilitiesByDependency(fetchedItem.compatibilities)
             for (const [dependency, compatibilities] of Object.entries(dependencyCompatibilities)) {
                 const activeCompatibilities = compatibilities
-                    .filter(compatibility => isCompatibleForVersioning(
+                    .filter(compatibility => isInVersioningRange(
                         versioning,
                         fetchedItem.dependency,
                         fetchedVersion,

@@ -7,7 +7,7 @@ import { MatrixItem, VersionOnlyFilter } from './config'
 import { DEFAULT_VERSIONING } from './constants'
 import { isNotEmpty } from './utils'
 import { fullSupportedVersionFetcherSuffix, getVersionFetcher, supportedVersionFetchers } from './version-fetcher-api'
-import { isCompatibleForVersioning } from './version-utils'
+import { isInVersioningRange } from './version-utils'
 
 export interface FetchedMatrixItem extends MatrixItem {
     fetchedVersions: string[]
@@ -144,7 +144,7 @@ export function filterFetchedVersions(fetchedMatrixItem: FetchedMatrixItem): Fet
 
     if (includeRanges.length) {
         fetchedVersions = fetchedVersions.filter(version => {
-            const filteringRange = includeRanges.find(range => isCompatibleForVersioning(
+            const filteringRange = includeRanges.find(range => isInVersioningRange(
                 versioning,
                 fetchedMatrixItem.dependency,
                 version,
@@ -161,7 +161,7 @@ export function filterFetchedVersions(fetchedMatrixItem: FetchedMatrixItem): Fet
 
     if (excludeRanges.length) {
         fetchedVersions = fetchedVersions.filter(version => {
-            const filteringRange = excludeRanges.find(range => isCompatibleForVersioning(
+            const filteringRange = excludeRanges.find(range => isInVersioningRange(
                 versioning,
                 fetchedMatrixItem.dependency,
                 version,
