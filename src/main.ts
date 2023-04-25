@@ -16,10 +16,14 @@ const configFiles = core.getInput('files', { required: false })
 
 const configContent = (function() {
     const strings: Record<keyof Config, string> = {
-        matrix: core.getInput('matrix', { required: false, trimWhitespace: false }),
-        auth: core.getInput('auth', { required: false, trimWhitespace: false }),
-        globalCompatibilities: core.getInput('globalCompatibilities', { required: false, trimWhitespace: false }),
+        matrix: 'matrix',
+        auth: 'auth',
+        globalCompatibilities: 'globalCompatibilities',
+        globalCompatibilityAliases: 'globalCompatibilityAliases',
     }
+    Object.keys(strings).forEach(key => {
+        strings[key] = core.getInput(key, { required: false, trimWhitespace: false })
+    })
 
     const lines: string[] = []
     for (const [property, string] of Object.entries(strings)) {

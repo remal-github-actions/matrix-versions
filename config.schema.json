@@ -35,6 +35,17 @@
           }
         }
       }
+    },
+    "globalCompatibilityAliases": {
+      "description": "Compatibility aliases",
+      "type": "object",
+      "additionalProperties": false,
+      "x-with-supported-dependency-key-types-pattern": true,
+      "patternProperties": {
+        "^(gradle-wrapper|java|java/full|maven:.+|node|node/full)$": {
+          "$ref": "#/definitions/compatibility-alias"
+        }
+      }
     }
   },
   "definitions": {
@@ -229,6 +240,9 @@
           "$ref": "#/definitions/version-range"
         }
       }
+    },
+    "compatibility-alias": {
+      "$ref": "#/definitions/dependency-id"
     },
     "dependency-id": {
       "type": "string",

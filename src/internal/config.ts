@@ -53,6 +53,11 @@ export type StaticVersioning =
   | "semver-coerced"
   | "swift"
   | "ubuntu";
+/**
+ * This interface was referenced by `undefined`'s JSON-Schema definition
+ * via the `patternProperty` "^(gradle-wrapper|java|java/full|maven:.+|node|node/full)$".
+ */
+export type CompatibilityAlias = string;
 
 /**
  * Config for matrix-version GitHub action
@@ -77,6 +82,12 @@ export interface Config {
      * via the `patternProperty` "^(gradle-wrapper|java|java/full|maven:.+|node|node/full)$".
      */
     [k: string]: CompatibilityItem[];
+  };
+  /**
+   * Compatibility aliases
+   */
+  globalCompatibilityAliases?: {
+    [k: string]: CompatibilityAlias;
   };
 }
 /**

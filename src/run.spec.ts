@@ -1,6 +1,7 @@
 import { run } from './run'
 
 describe('run', () => {
+
     it('simple', async () => {
         const versionMatrix = await run(1000, 0, 'test', [], `
 
@@ -18,4 +19,5 @@ matrix:
         expect(springBootVersions.includes('2.3.12.RELEASE')).toEqual(true)
         expect(springBootVersions.includes('1.5.22.RELEASE')).toEqual(false)
     })
+
 })

@@ -15,6 +15,9 @@ inputs:
   globalCompatibilities:
     required: false
     description: A YAML value of `globalCompatibilities` config property
+  globalCompatibilityAliases:
+    required: false
+    description: A YAML value of `globalCompatibilityAliases` config property
 
 outputs:
   allMatrixIncludes:

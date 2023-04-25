@@ -117,5 +117,10 @@
         "dependencyVersionRange": "[1.5,1.5.9999)"
       }
     ]
+  },
+  "globalCompatibilityAliases": {
+    "maven:name.remal.gradle-api:local-groovy": "gradle-wrapper",
+    "maven:name.remal.gradle-api:gradle-api": "gradle-wrapper",
+    "maven:name.remal.gradle-api:gradle-test-kit": "gradle-wrapper"
   }
 }
