@@ -22,6 +22,11 @@ export function composeVersionMatrix(fetchedMatrix: FetchedMatrix): VersionMatri
 
     const versionMatrix: VersionMatrixItem[] = []
     composeVersionMatrixIn(versionMatrix, {}, [], Object.keys(fetchedMatrix), Object.values(fetchedMatrix), 0)
+
+    if (!versionMatrix.length) {
+        throw new Error(`Empty version matrix. Check filters and compatibilities.`)
+    }
+
     return versionMatrix
 }
 
