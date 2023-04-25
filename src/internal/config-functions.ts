@@ -120,7 +120,7 @@ export async function parseConfigFiles(...configFileGlobs: string[]): Promise<Co
         .then(configs => mergeConfigs(...configs))
 }
 
-export function populateGlobalCompatibilityAliases(config: Config): void {
+export function processGlobalCompatibilityAliases(config: Config): void {
     const compatibilityAliases = config.globalCompatibilityAliases
     delete config.globalCompatibilityAliases
     if (!isNotEmpty(compatibilityAliases)) return
@@ -134,7 +134,7 @@ export function populateGlobalCompatibilityAliases(config: Config): void {
         }
 
         if (compatibilities[dependency] != null) {
-            throw new Error(`Dependency alias if set for '${dependency}', global compatibilities can't be set for this dependency`)
+            throw new Error(`Dependency alias is set for '${dependency}', which has global compatibilities defined`)
         }
 
         compatibilities[dependency] = aliasCompatibilities

@@ -1,5 +1,12 @@
 import { Config, VersionOnlyFilter } from './config'
-import { mergeConfigs, newEmptyConfig, validateConfig } from './config-functions'
+import {
+    mergeConfigs,
+    newEmptyConfig,
+    populateGlobalCompatibilities,
+    processGlobalCompatibilityAliases,
+    validateConfig,
+} from './config-functions'
+import { clone } from './utils'
 
 describe(validateConfig.name, () => {
 
@@ -171,6 +178,155 @@ describe(mergeConfigs.name, () => {
         }
         expect(mergeConfigs(config1, config2))
             .toEqual(expected)
+    })
+
+})
+
+describe(processGlobalCompatibilityAliases.name, () => {
+
+    it('simple', () => {
+        const config: Config = {
+            globalCompatibilities: {
+                '1': [
+                    {
+                        versionRange: '1',
+                        dependency: '2',
+                        dependencyVersionRange: '2',
+                    },
+                ],
+            },
+            globalCompatibilityAliases: {
+                '3': '1',
+            },
+        }
+        const expectedConfig: Config = {
+            globalCompatibilities: {
+                '1': clone(config.globalCompatibilities!!['1']),
+                '3': clone(config.globalCompatibilities!!['1']),
+            },
+        }
+        processGlobalCompatibilityAliases(config)
+        expect(config).toEqual(expectedConfig)
+    })
+
+    it('not found alias', () => {
+        const config: Config = {
+            globalCompatibilityAliases: {
+                '3': '1',
+            },
+        }
+        expect(() => processGlobalCompatibilityAliases(config)).toThrow()
+    })
+
+    it('alias for defined compatibilities', () => {
+        const config: Config = {
+            globalCompatibilities: {
+                '1': [
+                    {
+                        versionRange: '1',
+                        dependency: '2',
+                        dependencyVersionRange: '2',
+                    },
+                ],
+                '3': [
+                    {
+                        versionRange: '1',
+                        dependency: '2',
+                        dependencyVersionRange: '2',
+                    },
+                ],
+            },
+            globalCompatibilityAliases: {
+                '3': '1',
+            },
+        }
+        expect(() => processGlobalCompatibilityAliases(config)).toThrow()
+    })
+
+})
+
+describe(populateGlobalCompatibilities.name, () => {
+
+    it('simple', () => {
+        const config: Config = {
+            matrix: {
+                'prop1': {
+                    dependency: '1',
+                },
+            },
+            globalCompatibilities: {
+                '1': [
+                    {
+                        versionRange: '1',
+                        dependency: '2',
+                        dependencyVersionRange: '2',
+                    },
+                ],
+            },
+        }
+        const expectedConfig: Config = {
+            matrix: {
+                'prop1': {
+                    dependency: '1',
+                    compatibilities: clone(config.globalCompatibilities!!['1']),
+                },
+            },
+        }
+        populateGlobalCompatibilities(config)
+        expect(config).toEqual(expectedConfig)
+    })
+
+    it('not present in matrix', () => {
+        const config: Config = {
+            matrix: {
+                'prop2': {
+                    dependency: '2',
+                },
+            },
+            globalCompatibilities: {
+                '1': [
+                    {
+                        versionRange: '1',
+                        dependency: '2',
+                        dependencyVersionRange: '2',
+                    },
+                ],
+            },
+        }
+        const expectedConfig: Config = {
+            matrix: {
+                'prop2': {
+                    dependency: '2',
+                },
+            },
+        }
+        populateGlobalCompatibilities(config)
+        expect(config).toEqual(expectedConfig)
+    })
+
+    it('withoutGlobalCompatibilities', () => {
+        const config: Config = {
+            matrix: {
+                'prop1': {
+                    dependency: '1',
+                    withoutGlobalCompatibilities: true,
+                },
+            },
+            globalCompatibilities: {
+                '1': [
+                    {
+                        versionRange: '1',
+                        dependency: '2',
+                        dependencyVersionRange: '2',
+                    },
+                ],
+            },
+        }
+        const expectedConfig: Config = {
+            matrix: clone(config.matrix),
+        }
+        populateGlobalCompatibilities(config)
+        expect(config).toEqual(expectedConfig)
     })
 
 })
