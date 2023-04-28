@@ -79,6 +79,11 @@ jobs:
       run: |
         npm run build
 
+    - name: Minify
+      if: ${{github.event_name == 'push'}}
+      run: |
+        npm run minify-dist
+
 
     # $$$sync-with-template-modifiable: validation $$$
 

@@ -1,4 +1,5 @@
 process.env.RENOVATE_X_IGNORE_RE2 = 'true'
+require('./src/internal/initRenovateLogging').initRenovateLogging()
 
 
 import is from '@sindresorhus/is'
