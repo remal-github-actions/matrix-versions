@@ -80,7 +80,7 @@ jobs:
         npm run build
 
     - name: Minify
-      if: ${{github.event_name == 'push'}}
+      if: ${{github.event_name == 'push' && startsWith(github.ref, 'refs/heads/')}}
       run: |
         npm run minify-dist
 
