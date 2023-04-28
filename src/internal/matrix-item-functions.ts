@@ -35,13 +35,13 @@ export async function fetchMatrixItem(matrixItem: MatrixItem): Promise<FetchedMa
         repositories: matrixItem.repositories,
         only: matrixItem.only,
     })
-        .then(fetchedVersions => {
-            if (!fetchedVersions.length) {
+        .then(versions => {
+            if (!versions.length) {
                 throw new Error(`No versions fetched for '${matrixItem.dependency}' dependency`)
             }
-            return fetchedVersions
+            return versions
         })
-        .then(fetchedVersions => {
+        .then(versions => {
             return {
                 dependency: matrixItem.dependency,
                 only: matrixItem.only?.concat(),
@@ -49,12 +49,12 @@ export async function fetchMatrixItem(matrixItem: MatrixItem): Promise<FetchedMa
                 exclude: matrixItem.exclude?.concat(),
                 versioning: matrixItem.versioning || fetcher.defaultVersioning,
                 compatibilities: matrixItem.compatibilities?.concat(),
-                fetchedVersions,
+                fetchedVersions: versions,
             }
         })
         .then(filterFetchedVersions)
-        .then(fetchedMatrixItem => {
-            if (!fetchedMatrixItem.fetchedVersions.length) {
+        .then(item => {
+            if (!item.fetchedVersions.length) {
                 const filterStrings: string[] = []
                 if (isNotEmpty(matrixItem.only)) filterStrings.push(`only='${matrixItem.only.join('\', \'')}'`)
                 if (isNotEmpty(matrixItem.include)) filterStrings.push(`include='${matrixItem.include.join('\', \'')}'`)
@@ -62,7 +62,11 @@ export async function fetchMatrixItem(matrixItem: MatrixItem): Promise<FetchedMa
                 const filterString = filterStrings.join('; ')
                 throw new Error(`No versions left for '${matrixItem.dependency}' dependency after applying filters: ${filterString}`)
             }
-            return fetchedMatrixItem
+            return item
+        })
+        .then(item => {
+            core.info(`Fetched versions for '${item.dependency}' dependency: ${item.fetchedVersions.join(', ')}`)
+            return item
         })
 }
 
