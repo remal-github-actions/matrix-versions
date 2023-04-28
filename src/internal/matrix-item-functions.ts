@@ -60,7 +60,7 @@ export async function fetchMatrixItem(matrixItem: MatrixItem): Promise<FetchedMa
                 if (isNotEmpty(matrixItem.include)) filterStrings.push(`include='${matrixItem.include.join('\', \'')}'`)
                 if (isNotEmpty(matrixItem.exclude)) filterStrings.push(`exclude='${matrixItem.exclude.join('\', \'')}'`)
                 const filterString = filterStrings.join('; ')
-                throw new Error(`No versions left for '${matrixItem.dependency}' dependency after applying filters: ${filterString}`)
+                throw new Error(`No versions left for '${item.dependency}' dependency after applying filters: ${filterString}`)
             }
             return item
         })
