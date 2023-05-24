@@ -7,6 +7,7 @@ import {
     FetchedMatrix,
     FetchedMatrixItem,
     isFullFetcherDependency,
+    matchDependencies,
     withFullFetcherSuffixDependency,
     withoutFullFetcherSuffixDependency,
 } from './matrix-item-functions'
@@ -50,13 +51,16 @@ function composeVersionMatrixIn(
     const versioning = versionings.get(fetchedItem.versioning || DEFAULT_VERSIONING)
     const compatibleFetchVersions = fetchedItem.fetchedVersions.filter(version => {
         for (const compatibility of matrixItemCompatibilities) {
-            const compatibilityRanges = compatibility[fetchedItem.dependency]
-            if (!isNotEmpty(compatibilityRanges)) continue
-            const isCompatible = compatibilityRanges
-                .some(range => isInVersioningRange(versioning, fetchedItem.dependency, version, range))
-            if (!isCompatible) {
-                actionDebug(`${' '.repeat(index)}... filtering-out incompatible version: ${version}`)
-                return false
+            for (const [compatibilityDependency, compatibilityRanges] of Object.entries(compatibility)) {
+                if (!isNotEmpty(compatibilityRanges)) continue
+                if (matchDependencies(compatibilityDependency, fetchedItem.dependency)) {
+                    const isCompatible = compatibilityRanges
+                        .some(range => isInVersioningRange(versioning, fetchedItem.dependency, version, range))
+                    if (!isCompatible) {
+                        actionDebug(`${' '.repeat(index)}... filtering-out incompatible version: ${version}`)
+                        return false
+                    }
+                }
             }
         }
 
@@ -160,8 +164,8 @@ export function removeUnusedCompatibilities(matrixItems: MatrixItem[]): void {
         if (!isNotEmpty(compatibilities)) continue
 
         removeFromArrayIf(compatibilities, compatibility =>
-            !allDependencies.includes(compatibility.dependency)
-            || compatibility.dependency === matrixItem.dependency,
+            !allDependencies.some(dependency => matchDependencies(compatibility.dependency, dependency))
+            || matchDependencies(compatibility.dependency, matrixItem.dependency),
         )
 
         if (!isNotEmpty(matrixItem.compatibilities)) {
@@ -180,7 +184,7 @@ export function reorderCompatibilities(matrixItems: MatrixItem[]): void {
 
             for (let compatibilityIndex = 0; compatibilityIndex < secondCompatibilities.length; ++compatibilityIndex) {
                 const secondCompatibility = secondCompatibilities[compatibilityIndex]
-                if (secondCompatibility.dependency !== firstItem.dependency) continue
+                if (!matchDependencies(secondCompatibility.dependency, firstItem.dependency)) continue
 
                 const firstCompatibilities = firstItem.compatibilities = firstItem.compatibilities ?? []
                 firstCompatibilities.push({

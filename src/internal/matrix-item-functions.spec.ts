@@ -1,6 +1,7 @@
 import {
     FetchedMatrixItem,
     filterFetchedVersions,
+    matchDependencies,
     ParsedDependency,
     parseMatrixItemDependency,
 } from './matrix-item-functions'
@@ -490,6 +491,24 @@ describe(parseMatrixItemDependency.name, () => {
         }
         expect(parseMatrixItemDependency(matrixItemDependency))
             .toEqual(expected)
+    })
+
+})
+
+describe(matchDependencies.name, () => {
+
+    it('simple', () => {
+        expect(matchDependencies('1', '1')).toEqual(true)
+        expect(matchDependencies('1', '2')).toEqual(false)
+    })
+
+    it('pattern', () => {
+        expect(matchDependencies('prefix-*', 'prefix-')).toEqual(true)
+        expect(matchDependencies('prefix-*', 'prefix-asd')).toEqual(true)
+        expect(matchDependencies('prefix-', 'prefix-*')).toEqual(true)
+        expect(matchDependencies('prefix-asd', 'prefix-*')).toEqual(true)
+        expect(matchDependencies('prefix-*', 'prefix-*')).toEqual(true)
+        expect(matchDependencies('prefix-*', 'suffix-*')).toEqual(false)
     })
 
 })

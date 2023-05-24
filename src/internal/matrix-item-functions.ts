@@ -5,7 +5,7 @@ import { configRegexPredicate } from 'renovate/dist/util/regex'
 import { actionDebug } from './actionDebug'
 import { MatrixItem, VersionOnlyFilter } from './config'
 import { DEFAULT_VERSIONING } from './constants'
-import { isNotEmpty } from './utils'
+import { escapeRegex, isNotEmpty } from './utils'
 import { fullSupportedVersionFetcherSuffix, getVersionFetcher, supportedVersionFetchers } from './version-fetcher-api'
 import { isInVersioningRange } from './version-utils'
 
@@ -236,7 +236,7 @@ const onlyFilterFactories: Record<VersionOnlyFilter, VersionsFilterFactory> = {
 
 function createNumbersOnlyFilterFactory(
     numbersToInclude: number,
-    includeCurrentUnstable: boolean
+    includeCurrentUnstable: boolean,
 ): VersionsFilterFactory {
     return versioning => versions => {
         let isFirst = true
@@ -321,6 +321,7 @@ export function withFullFetcherSuffixDependency(dependency: string): string | un
 }
 
 export function isFullFetcherDependency(dependency: string): boolean {
+    if (dependency.includes('*')) return false
     return parseMatrixItemDependency(dependency).fetcherId.endsWith(fullSupportedVersionFetcherSuffix)
 }
 
@@ -329,5 +330,29 @@ export function createMatrixItemDependency(parsedDependency: ParsedDependency): 
         return `${parsedDependency.fetcherId}:${parsedDependency.dependency}`
     } else {
         return parsedDependency.fetcherId
+    }
+}
+
+
+export function matchDependencies(dependency1: string, dependency2: string): boolean {
+    if (!dependency1.includes('*') && !dependency2.includes('*')) {
+        return dependency1 === dependency2
+    }
+
+
+    function patternToRegex(pattern: string): RegExp {
+        pattern = escapeRegex(pattern)
+        pattern = pattern
+            .replaceAll('\\*', '.*')
+        return new RegExp(`^${pattern}$`)
+    }
+
+    if (dependency1.includes('*')) {
+        const regex1 = patternToRegex(dependency1)
+        return dependency2.match(regex1) != null
+
+    } else {
+        const regex2 = patternToRegex(dependency2)
+        return dependency1.match(regex2) != null
     }
 }

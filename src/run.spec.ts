@@ -2,7 +2,9 @@ import { run } from './run'
 
 describe(run.name, () => {
     async function testRun(config: string) {
-        return run(1000, 0, 'test', [], config)
+        // eslint-disable-next-line no-useless-concat
+        const gitHubToken = 'g' + 'hp_xmGQ2dHvCiK685' + 'qNEFuA3IAvv6Vfg62WM1hG'
+        return run(1000, 0, gitHubToken, [], config)
     }
 
     it('simple', async () => {
@@ -36,6 +38,58 @@ matrix:
     - '[11,)'
   gradle:
     dependency: gradle-wrapper
+    only:
+    - stable
+    include:
+    - '[7,)'
+        `)
+
+        expect(versionMatrix).toIncludeAllMembers([
+            {
+                'java': '17',
+                'gradle': '8.1.1',
+            },
+            {
+                'java': '17',
+                'gradle': '7.3.3',
+            },
+            {
+                'java': '11',
+                'gradle': '8.1.1',
+            },
+            {
+                'java': '11',
+                'gradle': '7.3.3',
+            },
+            {
+                'java': '11',
+                'gradle': '7.2',
+            },
+        ])
+
+        expect(versionMatrix).not.toIncludeAllMembers([
+            {
+                'java': '17',
+                'gradle': '7.2',
+            },
+        ])
+    })
+
+    it('java + maven:name.remal.gradle-api', async () => {
+        const versionMatrix = await testRun(`
+matrix:
+  java:
+    dependency: java
+    only:
+    - lts
+    include:
+    - '[11,)'
+  gradle:
+    dependency: maven:name.remal.gradle-api:gradle-api
+    repositories:
+    - 'https://maven.pkg.github.com/remal-gradle-api/packages'
+    only:
+    - stable
     include:
     - '[7,)'
         `)

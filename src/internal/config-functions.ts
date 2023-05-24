@@ -5,6 +5,7 @@ import { promises as fs } from 'fs'
 import YAML from 'yaml'
 import configSchema from '../../config.schema.json'
 import { Config, MatrixItem } from './config'
+import { matchDependencies } from './matrix-item-functions'
 import { byNewLineAndComma, isNotEmpty, processObjectFieldsRecursively } from './utils'
 
 const validateFunction: ValidateFunction = (function() {
@@ -20,7 +21,7 @@ const validateFunction: ValidateFunction = (function() {
 export function validateConfig(config: any, configSource?: string): Config {
     function throwValidationError(message: string) {
         throw new Error(
-            `Config validation error` + (configSource != null ? ` (at ${configSource})` : ``) + ': ' + message
+            `Config validation error` + (configSource != null ? ` (at ${configSource})` : ``) + ': ' + message,
         )
     }
 
@@ -31,7 +32,7 @@ export function validateConfig(config: any, configSource?: string): Config {
     const valid = validateFunction(config)
     if (!valid) {
         throw throwValidationError(
-            JSON.stringify(validateFunction.errors, null, 2)
+            JSON.stringify(validateFunction.errors, null, 2),
         )
     }
 
@@ -45,7 +46,7 @@ export function validateConfig(config: any, configSource?: string): Config {
         if (filters.includes('current-unstable')) {
             throw throwValidationError(`Matrix item ${property}: `
                 + `'only' filter current-unstable`
-                + ` conflict with ${filters.filter(it => it !== 'current-unstable').join(', ')}`
+                + ` conflict with ${filters.filter(it => it !== 'current-unstable').join(', ')}`,
             )
         }
 
@@ -54,7 +55,7 @@ export function validateConfig(config: any, configSource?: string): Config {
         if (withLtsFilters.length && withUnstableFilters.length) {
             throw throwValidationError(`Matrix item ${property}: `
                 + `'only' filters ${withLtsFilters.join(', ')}`
-                + ` conflict with ${withUnstableFilters.join(', ')}`
+                + ` conflict with ${withUnstableFilters.join(', ')}`,
             )
         }
 
@@ -63,14 +64,14 @@ export function validateConfig(config: any, configSource?: string): Config {
         if (withStableWithoutUnstableFilters.length && withUnstableFilters.length) {
             throw throwValidationError(`Matrix item ${property}: `
                 + `'only' filters ${withStableWithoutUnstableFilters.join(', ')}`
-                + ` conflict with ${withUnstableFilters.join(', ')}`
+                + ` conflict with ${withUnstableFilters.join(', ')}`,
             )
         }
 
         const withSubStableFilters = filters.filter(filter => filter.match(/(\bstable-|-stable\b)/))
         if (withSubStableFilters.length >= 2) {
             throw throwValidationError(`Matrix item ${property}: `
-                + `'only' filters ${withSubStableFilters.join(', ')} conflict`
+                + `'only' filters ${withSubStableFilters.join(', ')} conflict`,
             )
         }
     }
@@ -133,8 +134,10 @@ export function processGlobalCompatibilityAliases(config: Config): void {
             throw new Error(`Dependency not found for global compatibility alias: ${alias}`)
         }
 
-        if (compatibilities[dependency] != null) {
-            throw new Error(`Dependency alias is set for '${dependency}', which has global compatibilities defined`)
+        for (const compatibilityDependency of Object.keys(compatibilities)) {
+            if (matchDependencies(compatibilityDependency, dependency)) {
+                throw new Error(`Dependency alias is set for '${dependency}', which has global compatibilities defined`)
+            }
         }
 
         compatibilities[dependency] = aliasCompatibilities
@@ -152,9 +155,11 @@ export function populateGlobalCompatibilities(config: Config): void {
     for (const matrixItem of Object.values(matrix)) {
         if (matrixItem.withoutGlobalCompatibilities) continue
 
-        const currentCompatibilities = compatibilities[matrixItem.dependency]
-        if (!isNotEmpty(currentCompatibilities)) continue
-
-        matrixItem.compatibilities = (matrixItem.compatibilities ?? []).concat(currentCompatibilities)
+        for (const [compatibilityDependency, compatibility] of Object.entries(compatibilities)) {
+            if (!isNotEmpty(compatibility)) continue
+            if (matchDependencies(compatibilityDependency, matrixItem.dependency)) {
+                matrixItem.compatibilities = (matrixItem.compatibilities ?? []).concat(compatibility)
+            }
+        }
     }
 }

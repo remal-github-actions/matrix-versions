@@ -72,9 +72,6 @@ export function processObjectFieldsRecursively(object: any, action: (key: string
     }
 }
 
-
-
-
 export function shuffleArray<T>(array: T[]): T[] {
     let currentIndex = array.length
     while (currentIndex > 0) {
@@ -86,6 +83,28 @@ export function shuffleArray<T>(array: T[]): T[] {
 
     return array
 }
+
+export function escapeRegex(string: string): string {
+    return string
+        .replaceAll('\\', '\\\\')
+        .replaceAll('\r', '\\r')
+        .replaceAll('\n', '\\n')
+        .replaceAll('\t', '\\t')
+        .replaceAll('.', '\\.')
+        .replaceAll('|', '\\|')
+        .replaceAll('[', '\\[')
+        .replaceAll(']', '\\]')
+        .replaceAll('(', '\\(')
+        .replaceAll(')', '\\)')
+        .replaceAll('?', '\\?')
+        .replaceAll('*', '\\*')
+        .replaceAll('+', '\\+')
+        .replaceAll('{', '\\{')
+        .replaceAll('}', '\\}')
+        .replaceAll('^', '\\^')
+        .replaceAll('$', '\\$')
+}
+
 
 export const getErrorOf = async <TError>(call: () => Promise<unknown>): Promise<TError> => {
     try {

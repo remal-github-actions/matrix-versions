@@ -114,13 +114,29 @@
       {
         "versionRange": "[D,F)",
         "dependency": "maven:org.springframework.boot:spring-boot-dependencies",
-        "dependencyVersionRange": "[1.5,1.5.9999)"
+        "dependencyVersionRange": "[1.5,1.9999)"
+      }
+    ],
+    "maven:org.zalando:problem-spring-web": [
+      {
+        "versionRange": "[0.28,)",
+        "dependency": "maven:org.springframework.boot:spring-boot-dependencies",
+        "dependencyVersionRange": "[3,)"
+      },
+      {
+        "versionRange": "[0.27,0.27.9999)",
+        "dependency": "maven:org.springframework.boot:spring-boot-dependencies",
+        "dependencyVersionRange": "[2,2.9999)"
+      },
+      {
+        "versionRange": "[0.23,0.26.9999)",
+        "dependency": "maven:org.springframework.boot:spring-boot-dependencies",
+        "dependencyVersionRange": "[1.5,1.9999)"
       }
     ]
   },
   "globalCompatibilityAliases": {
-    "maven:name.remal.gradle-api:local-groovy": "gradle-wrapper",
-    "maven:name.remal.gradle-api:gradle-api": "gradle-wrapper",
-    "maven:name.remal.gradle-api:gradle-test-kit": "gradle-wrapper"
+    "maven:name.remal.gradle-api:*": "gradle-wrapper",
+    "maven:org.zalando:problem-spring-web-*": "maven:org.zalando:problem-spring-web"
   }
 }
