@@ -63,6 +63,18 @@
         "dependencyVersionRange": "[8,8.9999)"
       }
     ],
+    "maven:io.micronaut:micronaut-bom": [
+      {
+        "versionRange": "[4,)",
+        "dependency": "java",
+        "dependencyVersionRange": "[17,)"
+      },
+      {
+        "versionRange": "(,3.9999)",
+        "dependency": "java",
+        "dependencyVersionRange": "[8,)"
+      }
+    ],
     "maven:org.springframework.boot:spring-boot-dependencies": [
       {
         "versionRange": "[3,)",
