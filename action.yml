@@ -44,5 +44,5 @@ outputs:
     description: 11th batch of JSON array to be used for `strategy.matrix.includes`
 
 runs:
-  using: node16
+  using: node20
   main: 'dist/index.js'
