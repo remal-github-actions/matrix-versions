@@ -11,7 +11,7 @@
     "update-config-schema": "ts-node config.schema-update.ts",
     "generate-config": "npm run update-config-schema && json2ts config.schema.json > src/internal/config.ts",
     "generate": "npm run generate-config",
-    "lint": "eslint --fix **",
+    "lint": "eslint --fix src/**/*",
     "test": "jest --passWithNoTests",
     "tsconfig-generate-app": "node tsconfig-generate-app",
     "compile": "npm run generate && npm run lint && rimraf build && node tsconfig-generate-app && tsc -project tsconfig.app.json --rootDir . --outDir build",
