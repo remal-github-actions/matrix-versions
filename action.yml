@@ -25,7 +25,7 @@ outputs:
   batchMatrixIncludes1:
     description: 1st batch of JSON array to be used for `strategy.matrix.includes`
   batchMatrixIncludes2:
-    description: 2st batch of JSON array to be used for `strategy.matrix.includes`
+    description: 2nd batch of JSON array to be used for `strategy.matrix.includes`
   batchMatrixIncludes3:
     description: 3rd batch of JSON array to be used for `strategy.matrix.includes`
   batchMatrixIncludes4:

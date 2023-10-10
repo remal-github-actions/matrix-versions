@@ -41,7 +41,7 @@ const json = JSON.parse(content)
 
 
 const dependencyTypesPattern = (function() {
-    const pattens = supportedDependencyTypes.map(type => {
+    const patterns = supportedDependencyTypes.map(type => {
         const fetcher = supportedVersionFetchers.get(type)
         if (fetcher == null) {
             return type
@@ -53,7 +53,7 @@ const dependencyTypesPattern = (function() {
             return type
         }
     })
-    return `^(${pattens.join('|')})$`
+    return `^(${patterns.join('|')})$`
 })()
 
 const dynamicVersioningsPattern = `^(${supportedDynamicVersionings.join('|')})(:[^:]+)*$`
