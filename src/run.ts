@@ -86,7 +86,7 @@ export async function run(
         return versionMatrix
 
     } catch (error) {
-        core.setFailed(error instanceof Error ? error : (error as object).toString())
+        core.setFailed(error instanceof Error ? error : (error as any).toString())
         throw error
     }
 }
@@ -95,14 +95,17 @@ export async function run(
 
 function initRenovateConfig(config: Config, githubToken?: string | null) {
     const renovateConfig: AllConfig = {}
-    renovateConfig.githubTokenWarn = true
-    renovateConfig.fetchReleaseNotes = false
+    renovateConfig.githubTokenWarn = false
+    renovateConfig.fetchReleaseNotes = 'off'
+    renovateConfig.vulnerabilityAlerts = { enabled: true }
+    renovateConfig.osvVulnerabilityAlerts = false
+    renovateConfig.constraintsFiltering = 'none'
     renovateConfig.repositoryCache = 'disabled'
     renovateConfig.dryRun = 'full'
 
 
     const defaultHostRule: HostRule = {
-        timeout: 10_000,
+        timeout: 120_000,
         abortOnError: true,
     }
     const hostRules: HostRule[] = renovateConfig.hostRules = [defaultHostRule]

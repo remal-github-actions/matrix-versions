@@ -11,7 +11,7 @@ export type RenovateReleaseFilter = (release: Release) => boolean
 export abstract class VersionFetcherRenovateDatasource extends VersionFetcher {
 
     protected constructor(
-        private readonly renovateDatasourceApi: Datasource | RenovateDatasourceFactory
+        private readonly renovateDatasourceApi: Datasource | RenovateDatasourceFactory,
     ) {
         super()
     }
@@ -60,7 +60,7 @@ export abstract class VersionFetcherRenovateDatasource extends VersionFetcher {
         const results: ReleaseResult[] = []
         for (const currentRepository of repositories) {
             const result = await renovateDatasource.getReleases({
-                packageName: dependency != null ? dependency : '',
+                packageName: dependency ?? '',
                 registryUrl: currentRepository,
             })
             if (result != null) {

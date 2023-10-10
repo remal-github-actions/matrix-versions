@@ -4,10 +4,6 @@ import { NodeFullVersionFetcher } from './NodeFullVersionFetcher'
 
 export class NodeVersionFetcher extends NodeFullVersionFetcher {
 
-    constructor() {
-        super()
-    }
-
     async fetchVersions(params: VersionFetchParams): Promise<string[]> {
         return super.fetchVersions(params)
             .then(versions => versions

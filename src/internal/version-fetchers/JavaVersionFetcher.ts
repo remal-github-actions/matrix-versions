@@ -4,10 +4,6 @@ import { JavaFullVersionFetcher } from './JavaFullVersionFetcher'
 
 export class JavaVersionFetcher extends JavaFullVersionFetcher {
 
-    constructor() {
-        super()
-    }
-
     get defaultVersioning() {
         return 'maven'
     }

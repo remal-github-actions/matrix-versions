@@ -47,7 +47,7 @@ export async function fetchMatrixItem(matrixItem: MatrixItem): Promise<FetchedMa
                 only: matrixItem.only?.concat(),
                 include: matrixItem.include?.concat(),
                 exclude: matrixItem.exclude?.concat(),
-                versioning: matrixItem.versioning || fetcher.defaultVersioning,
+                versioning: matrixItem.versioning ?? fetcher.defaultVersioning,
                 compatibilities: matrixItem.compatibilities?.concat(),
                 fetchedVersions: versions,
             }
@@ -134,7 +134,7 @@ export function filterFetchedVersions(fetchedMatrixItem: FetchedMatrixItem): Fet
         })
     }
 
-    const versioning = versionings.get(fetchedMatrixItem.versioning || DEFAULT_VERSIONING)
+    const versioning = versionings.get(fetchedMatrixItem.versioning ?? DEFAULT_VERSIONING)
     fetchedVersions = fetchedVersions.filter(version => {
         if (!versioning.isVersion(version)) {
             core.warning(`Dependency '${fetchedMatrixItem.dependency}': `
@@ -349,10 +349,10 @@ export function matchDependencies(dependency1: string, dependency2: string): boo
 
     if (dependency1.includes('*')) {
         const regex1 = patternToRegex(dependency1)
-        return dependency2.match(regex1) != null
+        return regex1.exec(dependency2) != null
 
     } else {
         const regex2 = patternToRegex(dependency2)
-        return dependency1.match(regex2) != null
+        return regex2.exec(dependency1) != null
     }
 }
