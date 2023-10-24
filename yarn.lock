@@ -5851,10 +5851,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"emoji-regex@npm:10.2.1":
-  version: 10.2.1
-  resolution: "emoji-regex@npm:10.2.1"
-  checksum: 88f70a75a2889d968925b283e120f111c8ebb92c7961068d8897b16087820c358d22d72755b811906513762bb2b58255a5fca4f47ef8464a7f34c1e54523ccdf
+"emoji-regex@npm:10.3.0":
+  version: 10.3.0
+  resolution: "emoji-regex@npm:10.3.0"
+  checksum: b4838e8dcdceb44cf47f59abe352c25ff4fe7857acaf5fb51097c427f6f75b44d052eb907a7a3b86f86bc4eae3a93f5c2b7460abe79c407307e6212d65c91163
   languageName: node
   linkType: hard
 
@@ -9496,7 +9496,7 @@ __metadata:
     jest-circus: "npm:29.7.0"
     jest-extended: "npm:4.0.2"
     json-schema-to-typescript: "npm:13.1.1"
-    renovate: "npm:37.31.4"
+    renovate: "npm:37.31.5"
     rimraf: "npm:5.0.5"
     semver: "npm:7.5.4"
     ts-jest: "npm:29.1.1"
@@ -11012,9 +11012,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"renovate@npm:37.31.4":
-  version: 37.31.4
-  resolution: "renovate@npm:37.31.4"
+"renovate@npm:37.31.5":
+  version: 37.31.5
+  resolution: "renovate@npm:37.31.5"
   dependencies:
     "@aws-sdk/client-codecommit": "npm:3.363.0"
     "@aws-sdk/client-ec2": "npm:3.363.0"
@@ -11063,7 +11063,7 @@ __metadata:
     detect-indent: "npm:6.1.0"
     editorconfig: "npm:2.0.0"
     email-addresses: "npm:5.0.0"
-    emoji-regex: "npm:10.2.1"
+    emoji-regex: "npm:10.3.0"
     emojibase: "npm:15.2.0"
     emojibase-regex: "npm:15.2.0"
     extract-zip: "npm:2.0.1"
@@ -11129,7 +11129,7 @@ __metadata:
   bin:
     renovate: dist/renovate.js
     renovate-config-validator: dist/config-validator.js
-  checksum: 7bec17a9f7f5431ab51012df0fae9c83c64720528ddc2aebe2b5a0bee609bac643fac9518a818074942db91c19b74a642a896f46ea6cfcec3144ae89fd54587b
+  checksum: 945479e4849d7d3bcb51bc3205642870014bb483acecec9bf93055ceb0faf8e3407d2b79f27d38dd712a60f7c37561dee3f7acfb106e1840a7bd8b2b5992eb16
   languageName: node
   linkType: hard
 
