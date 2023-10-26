@@ -3697,10 +3697,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/tmp@npm:0.2.4":
-  version: 0.2.4
-  resolution: "@types/tmp@npm:0.2.4"
-  checksum: 26e19913170193420eddbe5bf83e873ef82a1af002d0871659e0bcd2af41fcc29818bba2571784a452c73094e50a7db1f1a89a6399c103bb037a095cfe67e63d
+"@types/tmp@npm:0.2.5":
+  version: 0.2.5
+  resolution: "@types/tmp@npm:0.2.5"
+  checksum: 7e14edd4238d5e34fc38cf1da017faf415a655e41e47404466dcb6eed10ca27062deb52b01358e4cc336cb2517d245271e2f03a51f2751063298d324cf0f056e
   languageName: node
   linkType: hard
 
@@ -9496,7 +9496,7 @@ __metadata:
     jest-circus: "npm:29.7.0"
     jest-extended: "npm:4.0.2"
     json-schema-to-typescript: "npm:13.1.1"
-    renovate: "npm:37.33.1"
+    renovate: "npm:37.33.2"
     rimraf: "npm:5.0.5"
     semver: "npm:7.5.4"
     ts-jest: "npm:29.1.1"
@@ -11012,9 +11012,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"renovate@npm:37.33.1":
-  version: 37.33.1
-  resolution: "renovate@npm:37.33.1"
+"renovate@npm:37.33.2":
+  version: 37.33.2
+  resolution: "renovate@npm:37.33.2"
   dependencies:
     "@aws-sdk/client-codecommit": "npm:3.363.0"
     "@aws-sdk/client-ec2": "npm:3.363.0"
@@ -11041,7 +11041,7 @@ __metadata:
     "@renovatebot/ruby-semver": "npm:3.0.16"
     "@sindresorhus/is": "npm:4.6.0"
     "@types/ms": "npm:0.7.33"
-    "@types/tmp": "npm:0.2.4"
+    "@types/tmp": "npm:0.2.5"
     "@yarnpkg/core": "npm:3.5.4"
     "@yarnpkg/parsers": "npm:2.5.1"
     agentkeepalive: "npm:4.5.0"
@@ -11129,7 +11129,7 @@ __metadata:
   bin:
     renovate: dist/renovate.js
     renovate-config-validator: dist/config-validator.js
-  checksum: 323c0b6e1bda126cfa56271fe226af2202a3f7911634a19e511a664e0a402281799ac53b7412b59f9d9ea748385d26d49d01d89ff08b6029d56750f624a1cb3c
+  checksum: e72d33c3d515d9f4228066e3ed6196f793f281d267dab56159b71eec06b8dcde66e5c01c597deeb7d46c34b032d1616e913605721fdee6151828e5c0fd4ad3a8
   languageName: node
   linkType: hard
 
