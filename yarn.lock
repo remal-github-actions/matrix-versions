@@ -7229,12 +7229,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"git-url-parse@npm:13.1.0":
-  version: 13.1.0
-  resolution: "git-url-parse@npm:13.1.0"
+"git-url-parse@npm:13.1.1":
+  version: 13.1.1
+  resolution: "git-url-parse@npm:13.1.1"
   dependencies:
     git-up: "npm:^7.0.0"
-  checksum: 2ef6126c42d999e240dbcdf1e96172cf7a2044ffa1ef78a518acf823df9bbe2a1ea9e6b443d42948e3c581e4d899559afc4c1de024b3eaa8eb6a4229f73285aa
+  checksum: 9304e6fbc1a6acf5e351e84ad87574fa6b840ccbe531afbbce9ba38e01fcacf6adf386ef7593daa037da59d9fd43b5d7c5232d5648638f8301cc2f18d00ad386
   languageName: node
   linkType: hard
 
@@ -9496,7 +9496,7 @@ __metadata:
     jest-circus: "npm:29.7.0"
     jest-extended: "npm:4.0.2"
     json-schema-to-typescript: "npm:13.1.1"
-    renovate: "npm:37.33.3"
+    renovate: "npm:37.33.4"
     rimraf: "npm:5.0.5"
     semver: "npm:7.5.4"
     ts-jest: "npm:29.1.1"
@@ -11012,9 +11012,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"renovate@npm:37.33.3":
-  version: 37.33.3
-  resolution: "renovate@npm:37.33.3"
+"renovate@npm:37.33.4":
+  version: 37.33.4
+  resolution: "renovate@npm:37.33.4"
   dependencies:
     "@aws-sdk/client-codecommit": "npm:3.363.0"
     "@aws-sdk/client-ec2": "npm:3.363.0"
@@ -11070,7 +11070,7 @@ __metadata:
     find-packages: "npm:10.0.4"
     find-up: "npm:5.0.0"
     fs-extra: "npm:11.1.1"
-    git-url-parse: "npm:13.1.0"
+    git-url-parse: "npm:13.1.1"
     github-url-from-git: "npm:1.5.0"
     glob: "npm:10.3.10"
     global-agent: "npm:3.0.0"
@@ -11129,7 +11129,7 @@ __metadata:
   bin:
     renovate: dist/renovate.js
     renovate-config-validator: dist/config-validator.js
-  checksum: 6c3651256b4495a370146b020d0b4f0506fa1926138ff6dbc32bbb192c9437fa8374eff757fa2351721dec5dc584787b9f69a3ef22a7b9e17ee8df7be98997c5
+  checksum: a5ba3ab87c09998c81943a6d5184fa65ce842832e1c26361d183e378d0816dc2371d57c392fb534a3a5c90dcdcccbab16a3216adb5e7ebf5b0d7c6bf62bc1eba
   languageName: node
   linkType: hard
 
