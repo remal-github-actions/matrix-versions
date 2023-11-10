@@ -106,7 +106,7 @@ export interface MatrixItem {
    */
   only?: VersionOnlyFilter[];
   /**
-   * Versions match to any of these filters are excluded
+   * Versions match to any of these filters are included
    */
   include?: VersionFilter[];
   /**
