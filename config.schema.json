@@ -69,7 +69,7 @@
           }
         },
         "include": {
-          "description": "Versions match to any of these filters are excluded",
+          "description": "Versions match to any of these filters are included",
           "type": "array",
           "uniqueItems": true,
           "items": {
