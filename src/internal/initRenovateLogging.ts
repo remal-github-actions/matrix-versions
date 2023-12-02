@@ -23,6 +23,7 @@ export function initRenovateLogging() {
     const levelMessagesToHide: Partial<Record<LogLevelString, RegExp[]>> = {
         warn: [
             /^RE2 not usable, falling back to RegExp$/,
+            /^Cannot parse env$/,
         ],
     }
 
