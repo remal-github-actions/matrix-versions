@@ -2267,7 +2267,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@opentelemetry/api-logs@npm:0.45.1":
+"@opentelemetry/api-logs@npm:0.45.1, @opentelemetry/api-logs@npm:^0.45.1":
   version: 0.45.1
   resolution: "@opentelemetry/api-logs@npm:0.45.1"
   dependencies:
@@ -2325,15 +2325,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@opentelemetry/instrumentation-bunyan@npm:0.33.0":
-  version: 0.33.0
-  resolution: "@opentelemetry/instrumentation-bunyan@npm:0.33.0"
+"@opentelemetry/instrumentation-bunyan@npm:0.34.0":
+  version: 0.34.0
+  resolution: "@opentelemetry/instrumentation-bunyan@npm:0.34.0"
   dependencies:
+    "@opentelemetry/api-logs": "npm:^0.45.1"
     "@opentelemetry/instrumentation": "npm:^0.45.1"
     "@types/bunyan": "npm:1.8.9"
   peerDependencies:
     "@opentelemetry/api": ^1.3.0
-  checksum: c759d4096ee349535e082f5f99fcd97b5b9e827653a184bdd9d382f9fb38ce5a50133009866e3303e2cea6d8d36c0c883a13dbd94f88205ccb68709c84430d5b
+  checksum: 4ab52ae7aa0e20fd0d9939566656ac3bb59c9edf051714965414f52c58d6340988f682333d165ac3a0818cca114b9e9c44537de4d11f7baeba0e39b8f367eddc
   languageName: node
   linkType: hard
 
@@ -2681,17 +2682,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@renovatebot/pep440@npm:3.0.12":
-  version: 3.0.12
-  resolution: "@renovatebot/pep440@npm:3.0.12"
-  checksum: 1b024dfcbb365f2747847550cee87db886d4b774ae910434c617848ccaa7c03c8af63803b5cb5f0c81232e3a72aee5c87c6c1237dd156ee748277ac0b5ae2095
+"@renovatebot/pep440@npm:3.0.14":
+  version: 3.0.14
+  resolution: "@renovatebot/pep440@npm:3.0.14"
+  checksum: 3ea1746ddbcef49e9dd9e2ab5ead60556bff7e0bdb82b6dbad33145c10fa6daad984f911ab63f9fc78b24cc3e44b71f09c877da71375832a3868d6b6d871c00c
   languageName: node
   linkType: hard
 
-"@renovatebot/ruby-semver@npm:3.0.19":
-  version: 3.0.19
-  resolution: "@renovatebot/ruby-semver@npm:3.0.19"
-  checksum: 4808538239c6f49332a60dc77e1ec68512676eeb8f019085ac31c915b1804f3cfe28ba1b2dc35f7a0099de7a9f359abf0092cfd82de9683117436d6efea99f27
+"@renovatebot/ruby-semver@npm:3.0.21":
+  version: 3.0.21
+  resolution: "@renovatebot/ruby-semver@npm:3.0.21"
+  checksum: c3eee50110994d1aff804cdd8cac8f78ab6841289611a8d477f1b7540de38793c3db9597c58dae494946d77908bdb5fe55e2ec3be084f3fc0cc32c510d8acf4d
   languageName: node
   linkType: hard
 
@@ -7364,10 +7365,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"graph-data-structure@npm:3.3.0":
-  version: 3.3.0
-  resolution: "graph-data-structure@npm:3.3.0"
-  checksum: 6b6b8c3e6f972c43fcc967d99cb554add0245753144041aa77ebffb01241d9b1939b801769294987a863dc765b0c8a8e1d1b576eedc3a3fa125fa798482d831a
+"graph-data-structure@npm:3.5.0":
+  version: 3.5.0
+  resolution: "graph-data-structure@npm:3.5.0"
+  checksum: 3a86e3881e260a6a955e3f4110bce795d87d4a2e1f9ae0e193f4e867538681f2d4bfc554169bdd003fa390c968467cbe86e90d47f5c9f0767d810a627475eec0
   languageName: node
   linkType: hard
 
@@ -9388,7 +9389,7 @@ __metadata:
     jest-circus: "npm:29.7.0"
     jest-extended: "npm:4.0.2"
     json-schema-to-typescript: "npm:13.1.1"
-    renovate: "npm:37.89.8"
+    renovate: "npm:37.102.0"
     rimraf: "npm:5.0.5"
     semver: "npm:7.5.4"
     ts-jest: "npm:29.1.1"
@@ -10831,9 +10832,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"renovate@npm:37.89.8":
-  version: 37.89.8
-  resolution: "renovate@npm:37.89.8"
+"renovate@npm:37.102.0":
+  version: 37.102.0
+  resolution: "renovate@npm:37.102.0"
   dependencies:
     "@aws-sdk/client-codecommit": "npm:3.363.0"
     "@aws-sdk/client-ec2": "npm:3.363.0"
@@ -10847,7 +10848,7 @@ __metadata:
     "@opentelemetry/context-async-hooks": "npm:1.18.1"
     "@opentelemetry/exporter-trace-otlp-http": "npm:0.45.1"
     "@opentelemetry/instrumentation": "npm:0.45.1"
-    "@opentelemetry/instrumentation-bunyan": "npm:0.33.0"
+    "@opentelemetry/instrumentation-bunyan": "npm:0.34.0"
     "@opentelemetry/instrumentation-http": "npm:0.45.1"
     "@opentelemetry/resources": "npm:1.18.1"
     "@opentelemetry/sdk-trace-base": "npm:1.18.1"
@@ -10855,8 +10856,8 @@ __metadata:
     "@opentelemetry/semantic-conventions": "npm:1.18.1"
     "@qnighy/marshal": "npm:0.1.3"
     "@renovatebot/osv-offline": "npm:1.3.10"
-    "@renovatebot/pep440": "npm:3.0.12"
-    "@renovatebot/ruby-semver": "npm:3.0.19"
+    "@renovatebot/pep440": "npm:3.0.14"
+    "@renovatebot/ruby-semver": "npm:3.0.21"
     "@sindresorhus/is": "npm:4.6.0"
     "@types/ms": "npm:0.7.34"
     "@types/tmp": "npm:0.2.6"
@@ -10895,7 +10896,7 @@ __metadata:
     good-enough-parser: "npm:1.1.23"
     google-auth-library: "npm:9.4.1"
     got: "npm:11.8.6"
-    graph-data-structure: "npm:3.3.0"
+    graph-data-structure: "npm:3.5.0"
     handlebars: "npm:4.7.8"
     ignore: "npm:5.3.0"
     ini: "npm:4.1.1"
@@ -10948,7 +10949,7 @@ __metadata:
   bin:
     renovate: dist/renovate.js
     renovate-config-validator: dist/config-validator.js
-  checksum: 66e8a589946b59e76f376db2e7adfcd6a04f290da65471721c3edc01d79476199cfd5738de9fd995d9e37534bbd2a5bd100a5a16612e77cfc085242561f45bb0
+  checksum: 482499409e900ee408c918ef8a203a2c24ba71f81d5848056517abbb40591dac85e83b9887aed84a05a18bdf62f93ce6ddfe1f8ee0e709fb40f24865d61e2b98
   languageName: node
   linkType: hard
 
