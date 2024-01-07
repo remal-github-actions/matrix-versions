@@ -50,6 +50,7 @@ export type StaticVersioning =
   | "python"
   | "redhat"
   | "rez"
+  | "rpm"
   | "ruby"
   | "semver"
   | "semver-coerced"
