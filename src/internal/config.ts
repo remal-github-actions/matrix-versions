@@ -55,7 +55,8 @@ export type StaticVersioning =
   | "semver"
   | "semver-coerced"
   | "swift"
-  | "ubuntu";
+  | "ubuntu"
+  | "unity3d";
 /**
  * This interface was referenced by `undefined`'s JSON-Schema definition
  * via the `patternProperty` "^(gradle-wrapper|java|java/full|maven:.+|node|node/full)$".

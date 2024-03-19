@@ -179,7 +179,8 @@
         "semver",
         "semver-coerced",
         "swift",
-        "ubuntu"
+        "ubuntu",
+        "unity3d"
       ]
     },
     "host-auth": {

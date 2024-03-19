@@ -13536,6 +13536,13 @@ var require_ignore = __commonJS({
       return slashes.slice(0, length - length % 2);
     };
     var REPLACERS = [
+      [
+        // remove BOM
+        // TODO:
+        // Other similar zero-width characters?
+        /^\uFEFF/,
+        () => EMPTY
+      ],
       // > Trailing spaces are ignored unless they are quoted with backslash ("\")
       [
         // (a\ ) -> (a )
@@ -20561,13 +20568,12 @@ function getLanguageByFileName(languages2, file) {
   }
   const basename = getFileBasename(file).toLowerCase();
   return languages2.find(
-    (language) => {
-      var _a, _b;
-      return ((_a = language.extensions) == null ? void 0 : _a.some((extension) => basename.endsWith(extension))) || ((_b = language.filenames) == null ? void 0 : _b.some((name) => name.toLowerCase() === basename));
-    }
+    ({ filenames }) => filenames == null ? void 0 : filenames.some((name) => name.toLowerCase() === basename)
+  ) ?? languages2.find(
+    ({ extensions }) => extensions == null ? void 0 : extensions.some((extension) => basename.endsWith(extension))
   );
 }
-function getLanguageByName(languages2, languageName) {
+function getLanguageByLanguageName(languages2, languageName) {
   if (!languageName) {
     return;
   }
@@ -20582,10 +20588,7 @@ function getLanguageByInterpreter(languages2, file) {
     return;
   }
   return languages2.find(
-    (language) => {
-      var _a;
-      return (_a = language.interpreters) == null ? void 0 : _a.includes(interpreter);
-    }
+    ({ interpreters }) => interpreters == null ? void 0 : interpreters.includes(interpreter)
   );
 }
 function inferParser(options8, fileInfo) {
@@ -20595,7 +20598,7 @@ function inferParser(options8, fileInfo) {
       plugin.languages ?? []
     )
   );
-  const language = getLanguageByName(languages2, fileInfo.language) ?? getLanguageByFileName(languages2, fileInfo.physicalFile) ?? getLanguageByFileName(languages2, fileInfo.file) ?? getLanguageByInterpreter(languages2, fileInfo.physicalFile);
+  const language = getLanguageByLanguageName(languages2, fileInfo.language) ?? getLanguageByFileName(languages2, fileInfo.physicalFile) ?? getLanguageByFileName(languages2, fileInfo.file) ?? getLanguageByInterpreter(languages2, fileInfo.physicalFile);
   return language == null ? void 0 : language.parsers[0];
 }
 var infer_parser_default = inferParser;
@@ -24869,7 +24872,12 @@ var languages_evaluate_default6 = [
       "Pipfile.lock",
       "composer.lock",
       "flake.lock",
-      "mcmod.info"
+      "mcmod.info",
+      ".babelrc",
+      ".jscsrc",
+      ".jshintrc",
+      ".jslintrc",
+      ".swcrc"
     ],
     "parsers": [
       "json"
@@ -24909,21 +24917,7 @@ var languages_evaluate_default6 = [
       ".sublime_metrics",
       ".sublime_session"
     ],
-    "filenames": [
-      ".babelrc",
-      ".devcontainer.json",
-      ".eslintrc.json",
-      ".jscsrc",
-      ".jshintrc",
-      ".jslintrc",
-      ".swcrc",
-      "api-extractor.json",
-      "devcontainer.json",
-      "jsconfig.json",
-      "language-configuration.json",
-      "tsconfig.json",
-      "tslint.json"
-    ],
+    "filenames": [],
     "parsers": [
       "jsonc"
     ],
@@ -25271,7 +25265,7 @@ var object_omit_default = omit;
 
 
 // src/main/version.evaluate.cjs
-var version_evaluate_default = "3.2.2";
+var version_evaluate_default = "3.2.5";
 
 // src/utils/public.js
 var prettier_public_exports = {};
