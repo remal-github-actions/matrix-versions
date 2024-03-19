@@ -1,7 +1,7 @@
 import * as core from '@actions/core'
 import * as versionings from 'renovate/dist/modules/versioning'
 import { VersioningApi } from 'renovate/dist/modules/versioning/types'
-import { configRegexPredicate } from 'renovate/dist/util/regex'
+import { getRegexPredicate } from 'renovate/dist/util/string-match'
 import { actionDebug } from './actionDebug'
 import { MatrixItem, VersionOnlyFilter } from './config'
 import { DEFAULT_VERSIONING } from './constants'
@@ -85,7 +85,7 @@ export function filterFetchedVersions(fetchedMatrixItem: FetchedMatrixItem): Fet
     const includePredicates: FilterRegexPredicate[] = []
     const includeRanges: string[] = []
     fetchedMatrixItem.include?.forEach(filter => {
-        const filterRegexPredicate = configRegexPredicate(filter)
+        const filterRegexPredicate = getRegexPredicate(filter)
         if (filterRegexPredicate != null) {
             includePredicates.push({
                 filter,
@@ -99,7 +99,7 @@ export function filterFetchedVersions(fetchedMatrixItem: FetchedMatrixItem): Fet
     const excludePredicates: FilterRegexPredicate[] = []
     const excludeRanges: string[] = []
     fetchedMatrixItem.exclude?.forEach(filter => {
-        const filterRegexPredicate = configRegexPredicate(filter)
+        const filterRegexPredicate = getRegexPredicate(filter)
         if (filterRegexPredicate != null) {
             excludePredicates.push({
                 filter,
