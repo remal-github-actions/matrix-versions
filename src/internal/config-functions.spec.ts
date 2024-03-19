@@ -201,8 +201,8 @@ describe(processGlobalCompatibilityAliases.name, () => {
         }
         const expectedConfig: Config = {
             globalCompatibilities: {
-                '1': clone(config.globalCompatibilities!!['1']),
-                '3': clone(config.globalCompatibilities!!['1']),
+                '1': clone(config.globalCompatibilities!['1']),
+                '3': clone(config.globalCompatibilities!['1']),
             },
         }
         processGlobalCompatibilityAliases(config)
@@ -268,7 +268,7 @@ describe(populateGlobalCompatibilities.name, () => {
             matrix: {
                 'prop1': {
                     dependency: '1',
-                    compatibilities: clone(config.globalCompatibilities!!['1']),
+                    compatibilities: clone(config.globalCompatibilities!['1']),
                 },
             },
         }
