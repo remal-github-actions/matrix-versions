@@ -25,6 +25,7 @@ export abstract class VersionFetcherRenovateDatasource extends VersionFetcher {
         }
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     protected createRenovateReleaseFilter(params: VersionFetchParams): RenovateReleaseFilter {
         return release => release.isDeprecated !== true
     }
