@@ -1647,12 +1647,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cdktf/hcl2json@npm:0.20.4":
-  version: 0.20.4
-  resolution: "@cdktf/hcl2json@npm:0.20.4"
+"@cdktf/hcl2json@npm:0.20.5":
+  version: 0.20.5
+  resolution: "@cdktf/hcl2json@npm:0.20.5"
   dependencies:
     fs-extra: "npm:11.2.0"
-  checksum: 10c0/2803403406056128cc68409fd1340e9da5fae93bf834e5ab09ebdd7cd62d077d812c97db11f08862a95597c19880990ec95bec4d544e6cd14aeb229d3b5c87c9
+  checksum: 10c0/93f015b4fd3a1c2d55c1b62e2dafadae562d83b2b11ac36186e8832f1d78d5015dbe3a89c04a6add1690b6c4aedf83b7a979cf545a43a56d259648cc092d0abd
   languageName: node
   linkType: hard
 
@@ -9634,7 +9634,7 @@ __metadata:
     jest-circus: "npm:29.7.0"
     jest-extended: "npm:4.0.2"
     json-schema-to-typescript: "npm:13.1.2"
-    renovate: "npm:37.269.3"
+    renovate: "npm:37.269.5"
     rimraf: "npm:5.0.5"
     semver: "npm:7.6.0"
     ts-jest: "npm:29.1.2"
@@ -11129,9 +11129,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"renovate@npm:37.269.3":
-  version: 37.269.3
-  resolution: "renovate@npm:37.269.3"
+"renovate@npm:37.269.5":
+  version: 37.269.5
+  resolution: "renovate@npm:37.269.5"
   dependencies:
     "@aws-sdk/client-codecommit": "npm:3.363.0"
     "@aws-sdk/client-ec2": "npm:3.363.0"
@@ -11140,7 +11140,7 @@ __metadata:
     "@aws-sdk/client-s3": "npm:3.363.0"
     "@aws-sdk/credential-providers": "npm:3.363.0"
     "@breejs/later": "npm:4.2.0"
-    "@cdktf/hcl2json": "npm:0.20.4"
+    "@cdktf/hcl2json": "npm:0.20.5"
     "@opentelemetry/api": "npm:1.8.0"
     "@opentelemetry/context-async-hooks": "npm:1.22.0"
     "@opentelemetry/exporter-trace-otlp-http": "npm:0.49.1"
@@ -11248,7 +11248,7 @@ __metadata:
   bin:
     renovate: dist/renovate.js
     renovate-config-validator: dist/config-validator.js
-  checksum: 10c0/699880019903ac926eae79eb434fab540c38b19ce2245c48929ebc2671db4901b20306ec2ef9cff32e33ce8c4a3658ab9e730f900c542e59183ee6f07d58d7f9
+  checksum: 10c0/d7906c880083b264ff73dee9c6409e29e965ec0c050d285973ba7c86cba6a693d9f21795b70bbdd49330d8b47072e4bf24f25af60e27155b9067dc1db95c7028
   languageName: node
   linkType: hard
 
