@@ -3,6 +3,11 @@
   "globalCompatibilities": {
     "gradle-wrapper": [
       {
+        "versionRange": "[8.8,)",
+        "dependency": "java",
+        "dependencyVersionRange": "[8,22.9999)"
+      },
+      {
         "versionRange": "[8.5,)",
         "dependency": "java",
         "dependencyVersionRange": "[8,21.9999)"
