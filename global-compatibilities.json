@@ -109,9 +109,14 @@
     ],
     "maven:org.springframework.cloud:spring-cloud-dependencies": [
       {
-        "versionRange": "[2022,)",
+        "versionRange": "[2023,)",
         "dependency": "maven:org.springframework.boot:spring-boot-dependencies",
-        "dependencyVersionRange": "[3,)"
+        "dependencyVersionRange": "[3.2,)"
+      },
+      {
+        "versionRange": "[2022,2023)",
+        "dependency": "maven:org.springframework.boot:spring-boot-dependencies",
+        "dependencyVersionRange": "[3,3.1.9999)"
       },
       {
         "versionRange": "[2021.0.3,2022)",
