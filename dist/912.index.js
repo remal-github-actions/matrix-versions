@@ -25132,7 +25132,7 @@ var { parsers, printers } = createParsersAndPrinters([
     ]
   },
   {
-    importPlugin: () => __webpack_require__.e(/* import() */ 18).then(__webpack_require__.bind(__webpack_require__, 36934)),
+    importPlugin: () => __webpack_require__.e(/* import() */ 18).then(__webpack_require__.bind(__webpack_require__, 14018)),
     parsers: [
       "babel",
       "babel-flow",
@@ -25183,7 +25183,7 @@ var { parsers, printers } = createParsersAndPrinters([
     parsers: ["meriyah"]
   },
   {
-    importPlugin: () => __webpack_require__.e(/* import() */ 14).then(__webpack_require__.bind(__webpack_require__, 21896)),
+    importPlugin: () => __webpack_require__.e(/* import() */ 14).then(__webpack_require__.bind(__webpack_require__, 32014)),
     parsers: ["css", "less", "scss"],
     printers: ["postcss"]
   },
