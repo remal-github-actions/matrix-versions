@@ -44,7 +44,7 @@
     "jest-circus": "29.7.0",
     "jest-extended": "4.0.2",
     "json-schema-to-typescript": "14.0.4",
-    "rimraf": "5.0.6",
+    "rimraf": "5.0.7",
     "semver": "7.6.2",
     "ts-jest": "29.1.2",
     "ts-node": "10.9.2",
