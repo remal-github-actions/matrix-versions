@@ -51,6 +51,6 @@
     "typescript": "5.4.5"
   },
   "resolutions": {
-    "re2": "npm:@favware/skip-dependency@1.2.1"
+    "re2": "npm:@favware/skip-dependency@1.2.2"
   }
 }
