@@ -32,6 +32,7 @@ export type StaticVersioning =
   | "debian"
   | "docker"
   | "git"
+  | "glasskube"
   | "go-mod-directive"
   | "gradle"
   | "hashicorp"
