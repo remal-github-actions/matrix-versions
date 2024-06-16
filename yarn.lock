@@ -11696,10 +11696,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"re2@npm:@favware/skip-dependency@1.2.1":
-  version: 1.2.1
-  resolution: "@favware/skip-dependency@npm:1.2.1"
-  checksum: 10c0/61424e8591bd3058fd1a88b14e8ac15d4da1fad2411576017c34b3ac8e1164df8c61db556ad6ee5edbde8e2c24b90a842854edc5c1fc8d16c655b961bd84a8ac
+"re2@npm:@favware/skip-dependency@1.2.2":
+  version: 1.2.2
+  resolution: "@favware/skip-dependency@npm:1.2.2"
+  checksum: 10c0/f7d46dcb99e2cb531a280532f2b46b286e56c68faee6e2435a0aa2e3255347a1a59ec804811a920df768c7315f290383baa6b3a960e13cc13c4909ab41d290a4
   languageName: node
   linkType: hard
 
