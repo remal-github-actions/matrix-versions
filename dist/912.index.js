@@ -511,7 +511,7 @@ function willBreak(doc) {
 function breakParentGroup(groupStack) {
   if (groupStack.length > 0) {
     const parentGroup = at_default(
-      /* isOptionalObject*/
+      /* isOptionalObject */
       false,
       groupStack,
       -1
@@ -568,12 +568,12 @@ function removeLines(doc) {
 function stripTrailingHardlineFromParts(parts) {
   parts = [...parts];
   while (parts.length >= 2 && at_default(
-    /* isOptionalObject*/
+    /* isOptionalObject */
     false,
     parts,
     -2
   ).type === DOC_TYPE_LINE && at_default(
-    /* isOptionalObject*/
+    /* isOptionalObject */
     false,
     parts,
     -1
@@ -582,7 +582,7 @@ function stripTrailingHardlineFromParts(parts) {
   }
   if (parts.length > 0) {
     const lastPart = stripTrailingHardlineFromDoc(at_default(
-      /* isOptionalObject*/
+      /* isOptionalObject */
       false,
       parts,
       -1
@@ -670,7 +670,7 @@ function cleanDocFn(doc) {
         }
         const [currentPart, ...restParts] = Array.isArray(part) ? part : [part];
         if (typeof currentPart === "string" && typeof at_default(
-          /* isOptionalObject*/
+          /* isOptionalObject */
           false,
           parts,
           -1
@@ -908,7 +908,7 @@ function fits(next, restCommands, width, hasLineSuffix, groupModeMap, mustBeFlat
         }
         const groupMode = doc.break ? MODE_BREAK : mode;
         const contents = doc.expandedStates && groupMode === MODE_BREAK ? at_default(
-          /* isOptionalObject*/
+          /* isOptionalObject */
           false,
           doc.expandedStates,
           -1
@@ -975,7 +975,7 @@ function printDocToString(doc, options) {
     switch (get_doc_type_default(doc2)) {
       case DOC_TYPE_STRING: {
         const formatted = newLine !== "\n" ? string_replace_all_default(
-          /* isOptionalObject*/
+          /* isOptionalObject */
           false,
           doc2,
           "\n",
@@ -1045,7 +1045,7 @@ function printDocToString(doc, options) {
             } else {
               if (doc2.expandedStates) {
                 const mostExpanded = at_default(
-                  /* isOptionalObject*/
+                  /* isOptionalObject */
                   false,
                   doc2.expandedStates,
                   -1
@@ -1093,7 +1093,7 @@ function printDocToString(doc, options) {
         }
         if (doc2.id) {
           groupModeMap[doc2.id] = at_default(
-            /* isOptionalObject*/
+            /* isOptionalObject */
             false,
             cmds,
             -1
@@ -12527,47 +12527,55 @@ var require_lib = __commonJS({
 // node_modules/picocolors/picocolors.js
 var require_picocolors = __commonJS({
   "node_modules/picocolors/picocolors.js"(exports, module) {
-    var tty2 = __require("tty");
-    var isColorSupported = !("NO_COLOR" in process.env || process.argv.includes("--no-color")) && ("FORCE_COLOR" in process.env || process.argv.includes("--color") || process.platform === "win32" || tty2.isatty(1) && process.env.TERM !== "dumb" || "CI" in process.env);
+    var argv = process.argv || [];
+    var env2 = process.env;
+    var isColorSupported = !("NO_COLOR" in env2 || argv.includes("--no-color")) && ("FORCE_COLOR" in env2 || argv.includes("--color") || process.platform === "win32" || __require != null && __require("tty").isatty(1) && env2.TERM !== "dumb" || "CI" in env2);
     var formatter = (open, close, replace = open) => (input) => {
       let string = "" + input;
       let index = string.indexOf(close, open.length);
       return ~index ? open + replaceClose(string, close, replace, index) + close : open + string + close;
     };
     var replaceClose = (string, close, replace, index) => {
-      let start = string.substring(0, index) + replace;
-      let end = string.substring(index + close.length);
-      let nextIndex = end.indexOf(close);
-      return ~nextIndex ? start + replaceClose(end, close, replace, nextIndex) : start + end;
+      let result = "";
+      let cursor2 = 0;
+      do {
+        result += string.substring(cursor2, index) + replace;
+        cursor2 = index + close.length;
+        index = string.indexOf(close, cursor2);
+      } while (~index);
+      return result + string.substring(cursor2);
     };
-    var createColors = (enabled = isColorSupported) => ({
-      isColorSupported: enabled,
-      reset: enabled ? (s) => `\x1B[0m${s}\x1B[0m` : String,
-      bold: enabled ? formatter("\x1B[1m", "\x1B[22m", "\x1B[22m\x1B[1m") : String,
-      dim: enabled ? formatter("\x1B[2m", "\x1B[22m", "\x1B[22m\x1B[2m") : String,
-      italic: enabled ? formatter("\x1B[3m", "\x1B[23m") : String,
-      underline: enabled ? formatter("\x1B[4m", "\x1B[24m") : String,
-      inverse: enabled ? formatter("\x1B[7m", "\x1B[27m") : String,
-      hidden: enabled ? formatter("\x1B[8m", "\x1B[28m") : String,
-      strikethrough: enabled ? formatter("\x1B[9m", "\x1B[29m") : String,
-      black: enabled ? formatter("\x1B[30m", "\x1B[39m") : String,
-      red: enabled ? formatter("\x1B[31m", "\x1B[39m") : String,
-      green: enabled ? formatter("\x1B[32m", "\x1B[39m") : String,
-      yellow: enabled ? formatter("\x1B[33m", "\x1B[39m") : String,
-      blue: enabled ? formatter("\x1B[34m", "\x1B[39m") : String,
-      magenta: enabled ? formatter("\x1B[35m", "\x1B[39m") : String,
-      cyan: enabled ? formatter("\x1B[36m", "\x1B[39m") : String,
-      white: enabled ? formatter("\x1B[37m", "\x1B[39m") : String,
-      gray: enabled ? formatter("\x1B[90m", "\x1B[39m") : String,
-      bgBlack: enabled ? formatter("\x1B[40m", "\x1B[49m") : String,
-      bgRed: enabled ? formatter("\x1B[41m", "\x1B[49m") : String,
-      bgGreen: enabled ? formatter("\x1B[42m", "\x1B[49m") : String,
-      bgYellow: enabled ? formatter("\x1B[43m", "\x1B[49m") : String,
-      bgBlue: enabled ? formatter("\x1B[44m", "\x1B[49m") : String,
-      bgMagenta: enabled ? formatter("\x1B[45m", "\x1B[49m") : String,
-      bgCyan: enabled ? formatter("\x1B[46m", "\x1B[49m") : String,
-      bgWhite: enabled ? formatter("\x1B[47m", "\x1B[49m") : String
-    });
+    var createColors = (enabled = isColorSupported) => {
+      let init = enabled ? formatter : () => String;
+      return {
+        isColorSupported: enabled,
+        reset: init("\x1B[0m", "\x1B[0m"),
+        bold: init("\x1B[1m", "\x1B[22m", "\x1B[22m\x1B[1m"),
+        dim: init("\x1B[2m", "\x1B[22m", "\x1B[22m\x1B[2m"),
+        italic: init("\x1B[3m", "\x1B[23m"),
+        underline: init("\x1B[4m", "\x1B[24m"),
+        inverse: init("\x1B[7m", "\x1B[27m"),
+        hidden: init("\x1B[8m", "\x1B[28m"),
+        strikethrough: init("\x1B[9m", "\x1B[29m"),
+        black: init("\x1B[30m", "\x1B[39m"),
+        red: init("\x1B[31m", "\x1B[39m"),
+        green: init("\x1B[32m", "\x1B[39m"),
+        yellow: init("\x1B[33m", "\x1B[39m"),
+        blue: init("\x1B[34m", "\x1B[39m"),
+        magenta: init("\x1B[35m", "\x1B[39m"),
+        cyan: init("\x1B[36m", "\x1B[39m"),
+        white: init("\x1B[37m", "\x1B[39m"),
+        gray: init("\x1B[90m", "\x1B[39m"),
+        bgBlack: init("\x1B[40m", "\x1B[49m"),
+        bgRed: init("\x1B[41m", "\x1B[49m"),
+        bgGreen: init("\x1B[42m", "\x1B[49m"),
+        bgYellow: init("\x1B[43m", "\x1B[49m"),
+        bgBlue: init("\x1B[44m", "\x1B[49m"),
+        bgMagenta: init("\x1B[45m", "\x1B[49m"),
+        bgCyan: init("\x1B[46m", "\x1B[49m"),
+        bgWhite: init("\x1B[47m", "\x1B[49m")
+      };
+    };
     module.exports = createColors();
     module.exports.createColors = createColors;
   }
@@ -19083,7 +19091,7 @@ var import_ignore = __toESM(require_ignore(), 1);
 
 var createIgnore = import_ignore.default.default;
 var slash = external_path_.sep === "\\" ? (filePath) => prettier_string_replace_all_default(
-  /* isOptionalObject*/
+  /* isOptionalObject */
   false,
   filePath,
   "\\",
@@ -19275,7 +19283,7 @@ function countEndOfLineChars(text, eol) {
 }
 function normalizeEndOfLine(text) {
   return prettier_string_replace_all_default(
-    /* isOptionalObject*/
+    /* isOptionalObject */
     false,
     text,
     /\r\n?/g,
@@ -19731,7 +19739,7 @@ function prettier_mapDoc(doc2, cb) {
 function prettier_breakParentGroup(groupStack) {
   if (groupStack.length > 0) {
     const parentGroup = prettier_at_default(
-      /* isOptionalObject*/
+      /* isOptionalObject */
       false,
       groupStack,
       -1
@@ -19776,12 +19784,12 @@ function prettier_propagateBreaks(doc2) {
 function prettier_stripTrailingHardlineFromParts(parts) {
   parts = [...parts];
   while (parts.length >= 2 && prettier_at_default(
-    /* isOptionalObject*/
+    /* isOptionalObject */
     false,
     parts,
     -2
   ).type === prettier_DOC_TYPE_LINE && prettier_at_default(
-    /* isOptionalObject*/
+    /* isOptionalObject */
     false,
     parts,
     -1
@@ -19790,7 +19798,7 @@ function prettier_stripTrailingHardlineFromParts(parts) {
   }
   if (parts.length > 0) {
     const lastPart = prettier_stripTrailingHardlineFromDoc(prettier_at_default(
-      /* isOptionalObject*/
+      /* isOptionalObject */
       false,
       parts,
       -1
@@ -19878,7 +19886,7 @@ function prettier_cleanDocFn(doc2) {
         }
         const [currentPart, ...restParts] = Array.isArray(part) ? part : [part];
         if (typeof currentPart === "string" && typeof prettier_at_default(
-          /* isOptionalObject*/
+          /* isOptionalObject */
           false,
           parts,
           -1
@@ -20111,7 +20119,7 @@ function prettier_fits(next, restCommands, width, hasLineSuffix, groupModeMap, m
         }
         const groupMode = doc2.break ? prettier_MODE_BREAK : mode;
         const contents = doc2.expandedStates && groupMode === prettier_MODE_BREAK ? prettier_at_default(
-          /* isOptionalObject*/
+          /* isOptionalObject */
           false,
           doc2.expandedStates,
           -1
@@ -20178,7 +20186,7 @@ function prettier_printDocToString(doc2, options8) {
     switch (prettier_get_doc_type_default(doc3)) {
       case prettier_DOC_TYPE_STRING: {
         const formatted = newLine !== "\n" ? prettier_string_replace_all_default(
-          /* isOptionalObject*/
+          /* isOptionalObject */
           false,
           doc3,
           "\n",
@@ -20248,7 +20256,7 @@ function prettier_printDocToString(doc2, options8) {
             } else {
               if (doc3.expandedStates) {
                 const mostExpanded = prettier_at_default(
-                  /* isOptionalObject*/
+                  /* isOptionalObject */
                   false,
                   doc3.expandedStates,
                   -1
@@ -20296,7 +20304,7 @@ function prettier_printDocToString(doc2, options8) {
         }
         if (doc3.id) {
           groupModeMap[doc3.id] = prettier_at_default(
-            /* isOptionalObject*/
+            /* isOptionalObject */
             false,
             cmds,
             -1
@@ -20512,7 +20520,7 @@ var AstPath = class {
       siblings
     } = this;
     return prettier_at_default(
-      /* isOptionalObject*/
+      /* isOptionalObject */
       false,
       stack2,
       siblings === null ? -2 : -4
@@ -20521,7 +20529,7 @@ var AstPath = class {
   /** @type {number | null} */
   get index() {
     return this.siblings === null ? null : prettier_at_default(
-      /* isOptionalObject*/
+      /* isOptionalObject */
       false,
       this.stack,
       -2
@@ -20530,7 +20538,7 @@ var AstPath = class {
   /** @type {object} */
   get node() {
     return prettier_at_default(
-      /* isOptionalObject*/
+      /* isOptionalObject */
       false,
       this.stack,
       -1
@@ -20554,7 +20562,7 @@ var AstPath = class {
       stack: stack2
     } = this;
     const maybeArray = prettier_at_default(
-      /* isOptionalObject*/
+      /* isOptionalObject */
       false,
       stack2,
       -3
@@ -20610,7 +20618,7 @@ var AstPath = class {
     } = stack2;
     if (length > 1) {
       return prettier_at_default(
-        /* isOptionalObject*/
+        /* isOptionalObject */
         false,
         stack2,
         -2
@@ -20622,7 +20630,7 @@ var AstPath = class {
   // this.stack.
   getValue() {
     return prettier_at_default(
-      /* isOptionalObject*/
+      /* isOptionalObject */
       false,
       this.stack,
       -1
@@ -20648,7 +20656,7 @@ var AstPath = class {
       length
     } = stack2;
     let value = prettier_at_default(
-      /* isOptionalObject*/
+      /* isOptionalObject */
       false,
       stack2,
       -1
@@ -20684,7 +20692,7 @@ var AstPath = class {
       length
     } = stack2;
     let value = prettier_at_default(
-      /* isOptionalObject*/
+      /* isOptionalObject */
       false,
       stack2,
       -1
@@ -21696,7 +21704,7 @@ function normalizeOptionSettings(settings) {
     };
     if (Array.isArray(option.default)) {
       option.default = prettier_at_default(
-        /* isOptionalObject*/
+        /* isOptionalObject */
         false,
         option.default,
         -1
@@ -21852,7 +21860,7 @@ function optionInfoToSchema(optionInfo, {
   if (isCLI && !optionInfo.array) {
     const originalPreprocess = parameters.preprocess || ((x) => x);
     parameters.preprocess = (value, schema2, utils) => schema2.preprocess(originalPreprocess(Array.isArray(value) ? prettier_at_default(
-      /* isOptionalObject*/
+      /* isOptionalObject */
       false,
       value,
       -1
@@ -21895,7 +21903,7 @@ function getParserPluginByParserName(plugins, parserName) {
     throw new Error("parserName is required.");
   }
   const plugin = array_find_last_default(
-    /* isOptionalObject*/
+    /* isOptionalObject */
     false,
     plugins,
     (plugin2) => plugin2.parsers && Object.prototype.hasOwnProperty.call(plugin2.parsers, parserName)
@@ -21912,7 +21920,7 @@ function getPrinterPluginByAstFormat(plugins, astFormat) {
     throw new Error("astFormat is required.");
   }
   const plugin = array_find_last_default(
-    /* isOptionalObject*/
+    /* isOptionalObject */
     false,
     plugins,
     (plugin2) => plugin2.printers && Object.prototype.hasOwnProperty.call(plugin2.printers, astFormat)
@@ -22610,7 +22618,7 @@ async function formatRange(originalText, opts) {
       cursorOffset += countEndOfLineChars(formatted.slice(0, cursorOffset), "\n");
     }
     formatted = prettier_string_replace_all_default(
-      /* isOptionalObject*/
+      /* isOptionalObject */
       false,
       formatted,
       "\n",
@@ -23855,7 +23863,7 @@ var object_omit_default = omit;
 
 
 // src/main/version.evaluate.cjs
-var version_evaluate_default = "3.3.1";
+var version_evaluate_default = "3.3.2";
 
 // src/utils/public.js
 var prettier_public_exports = {};
@@ -24016,7 +24024,7 @@ function makeString(rawText, enclosingQuote, unescapeUnnecessaryEscapes) {
   const otherQuote = enclosingQuote === '"' ? "'" : '"';
   const regex = /\\(.)|(["'])/gs;
   const raw = prettier_string_replace_all_default(
-    /* isOptionalObject*/
+    /* isOptionalObject */
     false,
     rawText,
     regex,
