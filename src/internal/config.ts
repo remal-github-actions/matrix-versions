@@ -53,6 +53,7 @@ export type StaticVersioning =
   | "rez"
   | "rpm"
   | "ruby"
+  | "same-major"
   | "semver"
   | "semver-coerced"
   | "swift"

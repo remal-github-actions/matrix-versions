@@ -177,6 +177,7 @@
         "rez",
         "rpm",
         "ruby",
+        "same-major",
         "semver",
         "semver-coerced",
         "swift",
