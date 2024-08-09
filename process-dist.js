@@ -1,5 +1,8 @@
 const fs = require('fs')
 
+const pkg = require('./package.json')
+const renovateVersion = pkg.dependencies.renovate ?? 'unknown'
+
 const dir = 'dist'
 const fileNames = fs.readdirSync(dir)
 for (const fileName of fileNames) {
@@ -9,7 +12,7 @@ for (const fileName of fileNames) {
     const newContent = content
         .replaceAll(
             /const (\w+) = path\.join\(__dirname, '\.\.', 'package\.json'\);\s*const pkg = \(\(\) => __nccwpck_require__\(\d+\)\(\1\)\)\(\);/g,
-            'const pkg = { version: "unknown" };'
+            `const pkg = { version: "${renovateVersion}" };`
         )
 
     if (newContent !== content) {
