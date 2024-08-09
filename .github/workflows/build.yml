@@ -144,19 +144,25 @@ jobs:
       env:
         ALL_MATRIX_INCLUDES: ${{ steps.current-gradle-wrapper-java-21.outputs.allMatrixIncludes }}
       run: |
-        if [ "${{ contains(env.ALL_MATRIX_INCLUDES, '{"gradle-wrapper":"8.5"}') }}" == "true" ]; then
+        if [ "${{ contains(env.ALL_MATRIX_INCLUDES, '{"gradle":"8.1"}') }}" == "true" ]; then
+          echo "::error::Current action output contains '8.1': $ALL_MATRIX_INCLUDES"
+          exit 1
+        else
+          echo "Valid"
+        fi
+        if [ "${{ contains(env.ALL_MATRIX_INCLUDES, '{"gradle":"8.5"}') }}" == "true" ]; then
           echo "Valid"
         else
           echo "::error::Current action output doesn't contain '8.5': $ALL_MATRIX_INCLUDES"
           exit 1
         fi
-        if [ "${{ contains(env.ALL_MATRIX_INCLUDES, '{"spring-boot":"8.9"}') }}" == "true" ]; then
+        if [ "${{ contains(env.ALL_MATRIX_INCLUDES, '{"gradle":"8.9"}') }}" == "true" ]; then
           echo "Valid"
         else
           echo "::error::Current action output doesn't contain '8.9': $ALL_MATRIX_INCLUDES"
           exit 1
         fi
-        if [ "${{ contains(env.ALL_MATRIX_INCLUDES, '{"spring-boot":"8.10-rc-1"}') }}" == "true" ]; then
+        if [ "${{ contains(env.ALL_MATRIX_INCLUDES, '{"gradle":"8.10-rc-1"}') }}" == "true" ]; then
           echo "Valid"
         else
           echo "::error::Current action output doesn't contain '8.10-rc-1': $ALL_MATRIX_INCLUDES"
@@ -185,19 +191,25 @@ jobs:
       env:
         ALL_MATRIX_INCLUDES: ${{ steps.current-gradle-wrapper-java-11.outputs.allMatrixIncludes }}
       run: |
-        if [ "${{ contains(env.ALL_MATRIX_INCLUDES, '{"gradle-wrapper":"8.5"}') }}" == "true" ]; then
+        if [ "${{ contains(env.ALL_MATRIX_INCLUDES, '{"gradle":"8.1"}') }}" == "true" ]; then
+          echo "Valid"
+        else
+          echo "::error::Current action output doesn't contain '8.1': $ALL_MATRIX_INCLUDES"
+          exit 1
+        fi
+        if [ "${{ contains(env.ALL_MATRIX_INCLUDES, '{"gradle":"8.5"}') }}" == "true" ]; then
           echo "Valid"
         else
           echo "::error::Current action output doesn't contain '8.5': $ALL_MATRIX_INCLUDES"
           exit 1
         fi
-        if [ "${{ contains(env.ALL_MATRIX_INCLUDES, '{"spring-boot":"8.9"}') }}" == "true" ]; then
+        if [ "${{ contains(env.ALL_MATRIX_INCLUDES, '{"gradle":"8.9"}') }}" == "true" ]; then
           echo "Valid"
         else
           echo "::error::Current action output doesn't contain '8.9': $ALL_MATRIX_INCLUDES"
           exit 1
         fi
-        if [ "${{ contains(env.ALL_MATRIX_INCLUDES, '{"spring-boot":"8.10-rc-1"}') }}" == "true" ]; then
+        if [ "${{ contains(env.ALL_MATRIX_INCLUDES, '{"gradle":"8.10-rc-1"}') }}" == "true" ]; then
           echo "::error::Current action output contains '8.10-rc-1': $ALL_MATRIX_INCLUDES"
           exit 1
         else
