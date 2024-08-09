@@ -15,7 +15,7 @@
     "test": "jest --passWithNoTests",
     "tsconfig-generate-app": "node tsconfig-generate-app",
     "compile": "npm run generate && npm run lint && rimraf build && node tsconfig-generate-app && tsc -project tsconfig.app.json --rootDir . --outDir build",
-    "dist": "npm run compile && rimraf dist && ncc build build/src/main.js --out dist",
+    "dist": "npm run compile && rimraf dist && ncc build build/src/main.js --out dist && node process-dist",
     "build": "node check-dependency-engines && npm run dist && npm run test"
   },
   "dependencies": {
@@ -23,7 +23,7 @@
     "@actions/glob": "0.4.0",
     "ajv": "8.17.1",
     "deepmerge": "4.3.1",
-    "renovate": "37.431.7",
+    "renovate": "38.23.2",
     "yaml": "2.5.0"
   },
   "devDependencies": {
