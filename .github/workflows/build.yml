@@ -148,7 +148,7 @@ jobs:
           gradle:
             dependency: gradle-wrapper
             include:
-            - '[8,)'
+            - '[8,8.9999)'
 
     - name: Validate current action - Gradle Wrapper + Java 21
       env:
@@ -195,7 +195,7 @@ jobs:
           gradle:
             dependency: gradle-wrapper
             include:
-            - '[8,)'
+            - '[8,8.9999)'
 
     - name: Validate current action - Gradle Wrapper + Java 11
       env:
