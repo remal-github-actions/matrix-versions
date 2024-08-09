@@ -124,7 +124,7 @@ jobs:
 
 
     - name: Run current action - Gradle Wrapper + Java 21
-      id: current-gradle-wrapper-java-11
+      id: current-gradle-wrapper-java-21
       uses: ./
       with:
         githubToken: ${{github.token}}
@@ -142,7 +142,7 @@ jobs:
 
     - name: Validate current action - Gradle Wrapper + Java 21
       env:
-        ALL_MATRIX_INCLUDES: ${{ steps.current-gradle-wrapper-java-11.outputs.allMatrixIncludes }}
+        ALL_MATRIX_INCLUDES: ${{ steps.current-gradle-wrapper-java-21.outputs.allMatrixIncludes }}
       run: |
         if [ "${{ contains(env.ALL_MATRIX_INCLUDES, '{"gradle-wrapper":"8.5"}') }}" == "true" ]; then
           echo "Valid"
