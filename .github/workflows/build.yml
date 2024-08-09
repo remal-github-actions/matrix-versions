@@ -87,7 +87,7 @@ jobs:
         path: dist/
         if-no-files-found: error
         overwrite: true
-        retention-days: 90
+        retention-days: 30
 
 
     # $$$sync-with-template-modifiable: validation $$$
