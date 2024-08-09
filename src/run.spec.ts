@@ -97,8 +97,6 @@ matrix:
     dependency: maven:name.remal.gradle-api:gradle-api
     repositories:
     - 'https://maven.pkg.github.com/remal-gradle-api/packages'
-    only:
-    - stable
     include:
     - '[7,)'
         `)
@@ -130,6 +128,17 @@ matrix:
             {
                 'java': '17',
                 'gradle': '7.2',
+            },
+        ])
+
+        expect(versionMatrix).not.toIncludeAnyMembers([
+            {
+                'java': '11',
+                'gradle': '8.10',
+            },
+            {
+                'java': '11',
+                'gradle': '8.10-rc-1',
             },
         ])
     })
