@@ -38,8 +38,6 @@ matrix:
     - '[11,)'
   gradle:
     dependency: gradle-wrapper
-    only:
-    - stable
     include:
     - '[7,)'
         `)
@@ -71,6 +69,17 @@ matrix:
             {
                 'java': '17',
                 'gradle': '7.2',
+            },
+        ])
+
+        expect(versionMatrix).not.toIncludeAnyMembers([
+            {
+                'java': '11',
+                'gradle': '8.10',
+            },
+            {
+                'java': '11',
+                'gradle': '8.10-rc-1',
             },
         ])
     })

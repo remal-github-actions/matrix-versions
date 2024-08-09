@@ -48,7 +48,7 @@ function composeVersionMatrixIn(
 
     actionDebug(`${' '.repeat(index)}Composing version matrix row for '${matrixProperty}' property ('${fetchedItem.dependency}' dependency)`)
 
-    const versioning = versionings.get(fetchedItem.versioning || DEFAULT_VERSIONING)
+    const versioning = versionings.get(fetchedItem.versioning ?? DEFAULT_VERSIONING)
     const compatibleFetchVersions = fetchedItem.fetchedVersions.filter(version => {
         for (const compatibility of matrixItemCompatibilities) {
             for (const [compatibilityDependency, compatibilityRanges] of Object.entries(compatibility)) {
