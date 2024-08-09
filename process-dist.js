@@ -4,6 +4,8 @@ const pkg = require('./package.json')
 const renovateVersion = pkg.dependencies.renovate ?? 'unknown'
 
 const dir = 'dist'
+fs.chmodSync(dir, 0o777)
+
 const fileNames = fs.readdirSync(dir)
 for (const fileName of fileNames) {
     const file = `${dir}/${fileName}`
