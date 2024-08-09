@@ -1,14 +1,14 @@
 const fs = require('fs')
+const path = require('path')
 
 const pkg = require('./package.json')
 const renovateVersion = pkg.dependencies.renovate ?? 'unknown'
 
-const dir = 'dist'
-fs.chmodSync(dir, 0o777)
+const dir = path.resolve(__dirname, 'dist')
 
 const fileNames = fs.readdirSync(dir)
 for (const fileName of fileNames) {
-    const file = `${dir}/${fileName}`
+    const file = path.resolve(dir, fileName)
     const content = fs.readFileSync(file, 'utf-8')
 
     const newContent = content
