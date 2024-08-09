@@ -5297,9 +5297,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cacache@npm:18.0.3":
-  version: 18.0.3
-  resolution: "cacache@npm:18.0.3"
+"cacache@npm:18.0.4":
+  version: 18.0.4
+  resolution: "cacache@npm:18.0.4"
   dependencies:
     "@npmcli/fs": "npm:^3.1.0"
     fs-minipass: "npm:^3.0.0"
@@ -5313,7 +5313,7 @@ __metadata:
     ssri: "npm:^10.0.0"
     tar: "npm:^6.1.11"
     unique-filename: "npm:^3.0.0"
-  checksum: 10c0/dfda92840bb371fb66b88c087c61a74544363b37a265023223a99965b16a16bbb87661fe4948718d79df6e0cc04e85e62784fbcf1832b2a5e54ff4c46fbb45b7
+  checksum: 10c0/6c055bafed9de4f3dcc64ac3dc7dd24e863210902b7c470eb9ce55a806309b3efff78033e3d8b4f7dcc5d467f2db43c6a2857aaaf26f0094b8a351d44c42179f
   languageName: node
   linkType: hard
 
@@ -7849,12 +7849,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"git-url-parse@npm:14.0.0":
-  version: 14.0.0
-  resolution: "git-url-parse@npm:14.0.0"
+"git-url-parse@npm:14.1.0":
+  version: 14.1.0
+  resolution: "git-url-parse@npm:14.1.0"
   dependencies:
     git-up: "npm:^7.0.0"
-  checksum: 10c0/d360cf23c6278e302b74603f3dc490c3fe22e533d58b7f35e0295fad9af209ce5046a55950ccbf2f0d18de7931faefb4353e3f3fd3dda87fce77b409d48e0ba9
+  checksum: 10c0/cd91547210eccdfaca92c41c5ab018c23a75e881f36aa8d7c46cef8e10dea790a455aeb4ca91426109fd5f645c6e874c0cf80a38be6a8675ed91abb08ed904d4
   languageName: node
   linkType: hard
 
@@ -10365,7 +10365,7 @@ __metadata:
     jest-circus: "npm:29.7.0"
     jest-extended: "npm:4.0.2"
     json-schema-to-typescript: "npm:15.0.0"
-    renovate: "npm:37.431.7"
+    renovate: "npm:37.440.7"
     rimraf: "npm:6.0.1"
     semver: "npm:7.6.3"
     ts-jest: "npm:29.2.4"
@@ -11650,12 +11650,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier@npm:3.3.2":
-  version: 3.3.2
-  resolution: "prettier@npm:3.3.2"
+"prettier@npm:3.3.3":
+  version: 3.3.3
+  resolution: "prettier@npm:3.3.3"
   bin:
     prettier: bin/prettier.cjs
-  checksum: 10c0/39ed27d17f0238da6dd6571d63026566bd790d3d0edac57c285fbab525982060c8f1e01955fe38134ab10f0951a6076da37f015db8173c02f14bc7f0803a384c
+  checksum: 10c0/b85828b08e7505716324e4245549b9205c0cacb25342a030ba8885aba2039a115dbcf75a0b7ca3b37bc9d101ee61fab8113fc69ca3359f2a226f1ecc07ad2e26
   languageName: node
   linkType: hard
 
@@ -12038,9 +12038,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"renovate@npm:37.431.7":
-  version: 37.431.7
-  resolution: "renovate@npm:37.431.7"
+"renovate@npm:37.440.7":
+  version: 37.440.7
+  resolution: "renovate@npm:37.440.7"
   dependencies:
     "@aws-sdk/client-codecommit": "npm:3.606.0"
     "@aws-sdk/client-ec2": "npm:3.606.0"
@@ -12075,7 +12075,7 @@ __metadata:
     azure-devops-node-api: "npm:14.0.1"
     better-sqlite3: "npm:11.1.2"
     bunyan: "npm:1.8.15"
-    cacache: "npm:18.0.3"
+    cacache: "npm:18.0.4"
     cacheable-lookup: "npm:5.0.4"
     chalk: "npm:4.1.2"
     changelog-filename-regex: "npm:2.0.1"
@@ -12096,7 +12096,7 @@ __metadata:
     find-packages: "npm:10.0.4"
     find-up: "npm:5.0.0"
     fs-extra: "npm:11.2.0"
-    git-url-parse: "npm:14.0.0"
+    git-url-parse: "npm:14.1.0"
     github-url-from-git: "npm:1.5.0"
     glob: "npm:10.4.5"
     global-agent: "npm:3.0.0"
@@ -12129,13 +12129,13 @@ __metadata:
     p-queue: "npm:6.6.2"
     p-throttle: "npm:4.1.1"
     parse-link-header: "npm:2.0.0"
-    prettier: "npm:3.3.2"
+    prettier: "npm:3.3.3"
     re2: "npm:1.21.3"
     redis: "npm:4.6.15"
     remark: "npm:13.0.0"
     remark-github: "npm:10.1.0"
     safe-stable-stringify: "npm:2.4.3"
-    semver: "npm:7.6.2"
+    semver: "npm:7.6.3"
     semver-stable: "npm:3.0.0"
     semver-utils: "npm:1.1.4"
     shlex: "npm:2.1.2"
@@ -12161,7 +12161,7 @@ __metadata:
   bin:
     renovate: dist/renovate.js
     renovate-config-validator: dist/config-validator.js
-  checksum: 10c0/b47bbf1bc07c0c47672eee9ae426edf8fbee159ab1cd8c32a4593e6a50f81890e5f52982c5b88a1f39719b9c8258131a8ad33713612f11eb8223c375fa7d9fde
+  checksum: 10c0/07fb6aacbcdbc79fe9617e0fe405a4cfc26bad78f93281ab85899e7fdb763a5d16f8685f903631cc1171fb179275e3b67e704387b1e8d5349b6f254d9e14bb89
   languageName: node
   linkType: hard
 
@@ -12518,15 +12518,6 @@ __metadata:
   bin:
     semver: ./bin/semver
   checksum: 10c0/d4884f2aeca28bff35d0bd40ff0a9b2dfc4b36a883bf0ea5dc15d10d9a01bdc9041035b05f825d4b5ac8a56e490703dbf0d986d054de82cc5e9bad3f02ca6e00
-  languageName: node
-  linkType: hard
-
-"semver@npm:7.6.2":
-  version: 7.6.2
-  resolution: "semver@npm:7.6.2"
-  bin:
-    semver: bin/semver.js
-  checksum: 10c0/97d3441e97ace8be4b1976433d1c32658f6afaff09f143e52c593bae7eef33de19e3e369c88bd985ce1042c6f441c80c6803078d1de2a9988080b66684cbb30c
   languageName: node
   linkType: hard
 
