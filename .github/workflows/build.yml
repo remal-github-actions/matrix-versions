@@ -82,8 +82,8 @@ jobs:
 
     # $$$sync-with-template-modifiable: validation $$$
 
-    - name: Run current action
-      id: current
+    - name: Run current action - Spring Boot
+      id: current-spring-boot
       uses: ./
       with:
         githubToken: ${{github.token}}
@@ -93,9 +93,9 @@ jobs:
             include:
             - '[2.3,)'
 
-    - name: Validate current action
+    - name: Validate current action - Spring Boot
       env:
-        ALL_MATRIX_INCLUDES: ${{ steps.current.outputs.allMatrixIncludes }}
+        ALL_MATRIX_INCLUDES: ${{ steps.current-spring-boot.outputs.allMatrixIncludes }}
       run: |
         if [ "${{ contains(env.ALL_MATRIX_INCLUDES, '{"spring-boot":"3.0.6"}') }}" == "true" ]; then
           echo "Valid"
@@ -117,6 +117,88 @@ jobs:
         fi
         if [ "${{ contains(env.ALL_MATRIX_INCLUDES, '{"spring-boot":"1.5.22.RELEASE"}') }}" == "true" ]; then
           echo "::error::Current action output contains '1.5.22.RELEASE': $ALL_MATRIX_INCLUDES"
+          exit 1
+        else
+          echo "Valid"
+        fi
+
+
+    - name: Run current action - Gradle Wrapper + Java 21
+      id: current-gradle-wrapper-java-11
+      uses: ./
+      with:
+        githubToken: ${{github.token}}
+        matrix: |
+          java:
+            dependency: java
+            only:
+            - lts
+            include:
+            - '[21,22)'
+          gradle:
+            dependency: gradle-wrapper
+            include:
+            - '[8,)'
+
+    - name: Validate current action - Gradle Wrapper + Java 21
+      env:
+        ALL_MATRIX_INCLUDES: ${{ steps.current-gradle-wrapper-java-11.outputs.allMatrixIncludes }}
+      run: |
+        if [ "${{ contains(env.ALL_MATRIX_INCLUDES, '{"gradle-wrapper":"8.5"}') }}" == "true" ]; then
+          echo "Valid"
+        else
+          echo "::error::Current action output doesn't contain '8.5': $ALL_MATRIX_INCLUDES"
+          exit 1
+        fi
+        if [ "${{ contains(env.ALL_MATRIX_INCLUDES, '{"spring-boot":"8.9"}') }}" == "true" ]; then
+          echo "Valid"
+        else
+          echo "::error::Current action output doesn't contain '8.9': $ALL_MATRIX_INCLUDES"
+          exit 1
+        fi
+        if [ "${{ contains(env.ALL_MATRIX_INCLUDES, '{"spring-boot":"8.10-rc-1"}') }}" == "true" ]; then
+          echo "Valid"
+        else
+          echo "::error::Current action output doesn't contain '8.10-rc-1': $ALL_MATRIX_INCLUDES"
+          exit 1
+        fi
+
+
+    - name: Run current action - Gradle Wrapper + Java 11
+      id: current-gradle-wrapper-java-11
+      uses: ./
+      with:
+        githubToken: ${{github.token}}
+        matrix: |
+          java:
+            dependency: java
+            only:
+            - lts
+            include:
+            - '[11,12)'
+          gradle:
+            dependency: gradle-wrapper
+            include:
+            - '[8,)'
+
+    - name: Validate current action - Gradle Wrapper + Java 11
+      env:
+        ALL_MATRIX_INCLUDES: ${{ steps.current-gradle-wrapper-java-11.outputs.allMatrixIncludes }}
+      run: |
+        if [ "${{ contains(env.ALL_MATRIX_INCLUDES, '{"gradle-wrapper":"8.5"}') }}" == "true" ]; then
+          echo "Valid"
+        else
+          echo "::error::Current action output doesn't contain '8.5': $ALL_MATRIX_INCLUDES"
+          exit 1
+        fi
+        if [ "${{ contains(env.ALL_MATRIX_INCLUDES, '{"spring-boot":"8.9"}') }}" == "true" ]; then
+          echo "Valid"
+        else
+          echo "::error::Current action output doesn't contain '8.9': $ALL_MATRIX_INCLUDES"
+          exit 1
+        fi
+        if [ "${{ contains(env.ALL_MATRIX_INCLUDES, '{"spring-boot":"8.10-rc-1"}') }}" == "true" ]; then
+          echo "::error::Current action output contains '8.10-rc-1': $ALL_MATRIX_INCLUDES"
           exit 1
         else
           echo "Valid"
