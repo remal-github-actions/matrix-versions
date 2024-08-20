@@ -5,7 +5,7 @@
       {
         "versionRange": "[8.10-alpha,)",
         "dependency": "java",
-        "dependencyVersionRange": "[16,23.9999)"
+        "dependencyVersionRange": "[17,23.9999)"
       },
       {
         "versionRange": "[8.8-alpha,8.10-alpha)",
