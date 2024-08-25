@@ -8173,10 +8173,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ignore@npm:5.3.1, ignore@npm:^5.3.1":
-  version: 5.3.1
-  resolution: "ignore@npm:5.3.1"
-  checksum: 10c0/703f7f45ffb2a27fb2c5a8db0c32e7dee66b33a225d28e8db4e1be6474795f606686a6e3bcc50e1aa12f2042db4c9d4a7d60af3250511de74620fbed052ea4cd
+"ignore@npm:5.3.2":
+  version: 5.3.2
+  resolution: "ignore@npm:5.3.2"
+  checksum: 10c0/f9f652c957983634ded1e7f02da3b559a0d4cc210fca3792cb67f1b153623c9c42efdc1c4121af171e295444459fc4a9201101fb041b1104a3c000bccb188337
   languageName: node
   linkType: hard
 
@@ -8191,6 +8191,13 @@ __metadata:
   version: 5.2.4
   resolution: "ignore@npm:5.2.4"
   checksum: 10c0/7c7cd90edd9fea6e037f9b9da4b01bf0a86b198ce78345f9bbd983929d68ff14830be31111edc5d70c264921f4962404d75b7262b4d9cc3bc12381eccbd03096
+  languageName: node
+  linkType: hard
+
+"ignore@npm:^5.3.1":
+  version: 5.3.1
+  resolution: "ignore@npm:5.3.1"
+  checksum: 10c0/703f7f45ffb2a27fb2c5a8db0c32e7dee66b33a225d28e8db4e1be6474795f606686a6e3bcc50e1aa12f2042db4c9d4a7d60af3250511de74620fbed052ea4cd
   languageName: node
   linkType: hard
 
@@ -10004,7 +10011,7 @@ __metadata:
     jest-circus: "npm:29.7.0"
     jest-extended: "npm:4.0.2"
     json-schema-to-typescript: "npm:15.0.1"
-    renovate: "npm:38.39.6"
+    renovate: "npm:38.52.3"
     rimraf: "npm:6.0.1"
     semver: "npm:7.6.3"
     ts-jest: "npm:29.2.5"
@@ -11591,9 +11598,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"renovate@npm:38.39.6":
-  version: 38.39.6
-  resolution: "renovate@npm:38.39.6"
+"renovate@npm:38.52.3":
+  version: 38.52.3
+  resolution: "renovate@npm:38.52.3"
   dependencies:
     "@aws-sdk/client-codecommit": "npm:3.621.0"
     "@aws-sdk/client-ec2": "npm:3.621.0"
@@ -11660,7 +11667,7 @@ __metadata:
     got: "npm:11.8.6"
     graph-data-structure: "npm:3.5.0"
     handlebars: "npm:4.7.8"
-    ignore: "npm:5.3.1"
+    ignore: "npm:5.3.2"
     ini: "npm:4.1.3"
     js-yaml: "npm:4.1.0"
     json-dup-key-validator: "npm:1.0.3"
@@ -11715,7 +11722,7 @@ __metadata:
   bin:
     renovate: dist/renovate.js
     renovate-config-validator: dist/config-validator.js
-  checksum: 10c0/f05a1be8517a6141f21452d054d12f86abc5beb9a5e13172461af2c26f2c30d0efdd20d6971703c8a0d2f93e50375c673141d2b84bc518e525bad95e54acf67c
+  checksum: 10c0/cbbc082a4c958a2f98c3d0d542236dee33485792594697450944c094f9cf7e6eba842dce75c220db779bcc28242858d994c4adee95ec631da3af0056c603271e
   languageName: node
   linkType: hard
 
