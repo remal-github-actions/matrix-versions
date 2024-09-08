@@ -2937,18 +2937,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@renovatebot/osv-offline@npm:1.5.9":
-  version: 1.5.9
-  resolution: "@renovatebot/osv-offline@npm:1.5.9"
+"@renovatebot/osv-offline@npm:1.5.10":
+  version: 1.5.10
+  resolution: "@renovatebot/osv-offline@npm:1.5.10"
   dependencies:
     "@octokit/rest": "npm:^20.1.1"
     "@renovatebot/osv-offline-db": "npm:1.6.0"
-    adm-zip: "npm:~0.5.15"
+    adm-zip: "npm:~0.5.16"
     fs-extra: "npm:^11.2.0"
     got: "npm:^11.8.6"
     luxon: "npm:^3.5.0"
     node-fetch: "npm:^2.7.0"
-  checksum: 10c0/3d548af39544bc69098e75bab3eaf4c8461005f698234361a781c850d6f1a7ce6bb894d2d59fbe52210382433952083855e62a5bb8f0426c3c4eb6abbd3891f6
+  checksum: 10c0/07be694a1c11bf0c102e750d30af37048b09fc6729fe1f542d43ab111af1f54e4877c0d02400061c32474566e6a76f2f2544d61b08bca6e808a343323c6c6c71
   languageName: node
   linkType: hard
 
@@ -4539,10 +4539,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"adm-zip@npm:~0.5.15":
-  version: 0.5.15
-  resolution: "adm-zip@npm:0.5.15"
-  checksum: 10c0/40ad504176c4b7f41983d11f7ff28acd3ce5b9bd51a09356be2447cb1799de4a4d93f8b0f65f75814add17687445cc807bbcb5ec8f73f44af1aefe4509894a8c
+"adm-zip@npm:~0.5.16":
+  version: 0.5.16
+  resolution: "adm-zip@npm:0.5.16"
+  checksum: 10c0/6f10119d4570c7ba76dcf428abb8d3f69e63f92e51f700a542b43d4c0130373dd2ddfc8f85059f12d4a843703a90c3970cfd17876844b4f3f48bf042bfa6b49f
   languageName: node
   linkType: hard
 
@@ -4966,10 +4966,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"aws4@npm:1.13.1":
-  version: 1.13.1
-  resolution: "aws4@npm:1.13.1"
-  checksum: 10c0/c40a90b998853b92f9d0198e9992f4a94c81f29b02ca02b75952efaef07ff0660e756c7ebd04ff674edfa36c29406abaa8aad84f23dbc8b362d31979a631d3fe
+"aws4@npm:1.13.2":
+  version: 1.13.2
+  resolution: "aws4@npm:1.13.2"
+  checksum: 10c0/c993d0d186d699f685d73113733695d648ec7d4b301aba2e2a559d0cd9c1c902308cc52f4095e1396b23fddbc35113644e7f0a6a32753636306e41e3ed6f1e79
   languageName: node
   linkType: hard
 
@@ -6356,10 +6356,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"emoji-regex@npm:10.3.0":
-  version: 10.3.0
-  resolution: "emoji-regex@npm:10.3.0"
-  checksum: 10c0/b4838e8dcdceb44cf47f59abe352c25ff4fe7857acaf5fb51097c427f6f75b44d052eb907a7a3b86f86bc4eae3a93f5c2b7460abe79c407307e6212d65c91163
+"emoji-regex@npm:10.4.0":
+  version: 10.4.0
+  resolution: "emoji-regex@npm:10.4.0"
+  checksum: 10c0/a3fcedfc58bfcce21a05a5f36a529d81e88d602100145fcca3dc6f795e3c8acc4fc18fe773fbf9b6d6e9371205edb3afa2668ec3473fa2aa7fd47d2a9d46482d
   languageName: node
   linkType: hard
 
@@ -10250,7 +10250,7 @@ __metadata:
     jest-circus: "npm:29.7.0"
     jest-extended: "npm:4.0.2"
     json-schema-to-typescript: "npm:15.0.2"
-    renovate: "npm:38.59.3"
+    renovate: "npm:38.72.1"
     rimraf: "npm:6.0.1"
     semver: "npm:7.6.3"
     ts-jest: "npm:29.2.5"
@@ -11861,9 +11861,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"renovate@npm:38.59.3":
-  version: 38.59.3
-  resolution: "renovate@npm:38.59.3"
+"renovate@npm:38.72.1":
+  version: 38.72.1
+  resolution: "renovate@npm:38.72.1"
   dependencies:
     "@aws-sdk/client-codecommit": "npm:3.637.0"
     "@aws-sdk/client-ec2": "npm:3.641.0"
@@ -11886,7 +11886,7 @@ __metadata:
     "@qnighy/marshal": "npm:0.1.3"
     "@renovatebot/detect-tools": "npm:1.1.0"
     "@renovatebot/kbpgp": "npm:3.0.1"
-    "@renovatebot/osv-offline": "npm:1.5.9"
+    "@renovatebot/osv-offline": "npm:1.5.10"
     "@renovatebot/pep440": "npm:3.0.20"
     "@renovatebot/ruby-semver": "npm:3.0.23"
     "@sindresorhus/is": "npm:4.6.0"
@@ -11896,7 +11896,7 @@ __metadata:
     aggregate-error: "npm:3.1.0"
     async-mutex: "npm:0.5.0"
     auth-header: "npm:1.0.0"
-    aws4: "npm:1.13.1"
+    aws4: "npm:1.13.2"
     azure-devops-node-api: "npm:14.0.2"
     better-sqlite3: "npm:11.2.1"
     bunyan: "npm:1.8.15"
@@ -11914,7 +11914,7 @@ __metadata:
     diff: "npm:5.2.0"
     editorconfig: "npm:2.0.0"
     email-addresses: "npm:5.0.0"
-    emoji-regex: "npm:10.3.0"
+    emoji-regex: "npm:10.4.0"
     emojibase: "npm:15.3.1"
     emojibase-regex: "npm:15.3.2"
     extract-zip: "npm:2.0.1"
@@ -11964,7 +11964,7 @@ __metadata:
     semver-stable: "npm:3.0.0"
     semver-utils: "npm:1.1.4"
     shlex: "npm:2.1.2"
-    simple-git: "npm:3.25.0"
+    simple-git: "npm:3.26.0"
     slugify: "npm:1.6.6"
     source-map-support: "npm:0.5.21"
     toml-eslint-parser: "npm:0.10.0"
@@ -11985,7 +11985,7 @@ __metadata:
   bin:
     renovate: dist/renovate.js
     renovate-config-validator: dist/config-validator.js
-  checksum: 10c0/8e56b308b1d4f358536ede5011d3c7bdce1591da67a1c4d90fc1c449b9ad14b8184050fa9a91eebdf1660654d7cb78b90d37346de534672e7369ea163a885ad0
+  checksum: 10c0/096e71c016cbe4ebfa2a0f43d5dc430c5786bef7c4996e25dc97f427ca892c149acc89984bd1dbdd94a79e36205d631cbfddcf3cb53303f7e8b9fcd57522bc1e
   languageName: node
   linkType: hard
 
@@ -12565,14 +12565,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"simple-git@npm:3.25.0":
-  version: 3.25.0
-  resolution: "simple-git@npm:3.25.0"
+"simple-git@npm:3.26.0":
+  version: 3.26.0
+  resolution: "simple-git@npm:3.26.0"
   dependencies:
     "@kwsites/file-exists": "npm:^1.1.1"
     "@kwsites/promise-deferred": "npm:^1.1.1"
     debug: "npm:^4.3.5"
-  checksum: 10c0/2087dddac041eac6330cbb7fafea21f3e45786ea54e50ae07a49ba6a7134298e12727e5e4b6580310b679c7cb4f2a83804c04e7eab247eeabcd48d33b7885e16
+  checksum: 10c0/fa45c9ff26c45aa7390f69610e27c1ae474b3881977828009fe41b7ffe8ce371cc108b818b2153815299deffefed591e9148cfdad92d8ddb60ca29eaefaf5827
   languageName: node
   linkType: hard
 
