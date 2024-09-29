@@ -10175,7 +10175,7 @@ __metadata:
     jest-circus: "npm:29.7.0"
     jest-extended: "npm:4.0.2"
     json-schema-to-typescript: "npm:15.0.2"
-    renovate: "npm:38.93.2"
+    renovate: "npm:38.101.1"
     rimraf: "npm:6.0.1"
     semver: "npm:7.6.3"
     ts-jest: "npm:29.2.5"
@@ -11786,9 +11786,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"renovate@npm:38.93.2":
-  version: 38.93.2
-  resolution: "renovate@npm:38.93.2"
+"renovate@npm:38.101.1":
+  version: 38.101.1
+  resolution: "renovate@npm:38.101.1"
   dependencies:
     "@aws-sdk/client-codecommit": "npm:3.637.0"
     "@aws-sdk/client-ec2": "npm:3.641.0"
@@ -11888,7 +11888,7 @@ __metadata:
     semver-stable: "npm:3.0.0"
     semver-utils: "npm:1.1.4"
     shlex: "npm:2.1.2"
-    simple-git: "npm:3.26.0"
+    simple-git: "npm:3.27.0"
     slugify: "npm:1.6.6"
     source-map-support: "npm:0.5.21"
     toml-eslint-parser: "npm:0.10.0"
@@ -11910,7 +11910,7 @@ __metadata:
   bin:
     renovate: dist/renovate.js
     renovate-config-validator: dist/config-validator.js
-  checksum: 10c0/9286e297e4d23df0d72632984d2bed575632099370e80c4e965017678071e0b1415d60452a673d9525dcfa99fa06c46a23e5f25d74647031d772c95d4fbf6898
+  checksum: 10c0/e17c0d9805f374606a181356aff76096ee473e93bec67e5658f98e5952260b3d6926a3567b12c7fd48cf1114fbb02e7705df049b494d172ce9ac7eb02963827f
   languageName: node
   linkType: hard
 
@@ -12490,14 +12490,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"simple-git@npm:3.26.0":
-  version: 3.26.0
-  resolution: "simple-git@npm:3.26.0"
+"simple-git@npm:3.27.0":
+  version: 3.27.0
+  resolution: "simple-git@npm:3.27.0"
   dependencies:
     "@kwsites/file-exists": "npm:^1.1.1"
     "@kwsites/promise-deferred": "npm:^1.1.1"
     debug: "npm:^4.3.5"
-  checksum: 10c0/fa45c9ff26c45aa7390f69610e27c1ae474b3881977828009fe41b7ffe8ce371cc108b818b2153815299deffefed591e9148cfdad92d8ddb60ca29eaefaf5827
+  checksum: 10c0/ef56cabea585377d3e0ca30e4e93447f465d91f23eaf751693cc31f366b5f7636facf52ad5bcd598bfdf295fa60732e7a394303d378995b52e2d221d92e5f9f4
   languageName: node
   linkType: hard
 
