@@ -2,6 +2,7 @@ import * as core from '@actions/core'
 import { Config } from './internal/config'
 import { byNewLineAndComma, indent, isNotEmpty } from './internal/utils'
 
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 require('./internal/initRenovateLogging').initRenovateLogging()
 
 const batchLimit = 256
@@ -35,6 +36,7 @@ const configContent = (function() {
     return lines.join('\n')
 })()
 
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 require('./run').run(
     batchLimit,
     batchNumbers,

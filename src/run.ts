@@ -21,6 +21,7 @@ import { fetchMatrix } from './internal/matrix-item-functions'
 import { isNotEmpty } from './internal/utils'
 
 const defaultCompatibilitiesConfig = validateConfig(
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     require('../global-compatibilities.json'),
     'builtin:global-compatibilities.json',
 )
