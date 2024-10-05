@@ -1,5 +1,5 @@
-import * as fs from 'fs'
-import * as path from 'path'
+const fs = require('fs')
+const path = require('path')
 
 const pkg = JSON.parse(fs.readFileSync('./package.json', 'utf8'))
 const renovateVersion = pkg.dependencies.renovate ?? 'unknown'

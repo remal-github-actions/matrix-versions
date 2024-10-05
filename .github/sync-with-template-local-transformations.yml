@@ -7,3 +7,12 @@ transformations:
   - 'LICENSE'
   format: text
   ignore: true
+
+- name: 'ESM -> CommonJS'
+  includes:
+  - '*.js'
+  format: text
+  script: |
+    return content
+      .replaceAll(/\bimport \* as (\w+) from ['"]([^'"]+)['"]/g, `const $1 = require('$2')`)
+      .replaceAll(/\bexport default /g, `module.exports =`)

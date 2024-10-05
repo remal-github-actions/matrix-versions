@@ -1,4 +1,4 @@
-export default {
+module.exports = {
     clearMocks: true,
     moduleFileExtensions: ['ts', 'js', 'mjs'],
     testEnvironment: 'node',

@@ -6,7 +6,7 @@
     "node": ">=20"
   },
   "packageManager": "yarn@4.5.0",
-  "type": "module",
+  "type": "commonjs",
   "scripts": {
     "update-config-schema": "tsx config.schema-update.ts",
     "generate-config": "npm run update-config-schema && json2ts config.schema.json > src/internal/config.ts",
