@@ -1,13 +1,13 @@
-import { MatrixItem } from './config'
+import { MatrixItem } from './config.js'
 import {
     composeVersionMatrix,
     processFullCompatibilities,
     removeUnusedCompatibilities,
     reorderCompatibilities,
     VersionMatrixItem,
-} from './matrix-functions'
-import { FetchedMatrix } from './matrix-item-functions'
-import { fullSupportedVersionFetcherSuffix } from './version-fetcher-api'
+} from './matrix-functions.js'
+import { FetchedMatrix } from './matrix-item-functions.js'
+import { fullSupportedVersionFetcherSuffix } from './version-fetcher-api.js'
 
 describe(composeVersionMatrix.name, () => {
 

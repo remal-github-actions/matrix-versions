@@ -1,12 +1,12 @@
 import * as glob from '@actions/glob'
-import Ajv2020, { ValidateFunction } from 'ajv/dist/2020'
-import * as merge from 'deepmerge'
+import { Ajv2020, ValidateFunction } from 'ajv/dist/2020.js'
+import merge from 'deepmerge'
 import { promises as fs } from 'fs'
 import YAML from 'yaml'
 import configSchema from '../../config.schema.json'
-import { Config, MatrixItem } from './config'
-import { matchDependencies } from './matrix-item-functions'
-import { byNewLineAndComma, isNotEmpty, processObjectFieldsRecursively } from './utils'
+import { Config, MatrixItem } from './config.js'
+import { matchDependencies } from './matrix-item-functions.js'
+import { byNewLineAndComma, isNotEmpty, processObjectFieldsRecursively } from './utils.js'
 
 const validateFunction: ValidateFunction = (function() {
     const sanitizedConfigSchema = JSON.parse(JSON.stringify(configSchema))

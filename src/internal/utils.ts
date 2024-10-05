@@ -1,14 +1,33 @@
-import is from '@sindresorhus/is'
-import * as merge from 'deepmerge'
+import merge from 'deepmerge'
 
 export const byNewLineAndComma: RegExp = /[\n\r,;]+/g
+
+
+export function isNumber(value: unknown): value is number {
+    return typeof value === 'number'
+}
+
+// eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
+export function isFunction(value: unknown): value is Function {
+    return typeof value === 'function'
+}
+
+export function isPlainObject<Value = unknown>(value: unknown): value is Record<string | number | symbol, Value> {
+    if (Object.prototype.toString.call(value) !== '[object Object]') {
+        return false
+    }
+
+    const prototype = Object.getPrototypeOf(value)
+    return prototype === null || prototype === Object.getPrototypeOf({})
+}
+
 
 export function normalizeSpaces(string: string): string {
     return string.replaceAll(/(\r\n)|(\n\r)|\r/g, '\n')
 }
 
 export function indent(string: string, indention: string | number): string {
-    if (is.number(indention)) {
+    if (isNumber(indention)) {
         indention = ' '.repeat(indention)
     }
     return indention + string.replaceAll(/((\r\n)|(\n\r)|\n|\r)/g, '$1' + indention)
@@ -45,7 +64,7 @@ export function isNotEmpty<Type>(object: Type | null | undefined): object is Typ
         return !!(object.size)
     } else if (object instanceof Set) {
         return !!(object.size)
-    } else if (is.plainObject(object)) {
+    } else if (isPlainObject(object)) {
         return !!(Object.keys(object).length)
     } else {
         return !!((object as any).toString().length)
@@ -53,7 +72,7 @@ export function isNotEmpty<Type>(object: Type | null | undefined): object is Typ
 }
 
 export function processObjectFieldsRecursively(object: any, action: (key: string, value: any) => any): void {
-    if (is.plainObject(object)) {
+    if (isPlainObject(object)) {
         for (const key of Object.keys(object)) {
             const value = object[key]
             const newValue = action(key, value)

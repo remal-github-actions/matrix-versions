@@ -1,9 +1,10 @@
 import * as core from '@actions/core'
-import { Config } from './internal/config'
-import { byNewLineAndComma, indent, isNotEmpty } from './internal/utils'
+import { Config } from './internal/config.js'
+import { initRenovateLogging } from './internal/initRenovateLogging.js'
+import { byNewLineAndComma, indent, isNotEmpty } from './internal/utils.js'
+import { run } from './run.js'
 
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-require('./internal/initRenovateLogging').initRenovateLogging()
+initRenovateLogging()
 
 const batchLimit = 256
 const batchNumbers = 10
@@ -36,8 +37,7 @@ const configContent = (function() {
     return lines.join('\n')
 })()
 
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-require('./run').run(
+run(
     batchLimit,
     batchNumbers,
     githubToken,

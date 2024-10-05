@@ -1,10 +1,10 @@
-const fs = require('fs')
-const path = require('path')
+import * as fs from 'fs'
+import * as path from 'path'
 
-const pkg = require('./package.json')
+const pkg = JSON.parse(fs.readFileSync('./package.json', 'utf8'))
 const renovateVersion = pkg.dependencies.renovate ?? 'unknown'
 
-const dir = path.resolve(__dirname, 'dist')
+const dir = path.resolve('.', 'dist')
 
 const fileNames = fs.readdirSync(dir)
     .filter(name => name.endsWith('.js'))

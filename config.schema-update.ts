@@ -1,13 +1,12 @@
 process.env.RENOVATE_X_IGNORE_RE2 = 'true'
-require('./src/internal/initRenovateLogging').initRenovateLogging()
+//require('./src/internal/initRenovateLogging').initRenovateLogging()
 
 
-import is from '@sindresorhus/is'
 import * as fs from 'fs'
 import { getVersionings } from 'renovate/dist/modules/versioning'
-import { isVersioningApiConstructor } from 'renovate/dist/modules/versioning/common'
-import { isNotEmpty } from './src/internal/utils'
-import { supportedVersionFetchers } from './src/internal/version-fetcher-api'
+import { isVersioningApiConstructor } from 'renovate/dist/modules/versioning/common.js'
+import { isNotEmpty, isPlainObject } from './src/internal/utils.js'
+import { supportedVersionFetchers } from './src/internal/version-fetcher-api.js'
 
 
 const supportedDependencyTypes = Array.from(supportedVersionFetchers.keys()).sort()
@@ -59,7 +58,7 @@ const dependencyTypesPattern = (function() {
 const dynamicVersioningsPattern = `^(${supportedDynamicVersionings.join('|')})(:[^:]+)*$`
 
 function modify(value) {
-    if (is.plainObject(value)) {
+    if (isPlainObject(value)) {
         for (const key of Object.keys(value)) {
             modify(value[key])
         }

@@ -1,4 +1,4 @@
-import { NodeFullVersionFetcher } from './NodeFullVersionFetcher'
+import { NodeFullVersionFetcher } from './NodeFullVersionFetcher.js'
 
 describe(NodeFullVersionFetcher.name, () => {
 

@@ -1,8 +1,8 @@
 import * as core from '@actions/core'
 import * as versionings from 'renovate/dist/modules/versioning'
-import { actionDebug } from './actionDebug'
-import { CompatibilityItem, MatrixItem } from './config'
-import { DEFAULT_VERSIONING } from './constants'
+import { actionDebug } from './actionDebug.js'
+import { CompatibilityItem, MatrixItem } from './config.js'
+import { DEFAULT_VERSIONING } from './constants.js'
 import {
     FetchedMatrix,
     FetchedMatrixItem,
@@ -10,9 +10,9 @@ import {
     matchDependencies,
     withFullFetcherSuffixDependency,
     withoutFullFetcherSuffixDependency,
-} from './matrix-item-functions'
-import { isNotEmpty, onlyUnique, removeFromArrayIf } from './utils'
-import { INCOMPATIBLE_RANGE, isInVersioningRange } from './version-utils'
+} from './matrix-item-functions.js'
+import { isNotEmpty, onlyUnique, removeFromArrayIf } from './utils.js'
+import { INCOMPATIBLE_RANGE, isInVersioningRange } from './version-utils.js'
 
 export type VersionMatrixItem = Record<string, string>
 

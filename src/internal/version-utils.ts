@@ -1,5 +1,5 @@
 import * as core from '@actions/core'
-import { VersioningApi } from 'renovate/dist/modules/versioning/types'
+import { VersioningApi } from 'renovate/dist/modules/versioning/types.js'
 
 export const INCOMPATIBLE_RANGE = 'incompatible' as const
 

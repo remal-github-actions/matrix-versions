@@ -1,30 +1,24 @@
 import * as core from '@actions/core'
 import os from 'node:os'
-import { GlobalConfig } from 'renovate/dist/config/global'
-import { AllConfig } from 'renovate/dist/config/types'
-import { bootstrap as initProxyForRenovate } from 'renovate/dist/proxy'
-import { HostRule } from 'renovate/dist/types/host-rules'
-import * as renovateHostRules from 'renovate/dist/util/host-rules'
-import { hostRulesFromEnv } from 'renovate/dist/workers/global/config/parse/host-rules-from-env'
-import { Config } from './internal/config'
+import { GlobalConfig } from 'renovate/dist/config/global.js'
+import { AllConfig } from 'renovate/dist/config/types.js'
+import { bootstrap as initProxyForRenovate } from 'renovate/dist/proxy.js'
+import { HostRule } from 'renovate/dist/types/host-rules.js'
+import * as renovateHostRules from 'renovate/dist/util/host-rules.js'
+import { hostRulesFromEnv } from 'renovate/dist/workers/global/config/parse/host-rules-from-env.js'
+import { defaultCompatibilitiesConfig } from './defaultCompatibilitiesConfig.js'
 import {
     mergeConfigs,
     parseConfigContent,
     parseConfigFiles,
     populateGlobalCompatibilities,
     processGlobalCompatibilityAliases,
-    validateConfig,
-} from './internal/config-functions'
-import { initRenovateLogging } from './internal/initRenovateLogging'
-import { composeVersionMatrix, VersionMatrixItem } from './internal/matrix-functions'
-import { fetchMatrix } from './internal/matrix-item-functions'
-import { isNotEmpty } from './internal/utils'
-
-const defaultCompatibilitiesConfig = validateConfig(
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
-    require('../global-compatibilities.json'),
-    'builtin:global-compatibilities.json',
-)
+} from './internal/config-functions.js'
+import { Config } from './internal/config.js'
+import { initRenovateLogging } from './internal/initRenovateLogging.js'
+import { composeVersionMatrix, VersionMatrixItem } from './internal/matrix-functions.js'
+import { fetchMatrix } from './internal/matrix-item-functions.js'
+import { isNotEmpty } from './internal/utils.js'
 
 export async function run(
     batchLimit: number,

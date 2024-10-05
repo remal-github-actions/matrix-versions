@@ -1,5 +1,5 @@
 import { getErrorOf, NoErrorThrownError } from '../utils'
-import { MavenVersionFetcher } from './MavenVersionFetcher'
+import { MavenVersionFetcher } from './MavenVersionFetcher.js'
 
 describe(MavenVersionFetcher.name, () => {
 

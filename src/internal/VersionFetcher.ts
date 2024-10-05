@@ -1,4 +1,4 @@
-import { Versioning, VersionOnlyFilter } from './config'
+import { Versioning, VersionOnlyFilter } from './config.js'
 
 export abstract class VersionFetcher {
 

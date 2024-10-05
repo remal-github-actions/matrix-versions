@@ -1,4 +1,4 @@
-import { isInVersioningRange } from './version-utils'
+import { isInVersioningRange } from './version-utils.js'
 import * as versionings from 'renovate/dist/modules/versioning'
 
 describe(isInVersioningRange.name, () => {

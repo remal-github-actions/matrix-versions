@@ -1,12 +1,12 @@
-import { Config, VersionOnlyFilter } from './config'
+import { Config, VersionOnlyFilter } from './config.js'
 import {
     mergeConfigs,
     newEmptyConfig,
     populateGlobalCompatibilities,
     processGlobalCompatibilityAliases,
     validateConfig,
-} from './config-functions'
-import { clone } from './utils'
+} from './config-functions.js'
+import { clone } from './utils.js'
 
 describe(validateConfig.name, () => {
 

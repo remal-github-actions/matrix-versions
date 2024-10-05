@@ -1,5 +1,5 @@
 import { JavaVersionDatasource } from 'renovate/dist/modules/datasource/java-version'
-import { RenovateDatasourceFactory, VersionFetcherRenovateDatasource } from '../VersionFetcherRenovateDatasource'
+import { RenovateDatasourceFactory, VersionFetcherRenovateDatasource } from '../VersionFetcherRenovateDatasource.js'
 
 const defaultDatasource = new JavaVersionDatasource()
 

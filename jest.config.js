@@ -1,22 +1,26 @@
-module.exports = {
+export default {
     clearMocks: true,
     moduleFileExtensions: ['ts', 'js', 'mjs'],
     testEnvironment: 'node',
     testRunner: 'jest-circus/runner',
+    extensionsToTreatAsEsm: ['.ts'],
+    moduleNameMapper: {
+        '^(\\.{1,2}/.*)\\.js$': '$1'
+    },
     transform: {
-        '^.+\\.ts$': 'ts-jest'
+        '^.+\\.ts$': ['ts-jest', { 'useESM': true }]
     },
     testMatch: [
-        '**/*.spec.(ts|js|mjs)',
+        '**/*.spec.(ts|js|mjs)'
     ],
     testPathIgnorePatterns: [
         '/build/',
         '/dist/',
-        '/node_modules/',
+        '/node_modules/'
     ],
     collectCoverage: true,
     collectCoverageFrom: [
-        'src/**',
+        'src/**'
     ],
     errorOnDeprecated: true,
     verbose: true,
@@ -26,5 +30,5 @@ module.exports = {
     setupFilesAfterEnv: [
         '<rootDir>/jest-setup.js'
     ],
-    testTimeout: 15000,
+    testTimeout: 15000
 }

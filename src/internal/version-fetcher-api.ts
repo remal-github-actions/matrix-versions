@@ -1,10 +1,10 @@
-import { GradleWrapperVersionFetcher } from './version-fetchers/GradleWrapperVersionFetcher'
-import { JavaFullVersionFetcher } from './version-fetchers/JavaFullVersionFetcher'
-import { JavaVersionFetcher } from './version-fetchers/JavaVersionFetcher'
-import { MavenVersionFetcher } from './version-fetchers/MavenVersionFetcher'
-import { NodeFullVersionFetcher } from './version-fetchers/NodeFullVersionFetcher'
-import { NodeVersionFetcher } from './version-fetchers/NodeVersionFetcher'
-import { VersionFetcher } from './VersionFetcher'
+import { GradleWrapperVersionFetcher } from './version-fetchers/GradleWrapperVersionFetcher.js'
+import { JavaFullVersionFetcher } from './version-fetchers/JavaFullVersionFetcher.js'
+import { JavaVersionFetcher } from './version-fetchers/JavaVersionFetcher.js'
+import { MavenVersionFetcher } from './version-fetchers/MavenVersionFetcher.js'
+import { NodeFullVersionFetcher } from './version-fetchers/NodeFullVersionFetcher.js'
+import { NodeVersionFetcher } from './version-fetchers/NodeVersionFetcher.js'
+import { VersionFetcher } from './VersionFetcher.js'
 
 export const fullSupportedVersionFetcherSuffix = '/full'
 

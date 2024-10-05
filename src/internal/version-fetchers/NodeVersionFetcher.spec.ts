@@ -1,4 +1,4 @@
-import { NodeVersionFetcher } from './NodeVersionFetcher'
+import { NodeVersionFetcher } from './NodeVersionFetcher.js'
 
 describe(NodeVersionFetcher.name, () => {
 

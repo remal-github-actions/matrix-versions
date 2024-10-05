@@ -1,5 +1,5 @@
 import { MavenDatasource } from 'renovate/dist/modules/datasource/maven'
-import { VersionFetcherRenovateDatasource } from '../VersionFetcherRenovateDatasource'
+import { VersionFetcherRenovateDatasource } from '../VersionFetcherRenovateDatasource.js'
 
 export class MavenVersionFetcher extends VersionFetcherRenovateDatasource {
 

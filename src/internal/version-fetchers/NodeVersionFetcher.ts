@@ -1,6 +1,6 @@
-import { onlyUnique } from '../utils'
-import { VersionFetchParams } from '../VersionFetcher'
-import { NodeFullVersionFetcher } from './NodeFullVersionFetcher'
+import { onlyUnique } from '../utils.js'
+import { VersionFetchParams } from '../VersionFetcher.js'
+import { NodeFullVersionFetcher } from './NodeFullVersionFetcher.js'
 
 export class NodeVersionFetcher extends NodeFullVersionFetcher {
 

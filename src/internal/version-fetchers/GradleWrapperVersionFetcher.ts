@@ -1,5 +1,5 @@
 import { GradleVersionDatasource } from 'renovate/dist/modules/datasource/gradle-version'
-import { VersionFetcherRenovateDatasource } from '../VersionFetcherRenovateDatasource'
+import { VersionFetcherRenovateDatasource } from '../VersionFetcherRenovateDatasource.js'
 
 export class GradleWrapperVersionFetcher extends VersionFetcherRenovateDatasource {
 

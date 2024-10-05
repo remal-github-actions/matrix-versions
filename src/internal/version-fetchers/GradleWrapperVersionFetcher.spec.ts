@@ -1,4 +1,4 @@
-import { GradleWrapperVersionFetcher } from './GradleWrapperVersionFetcher'
+import { GradleWrapperVersionFetcher } from './GradleWrapperVersionFetcher.js'
 
 describe(GradleWrapperVersionFetcher.name, () => {
 

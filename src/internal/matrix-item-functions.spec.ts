@@ -4,8 +4,8 @@ import {
     matchDependencies,
     ParsedDependency,
     parseMatrixItemDependency,
-} from './matrix-item-functions'
-import { shuffleArray } from './utils'
+} from './matrix-item-functions.js'
+import { shuffleArray } from './utils.js'
 
 describe(filterFetchedVersions.name, () => {
 

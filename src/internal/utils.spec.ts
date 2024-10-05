@@ -1,4 +1,4 @@
-import { clone, indent } from './utils'
+import { clone, indent } from './utils.js'
 
 describe(indent.name, () => {
 

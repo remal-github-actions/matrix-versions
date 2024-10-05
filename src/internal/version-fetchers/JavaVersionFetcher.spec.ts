@@ -1,4 +1,4 @@
-import { JavaVersionFetcher } from './JavaVersionFetcher'
+import { JavaVersionFetcher } from './JavaVersionFetcher.js'
 
 describe(JavaVersionFetcher.name, () => {
 

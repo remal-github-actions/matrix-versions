@@ -1,4 +1,4 @@
-import { run } from './run'
+import { run } from './run.js'
 
 describe(run.name, () => {
     async function testRun(config: string) {

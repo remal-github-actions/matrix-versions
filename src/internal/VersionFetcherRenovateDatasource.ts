@@ -1,9 +1,8 @@
-import is from '@sindresorhus/is'
-import { Datasource } from 'renovate/dist/modules/datasource/datasource'
-import { Release, ReleaseResult } from 'renovate/dist/modules/datasource/types'
-import { Versioning } from './config'
-import { isNotEmpty } from './utils'
-import { VersionFetcher, VersionFetchParams } from './VersionFetcher'
+import { Datasource } from 'renovate/dist/modules/datasource/datasource.js'
+import { Release, ReleaseResult } from 'renovate/dist/modules/datasource/types.js'
+import { Versioning } from './config.js'
+import { isFunction, isNotEmpty } from './utils.js'
+import { VersionFetcher, VersionFetchParams } from './VersionFetcher.js'
 
 export type RenovateDatasourceFactory = ((params: VersionFetchParams) => Datasource)
 export type RenovateReleaseFilter = (release: Release) => boolean
@@ -18,7 +17,7 @@ export abstract class VersionFetcherRenovateDatasource extends VersionFetcher {
 
     private getRenovateDatasource(params: VersionFetchParams = {}): Datasource {
         const renovateDatasourceApi = this.renovateDatasourceApi
-        if (is.function_(renovateDatasourceApi)) {
+        if (isFunction(renovateDatasourceApi)) {
             return renovateDatasourceApi(params)
         } else {
             return renovateDatasourceApi
@@ -48,7 +47,7 @@ export abstract class VersionFetcherRenovateDatasource extends VersionFetcher {
             const defaultRepositories = renovateDatasource.defaultRegistryUrls
             if (defaultRepositories == null) {
                 repositories = []
-            } else if (is.function_(defaultRepositories)) {
+            } else if (isFunction(defaultRepositories)) {
                 repositories = defaultRepositories()
             } else {
                 repositories = defaultRepositories

@@ -1,7 +1,7 @@
 import * as core from '@actions/core'
 import { LogLevelString } from 'bunyan'
-import { logger as renovateLogger } from 'renovate/dist/logger/index'
-import { indent, isNotEmpty, normalizeSpaces, processObjectFieldsRecursively } from './utils'
+import { logger as renovateLogger } from 'renovate/dist/logger/index.js'
+import { indent, isNotEmpty, normalizeSpaces, processObjectFieldsRecursively } from './utils.js'
 
 export function initRenovateLogging() {
     const hideTrace = true
