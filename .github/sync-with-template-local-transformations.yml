@@ -8,7 +8,7 @@ transformations:
   format: text
   ignore: true
 
-- name: 'ESM -> CommonJS'
+- name: ESM-to-CommonJS
   includes:
   - '*.js'
   format: text
