@@ -23,7 +23,7 @@
     "@actions/glob": "0.5.0",
     "ajv": "8.17.1",
     "deepmerge": "4.3.1",
-    "renovate": "38.128.7",
+    "renovate": "38.132.3",
     "yaml": "2.6.0"
   },
   "devDependencies": {
