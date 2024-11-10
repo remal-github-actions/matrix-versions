@@ -10428,7 +10428,7 @@ __metadata:
     jest-circus: "npm:29.7.0"
     jest-extended: "npm:4.0.2"
     json-schema-to-typescript: "npm:15.0.3"
-    renovate: "npm:39.9.0"
+    renovate: "npm:39.9.1"
     rimraf: "npm:6.0.1"
     semver: "npm:7.6.3"
     ts-jest: "npm:29.2.5"
@@ -12057,9 +12057,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"renovate@npm:39.9.0":
-  version: 39.9.0
-  resolution: "renovate@npm:39.9.0"
+"renovate@npm:39.9.1":
+  version: 39.9.1
+  resolution: "renovate@npm:39.9.1"
   dependencies:
     "@aws-sdk/client-codecommit": "npm:3.658.1"
     "@aws-sdk/client-ec2": "npm:3.658.1"
@@ -12182,7 +12182,7 @@ __metadata:
   bin:
     renovate: dist/renovate.js
     renovate-config-validator: dist/config-validator.js
-  checksum: 10c0/b3a6f83c71601fca93037440bfdd031222eeb4af66933c7d12a99c305735029d5d10ed5783de1f05f57e594c9b42eea781d941a32f87f12f44e404dedc8777c7
+  checksum: 10c0/f4b7f13d31302654e62b924724d0c5e66b59c0e91c5c6bbc6596094c428c8da0c80f5d718bd689d04ea27fee5518701b1e675c2e7ac3715ab440a91253e50e18
   languageName: node
   linkType: hard
 
