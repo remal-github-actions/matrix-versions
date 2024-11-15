@@ -6,7 +6,7 @@ describe(MavenVersionFetcher.name, () => {
     const fetcher = new MavenVersionFetcher()
 
     it('defaultVersioning', () => {
-        expect(fetcher.defaultVersioning).toEqual('maven')
+        expect(fetcher.versioning).toEqual('maven')
     })
 
     it('supportDependencies', () => {

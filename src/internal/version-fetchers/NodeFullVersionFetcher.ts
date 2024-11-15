@@ -1,7 +1,8 @@
 import { NodeVersionDatasource } from 'renovate/dist/modules/datasource/node-version'
+import { RenovateReleaseFilter } from '../RenovateReleaseFilter'
 import { onlyUnique } from '../utils.js'
 import { VersionFetchParams } from '../VersionFetcher.js'
-import { RenovateReleaseFilter, VersionFetcherRenovateDatasource } from '../VersionFetcherRenovateDatasource.js'
+import { VersionFetcherRenovateDatasource } from '../VersionFetcherRenovateDatasource.js'
 
 export class NodeFullVersionFetcher extends VersionFetcherRenovateDatasource {
 
@@ -18,7 +19,7 @@ export class NodeFullVersionFetcher extends VersionFetcherRenovateDatasource {
         return defaultFilter
     }
 
-    get defaultVersioning() {
+    get versioning() {
         return 'semver-coerced'
     }
 

@@ -5,7 +5,7 @@ describe(GradleWrapperVersionFetcher.name, () => {
     const fetcher = new GradleWrapperVersionFetcher()
 
     it('defaultVersioning', () => {
-        expect(fetcher.defaultVersioning).toEqual('gradle')
+        expect(fetcher.versioning).toEqual('gradle')
     })
 
     it('supportDependencies', () => {

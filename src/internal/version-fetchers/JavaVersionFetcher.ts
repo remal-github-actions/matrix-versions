@@ -4,10 +4,6 @@ import { JavaFullVersionFetcher } from './JavaFullVersionFetcher.js'
 
 export class JavaVersionFetcher extends JavaFullVersionFetcher {
 
-    get defaultVersioning() {
-        return 'maven'
-    }
-
     async fetchVersions(params: VersionFetchParams): Promise<string[]> {
         return super.fetchVersions(params)
             .then(versions => versions

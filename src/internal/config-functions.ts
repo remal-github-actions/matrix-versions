@@ -6,7 +6,7 @@ import YAML from 'yaml'
 import configSchema from '../../config.schema.json'
 import { Config, MatrixItem } from './config.js'
 import { matchDependencies } from './matrix-item-functions.js'
-import { byNewLineAndComma, isNotEmpty, processObjectFieldsRecursively } from './utils.js'
+import { byNewLineAndComma, isNotEmpty, onlyUnique, processObjectFieldsRecursively } from './utils.js'
 
 const validateFunction: ValidateFunction = (function() {
     const sanitizedConfigSchema = JSON.parse(JSON.stringify(configSchema))
@@ -40,7 +40,7 @@ export function validateConfig(config: any, configSource?: string): Config {
 
     const matrix: Record<string, MatrixItem> = config.matrix ?? {}
     for (const [property, matrixItem] of Object.entries(matrix)) {
-        const filters = matrixItem.only
+        const filters = matrixItem.only?.filter(onlyUnique)
         if (filters == null || filters.length <= 1) continue
 
         if (filters.includes('current-unstable')) {
@@ -50,7 +50,7 @@ export function validateConfig(config: any, configSource?: string): Config {
             )
         }
 
-        const withLtsFilters = filters.filter(filter => filter.match(/\blts\b/))
+        const withLtsFilters = filters.filter(filter => filter.match('lts'))
         const withUnstableFilters = filters.filter(filter => filter.match(/\bunstable\b/))
         if (withLtsFilters.length && withUnstableFilters.length) {
             throw throwValidationError(`Matrix item ${property}: `

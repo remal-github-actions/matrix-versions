@@ -5,7 +5,7 @@ describe(JavaFullVersionFetcher.name, () => {
     const fetcher = new JavaFullVersionFetcher()
 
     it('defaultVersioning', () => {
-        expect(fetcher.defaultVersioning).toEqual('maven')
+        expect(fetcher.versioning).toEqual('maven')
     })
 
     it('supportDependencies', () => {

@@ -51,7 +51,7 @@ export async function fetchMatrixItem(matrixItem: MatrixItem): Promise<FetchedMa
                 only: matrixItem.only?.concat(),
                 include: matrixItem.include?.concat(),
                 exclude: matrixItem.exclude?.concat(),
-                versioning: matrixItem.versioning ?? fetcher.defaultVersioning,
+                versioning: matrixItem.versioning ?? fetcher.versioning,
                 compatibilities: matrixItem.compatibilities?.concat(),
                 fetchedVersions: versions,
             }

@@ -6,7 +6,7 @@ export abstract class VersionFetcher {
 
     abstract get withDependencies(): boolean
 
-    get defaultVersioning(): Versioning {
+    get versioning(): Versioning {
         return 'loose'
     }
 

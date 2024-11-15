@@ -55,6 +55,19 @@ export function onlyUnique(value: any, index: number, array: Array<any>): boolea
     return array.indexOf(value) === index
 }
 
+export function onlyUniqueBy(extractor: (value: any) => any): (value: any) => boolean {
+    const seen = new Set()
+    return (value: any): boolean => {
+        const extracted = extractor(value)
+        if (seen.has(extracted)) {
+            return false
+        } else {
+            seen.add(extracted)
+            return true
+        }
+    }
+}
+
 export function isNotEmpty<Type>(object: Type | null | undefined): object is Type {
     if (object == null) {
         return false

@@ -1,27 +1,17 @@
-import { Datasource } from 'renovate/dist/modules/datasource/datasource.js'
-import { Release, ReleaseResult } from 'renovate/dist/modules/datasource/types.js'
+import { ReleaseResult } from 'renovate/dist/modules/datasource/types.js'
+import * as versionings from 'renovate/dist/modules/versioning'
 import { Versioning } from './config.js'
-import { isFunction, isNotEmpty } from './utils.js'
+import { RenovateDatasourceSimple } from './RenovateDatasource.js'
+import { RenovateReleaseFilter } from './RenovateReleaseFilter'
+import { isFunction, isNotEmpty, onlyUniqueBy } from './utils.js'
 import { VersionFetcher, VersionFetchParams } from './VersionFetcher.js'
-
-export type RenovateDatasourceFactory = ((params: VersionFetchParams) => Datasource)
-export type RenovateReleaseFilter = (release: Release) => boolean
 
 export abstract class VersionFetcherRenovateDatasource extends VersionFetcher {
 
     protected constructor(
-        private readonly renovateDatasourceApi: Datasource | RenovateDatasourceFactory,
+        private readonly renovateDatasource: RenovateDatasourceSimple,
     ) {
         super()
-    }
-
-    private getRenovateDatasource(params: VersionFetchParams = {}): Datasource {
-        const renovateDatasourceApi = this.renovateDatasourceApi
-        if (isFunction(renovateDatasourceApi)) {
-            return renovateDatasourceApi(params)
-        } else {
-            return renovateDatasourceApi
-        }
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -39,12 +29,9 @@ export abstract class VersionFetcherRenovateDatasource extends VersionFetcher {
         }
         const dependency = params.dependency
 
-        const renovateDatasource = this.getRenovateDatasource(params)
-        const renovateReleaseFilter = this.createRenovateReleaseFilter(params)
-
         let repositories = params.repositories ?? []
         if (!repositories.length) {
-            const defaultRepositories = renovateDatasource.defaultRegistryUrls
+            const defaultRepositories = this.renovateDatasource.defaultRegistryUrls
             if (defaultRepositories == null) {
                 repositories = []
             } else if (isFunction(defaultRepositories)) {
@@ -59,7 +46,7 @@ export abstract class VersionFetcherRenovateDatasource extends VersionFetcher {
 
         const results: ReleaseResult[] = []
         for (const currentRepository of repositories) {
-            const result = await renovateDatasource.getReleases({
+            const result = await this.renovateDatasource.getReleases({
                 packageName: dependency ?? '',
                 registryUrl: currentRepository,
             })
@@ -68,7 +55,18 @@ export abstract class VersionFetcherRenovateDatasource extends VersionFetcher {
             }
         }
 
-        const versions = results.flatMap(result => result.releases)
+        const versioning = versionings.get(this.versioning)
+        const renovateReleaseFilter = this.createRenovateReleaseFilter(params)
+        const versions = results
+            .flatMap(result => result.releases)
+            .filter(onlyUniqueBy(release => release.version))
+            .toSorted((r1, r2) => {
+                if (versioning.isGreaterThan(r1.version, r2.version)) {
+                    return -1
+                } else {
+                    return 1
+                }
+            })
             .filter(renovateReleaseFilter)
             .map(release => release.version)
             .filter(isNotEmpty)
@@ -85,9 +83,8 @@ export abstract class VersionFetcherRenovateDatasource extends VersionFetcher {
         throw new Error(message)
     }
 
-    get defaultVersioning(): Versioning {
-        const renovateDatasource = this.getRenovateDatasource()
-        return renovateDatasource.defaultVersioning ?? super.defaultVersioning
+    get versioning(): Versioning {
+        return this.renovateDatasource.defaultVersioning ?? super.versioning
     }
 
 }

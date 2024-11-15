@@ -5,7 +5,7 @@ describe(NodeFullVersionFetcher.name, () => {
     const fetcher = new NodeFullVersionFetcher()
 
     it('defaultVersioning', () => {
-        expect(fetcher.defaultVersioning).toEqual('semver-coerced')
+        expect(fetcher.versioning).toEqual('semver-coerced')
     })
 
     it('supportDependencies', () => {
