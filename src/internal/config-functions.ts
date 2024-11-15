@@ -39,8 +39,15 @@ export function validateConfig(config: any, configSource?: string): Config {
     config = config as Config
 
     const matrix: Record<string, MatrixItem> = config.matrix ?? {}
+    for (const matrixItem of Object.values(matrix)) {
+        matrixItem.only = matrixItem.only?.filter(onlyUnique)
+        matrixItem.include = matrixItem.include?.filter(onlyUnique)
+        matrixItem.exclude = matrixItem.exclude?.filter(onlyUnique)
+        matrixItem.repositories = matrixItem.repositories?.filter(onlyUnique)
+    }
+
     for (const [property, matrixItem] of Object.entries(matrix)) {
-        const filters = matrixItem.only?.filter(onlyUnique)
+        const filters = matrixItem.only
         if (filters == null || filters.length <= 1) continue
 
         if (filters.includes('current-unstable')) {
