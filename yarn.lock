@@ -1672,12 +1672,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cdktf/hcl2json@npm:0.20.9":
-  version: 0.20.9
-  resolution: "@cdktf/hcl2json@npm:0.20.9"
+"@cdktf/hcl2json@npm:0.20.10":
+  version: 0.20.10
+  resolution: "@cdktf/hcl2json@npm:0.20.10"
   dependencies:
     fs-extra: "npm:11.2.0"
-  checksum: 10c0/422f42c14275198ebb991902708e35629bd73b0042ec72d2f7710e290516cb481c4e0476f6da142533b99efa92f38b5f4200a1fdf1f020f00554a30e3e675735
+  checksum: 10c0/d5f2907c4c1f2ca9d30f2a87ce93fe32d7e814021029e36baf4ffd6d9af4c9942f4daee2f8e1ce5d8cacf2b902b1c04dd907601a088574dc523fc435adc7330e
   languageName: node
   linkType: hard
 
@@ -3106,10 +3106,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@renovatebot/kbpgp@npm:4.0.0":
-  version: 4.0.0
-  resolution: "@renovatebot/kbpgp@npm:4.0.0"
+"@renovatebot/kbpgp@npm:4.0.1":
+  version: 4.0.1
+  resolution: "@renovatebot/kbpgp@npm:4.0.1"
   dependencies:
+    bn: "npm:1.0.5"
     bzip-deflate: "npm:^1.0.0"
     iced-error: "npm:0.0.13"
     iced-lock: "npm:^2.0.1"
@@ -3121,7 +3122,7 @@ __metadata:
     purepack: "npm:^1.0.6"
     triplesec: "npm:^4.0.3"
     tweetnacl: "npm:^1.0.3"
-  checksum: 10c0/e836e8db47b3e3fc12dc21bd8274e1101fc415da74865fa1ffcef1e899e8c71807fa09eaff76e40c7ca95142766d2668e5bbe1b51952551d30555e0db394acb0
+  checksum: 10c0/d521543ddff82f1f4d8ea4aea3b10179172aaa218421a5a2b71d179c1a44e78be2c95390d0e2d459b2d5129fba7a35a9a17374885f3c56a2cf8502ee901c2cf8
   languageName: node
   linkType: hard
 
@@ -5223,7 +5224,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"bn@npm:^1.0.4":
+"bn@npm:1.0.5, bn@npm:^1.0.4":
   version: 1.0.5
   resolution: "bn@npm:1.0.5"
   checksum: 10c0/5b2ee80b4165adf68e5c64129afbc1385fa06f9bcbb52a9ca60597c6a2b9d0d0c55bda7e2c369ed300e3fb4ee46ef7f91d088bf41ae10c9d6713dd3f67e23e1c
@@ -8122,9 +8123,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"google-auth-library@npm:9.14.2":
-  version: 9.14.2
-  resolution: "google-auth-library@npm:9.14.2"
+"google-auth-library@npm:9.15.0":
+  version: 9.15.0
+  resolution: "google-auth-library@npm:9.15.0"
   dependencies:
     base64-js: "npm:^1.3.0"
     ecdsa-sig-formatter: "npm:^1.0.11"
@@ -8132,7 +8133,7 @@ __metadata:
     gcp-metadata: "npm:^6.1.0"
     gtoken: "npm:^7.0.0"
     jws: "npm:^4.0.0"
-  checksum: 10c0/de1a28734bf8de6b9200da32e6cc5200ca3abb3b8c8ad6a1a59926fd8c38bdeb13ffce8e31b921bfdfe8ab553790534a237342a7838c73d81bcea11c652bad70
+  checksum: 10c0/f5a9a46e939147b181bac9b254f11dd8c2d05c15a65c9d3f2180252bef21c12af37d9893bc3caacafd226d6531a960535dbb5222ef869143f393c6a97639cc06
   languageName: node
   linkType: hard
 
@@ -8178,10 +8179,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"graph-data-structure@npm:3.5.0":
-  version: 3.5.0
-  resolution: "graph-data-structure@npm:3.5.0"
-  checksum: 10c0/3a86e3881e260a6a955e3f4110bce795d87d4a2e1f9ae0e193f4e867538681f2d4bfc554169bdd003fa390c968467cbe86e90d47f5c9f0767d810a627475eec0
+"graph-data-structure@npm:4.2.0":
+  version: 4.2.0
+  resolution: "graph-data-structure@npm:4.2.0"
+  checksum: 10c0/fa8f4e8ce4dbecdf5b6ffc73bab88381bfc7223bca96b220c2eb77cc20819a75dad91c8e7bb2efd7e9b4c3b14375f785e3094446438ee449c419a4525023a17c
   languageName: node
   linkType: hard
 
@@ -10328,7 +10329,7 @@ __metadata:
     jest-circus: "npm:29.7.0"
     jest-extended: "npm:4.0.2"
     json-schema-to-typescript: "npm:15.0.3"
-    renovate: "npm:39.19.1"
+    renovate: "npm:39.29.0"
     rimraf: "npm:6.0.1"
     semver: "npm:7.6.3"
     ts-jest: "npm:29.2.5"
@@ -11932,9 +11933,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"renovate@npm:39.19.1":
-  version: 39.19.1
-  resolution: "renovate@npm:39.19.1"
+"renovate@npm:39.29.0":
+  version: 39.29.0
+  resolution: "renovate@npm:39.29.0"
   dependencies:
     "@aws-sdk/client-codecommit": "npm:3.687.0"
     "@aws-sdk/client-ec2": "npm:3.687.0"
@@ -11943,7 +11944,7 @@ __metadata:
     "@aws-sdk/client-s3": "npm:3.689.0"
     "@aws-sdk/credential-providers": "npm:3.687.0"
     "@breejs/later": "npm:4.2.0"
-    "@cdktf/hcl2json": "npm:0.20.9"
+    "@cdktf/hcl2json": "npm:0.20.10"
     "@opentelemetry/api": "npm:1.9.0"
     "@opentelemetry/context-async-hooks": "npm:1.27.0"
     "@opentelemetry/exporter-trace-otlp-http": "npm:0.54.2"
@@ -11956,7 +11957,7 @@ __metadata:
     "@opentelemetry/semantic-conventions": "npm:1.27.0"
     "@qnighy/marshal": "npm:0.1.3"
     "@renovatebot/detect-tools": "npm:1.1.0"
-    "@renovatebot/kbpgp": "npm:4.0.0"
+    "@renovatebot/kbpgp": "npm:4.0.1"
     "@renovatebot/osv-offline": "npm:1.5.10"
     "@renovatebot/pep440": "npm:4.0.1"
     "@renovatebot/ruby-semver": "npm:4.0.0"
@@ -11997,9 +11998,9 @@ __metadata:
     glob: "npm:11.0.0"
     global-agent: "npm:3.0.0"
     good-enough-parser: "npm:1.1.23"
-    google-auth-library: "npm:9.14.2"
+    google-auth-library: "npm:9.15.0"
     got: "npm:11.8.6"
-    graph-data-structure: "npm:3.5.0"
+    graph-data-structure: "npm:4.2.0"
     handlebars: "npm:4.7.8"
     ignore: "npm:6.0.2"
     ini: "npm:5.0.0"
@@ -12058,7 +12059,7 @@ __metadata:
   bin:
     renovate: dist/renovate.js
     renovate-config-validator: dist/config-validator.js
-  checksum: 10c0/8231b8f43b7c1713969699c93b089fea787e1078226383126cebb9317700870dc0784588bc32060e81e535380bee8c39ff4ddcd2293758523d1628da4df42808
+  checksum: 10c0/becf6ada78058a08a751fe5846ad3e58766fa36c68c994465b3a4f63dcda2be2d2d219f0b914eee1f356844ae73074ef426e908cd3a9c118deefe74484ed60b1
   languageName: node
   linkType: hard
 
