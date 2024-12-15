@@ -48,6 +48,7 @@ export type StaticVersioning =
   | "pep440"
   | "perl"
   | "poetry"
+  | "pvp"
   | "python"
   | "redhat"
   | "rez"
