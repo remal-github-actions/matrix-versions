@@ -30,6 +30,7 @@ export type StaticVersioning =
   | "conan"
   | "deb"
   | "debian"
+  | "devbox"
   | "docker"
   | "git"
   | "glasskube"
