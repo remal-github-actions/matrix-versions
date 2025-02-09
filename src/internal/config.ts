@@ -22,6 +22,7 @@ export type VersionFilter = string;
  */
 export type Versioning = StaticVersioning | string;
 export type StaticVersioning =
+  | "aws-eks-addon"
   | "aws-machine-image"
   | "azure-rest-api"
   | "bazel-module"

@@ -146,6 +146,7 @@
       "type": "string",
       "x-with-supported-static-versionings-enum": true,
       "enum": [
+        "aws-eks-addon",
         "aws-machine-image",
         "azure-rest-api",
         "bazel-module",
