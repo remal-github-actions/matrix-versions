@@ -10986,7 +10986,7 @@ __metadata:
     jest-circus: "npm:29.7.0"
     jest-extended: "npm:4.0.2"
     json-schema-to-typescript: "npm:15.0.4"
-    renovate: "npm:39.164.1"
+    renovate: "npm:39.171.1"
     rimraf: "npm:6.0.1"
     semver: "npm:7.7.1"
     ts-jest: "npm:29.2.5"
@@ -12206,12 +12206,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier@npm:3.4.2":
-  version: 3.4.2
-  resolution: "prettier@npm:3.4.2"
+"prettier@npm:3.5.0":
+  version: 3.5.0
+  resolution: "prettier@npm:3.5.0"
   bin:
     prettier: bin/prettier.cjs
-  checksum: 10c0/99e076a26ed0aba4ebc043880d0f08bbb8c59a4c6641cdee6cdadf2205bdd87aa1d7823f50c3aea41e015e99878d37c58d7b5f0e663bba0ef047f94e36b96446
+  checksum: 10c0/6c355d74c377f5622953229d92477e8b9779162e848db90fd7e06c431deb73585d31fafc4516cf5868917825b97b9ec7c87c8d8b8e03ccd9fc9c0b7699d1a650
   languageName: node
   linkType: hard
 
@@ -12651,9 +12651,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"renovate@npm:39.164.1":
-  version: 39.164.1
-  resolution: "renovate@npm:39.164.1"
+"renovate@npm:39.171.1":
+  version: 39.171.1
+  resolution: "renovate@npm:39.171.1"
   dependencies:
     "@aws-sdk/client-codecommit": "npm:3.738.0"
     "@aws-sdk/client-ec2": "npm:3.738.0"
@@ -12744,7 +12744,7 @@ __metadata:
     p-queue: "npm:6.6.2"
     p-throttle: "npm:4.1.1"
     parse-link-header: "npm:2.0.0"
-    prettier: "npm:3.4.2"
+    prettier: "npm:3.5.0"
     protobufjs: "npm:7.4.0"
     punycode: "npm:2.3.1"
     re2: "npm:1.21.4"
@@ -12752,7 +12752,7 @@ __metadata:
     remark: "npm:13.0.0"
     remark-github: "npm:10.1.0"
     safe-stable-stringify: "npm:2.5.0"
-    semver: "npm:7.7.0"
+    semver: "npm:7.7.1"
     semver-stable: "npm:3.0.0"
     semver-utils: "npm:1.1.4"
     shlex: "npm:2.1.2"
@@ -12778,7 +12778,7 @@ __metadata:
   bin:
     renovate: dist/renovate.js
     renovate-config-validator: dist/config-validator.js
-  checksum: 10c0/d7ee3540a554f3cd261654d039fcd95e2835eb29fd97a749075572fefeadf8640456811d309da30fd37aa55fe82dae3f3ad7db24874120c1f0774ca4e6d22d76
+  checksum: 10c0/16cfa20a8389b620fb1cd7e93f1d7a4ad057de5d1c6d12d79a2180ac89bf91b0858a8a62f8d2b625d5fd6e2ba1eeded401dd417d1a87a2f29d8014c2c01faefd
   languageName: node
   linkType: hard
 
@@ -13178,15 +13178,6 @@ __metadata:
   bin:
     semver: ./bin/semver
   checksum: 10c0/d4884f2aeca28bff35d0bd40ff0a9b2dfc4b36a883bf0ea5dc15d10d9a01bdc9041035b05f825d4b5ac8a56e490703dbf0d986d054de82cc5e9bad3f02ca6e00
-  languageName: node
-  linkType: hard
-
-"semver@npm:7.7.0":
-  version: 7.7.0
-  resolution: "semver@npm:7.7.0"
-  bin:
-    semver: bin/semver.js
-  checksum: 10c0/bcd1c03209b4be7d8ca86c976a0410beba7d4ec1d49d846a4be154b958db1ff5eaee50760c1d4f4070b19dee3236b8672d3e09642c53ea23740398bba2538a2d
   languageName: node
   linkType: hard
 
