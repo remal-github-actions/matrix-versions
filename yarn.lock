@@ -2409,23 +2409,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@one-ini/wasm@npm:0.1.1":
-  version: 0.1.1
-  resolution: "@one-ini/wasm@npm:0.1.1"
-  checksum: 10c0/54700e055037f1a63bfcc86d24822203b25759598c2c3e295d1435130a449108aebc119c9c2e467744767dbe0b6ab47a182c61aa1071ba7368f5e20ab197ba65
+"@one-ini/wasm@npm:0.2.0":
+  version: 0.2.0
+  resolution: "@one-ini/wasm@npm:0.2.0"
+  checksum: 10c0/be3b8693230a4bd4c88bbf4679bcd5c9d9e4a26816dec2cf581453ce45aeaa6011fc310a056562549a1e1eb4f5a4b169aec9b6ae3636b8659a0b39049f07b672
   languageName: node
   linkType: hard
 
-"@opentelemetry/api-logs@npm:0.57.0, @opentelemetry/api-logs@npm:^0.57.0":
-  version: 0.57.0
-  resolution: "@opentelemetry/api-logs@npm:0.57.0"
-  dependencies:
-    "@opentelemetry/api": "npm:^1.3.0"
-  checksum: 10c0/4aa333a1cd942d0905b4ceae369fabfd9785fc6879f38a9835ab09dd9c03f72eac06250d55c96f7ce83c088a8e8bcfc200f38b5e3313a0e9096add44b68bc92b
-  languageName: node
-  linkType: hard
-
-"@opentelemetry/api-logs@npm:0.57.2":
+"@opentelemetry/api-logs@npm:0.57.2, @opentelemetry/api-logs@npm:^0.57.1":
   version: 0.57.2
   resolution: "@opentelemetry/api-logs@npm:0.57.2"
   dependencies:
@@ -2476,16 +2467,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@opentelemetry/instrumentation-bunyan@npm:0.45.0":
-  version: 0.45.0
-  resolution: "@opentelemetry/instrumentation-bunyan@npm:0.45.0"
+"@opentelemetry/instrumentation-bunyan@npm:0.45.1":
+  version: 0.45.1
+  resolution: "@opentelemetry/instrumentation-bunyan@npm:0.45.1"
   dependencies:
-    "@opentelemetry/api-logs": "npm:^0.57.0"
-    "@opentelemetry/instrumentation": "npm:^0.57.0"
-    "@types/bunyan": "npm:1.8.9"
+    "@opentelemetry/api-logs": "npm:^0.57.1"
+    "@opentelemetry/instrumentation": "npm:^0.57.1"
+    "@types/bunyan": "npm:1.8.11"
   peerDependencies:
     "@opentelemetry/api": ^1.3.0
-  checksum: 10c0/a010035927d5f47aae99866fde06dc4d4bcb100c49e049ee41640b3bf5d2f5811cd0f4d014a1b0cd6fb0c1f1058ae3253f07e6b0821ceefa62cce7d4a8ace0b0
+  checksum: 10c0/791529b7e5736c55549d72d89b8a7e465e95eba5298e49f0a8547e8a6ff088ba2b2cff06cd70dbdb7dd9063df1f9aad14e2722bd755b28794cf59739e1ec8db3
   languageName: node
   linkType: hard
 
@@ -2504,7 +2495,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@opentelemetry/instrumentation@npm:0.57.2":
+"@opentelemetry/instrumentation@npm:0.57.2, @opentelemetry/instrumentation@npm:^0.57.1":
   version: 0.57.2
   resolution: "@opentelemetry/instrumentation@npm:0.57.2"
   dependencies:
@@ -2517,22 +2508,6 @@ __metadata:
   peerDependencies:
     "@opentelemetry/api": ^1.3.0
   checksum: 10c0/79ca65b66357665d19f89da7027da25ea1c6b55ecdacb0a99534923743c80deb9282870db563de8ae284b13e7e0aab8413efa1937f199deeaef069e07c7e4875
-  languageName: node
-  linkType: hard
-
-"@opentelemetry/instrumentation@npm:^0.57.0":
-  version: 0.57.0
-  resolution: "@opentelemetry/instrumentation@npm:0.57.0"
-  dependencies:
-    "@opentelemetry/api-logs": "npm:0.57.0"
-    "@types/shimmer": "npm:^1.2.0"
-    import-in-the-middle: "npm:^1.8.1"
-    require-in-the-middle: "npm:^7.1.1"
-    semver: "npm:^7.5.2"
-    shimmer: "npm:^1.2.1"
-  peerDependencies:
-    "@opentelemetry/api": ^1.3.0
-  checksum: 10c0/8bceabc6c47376760d46275f0adba711efa4015f46c9d502dc9b2c6fea10bcf8dab196e38080ce41829685075bcfad71de713ef71ddbfd542a92bf46f1f78dcd
   languageName: node
   linkType: hard
 
@@ -3853,12 +3828,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/bunyan@npm:1.8.9":
-  version: 1.8.9
-  resolution: "@types/bunyan@npm:1.8.9"
+"@types/bunyan@npm:1.8.11":
+  version: 1.8.11
+  resolution: "@types/bunyan@npm:1.8.11"
   dependencies:
     "@types/node": "npm:*"
-  checksum: 10c0/fa55ad03954cad5a6e73b8c24f4bd506cf88e5f3a0714740b0b9afada77e483400f893ce6b6e36335e43f2d716554ed0329b68c7873b165edb5ea5935b362935
+  checksum: 10c0/07d762499307a1c3f04f56f2c62417b909f86f6090cee29b73a00dde323a4463cfd2e78888598cb1cd3b1eb88e6c47ef2a58e17f119dae27ff04cd361c0a1d4c
   languageName: node
   linkType: hard
 
@@ -5846,17 +5821,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"commander@npm:13.1.0":
+"commander@npm:13.1.0, commander@npm:^13.1.0":
   version: 13.1.0
   resolution: "commander@npm:13.1.0"
   checksum: 10c0/7b8c5544bba704fbe84b7cab2e043df8586d5c114a4c5b607f83ae5060708940ed0b5bd5838cf8ce27539cde265c1cbd59ce3c8c6b017ed3eec8943e3a415164
-  languageName: node
-  linkType: hard
-
-"commander@npm:^11.0.0":
-  version: 11.0.0
-  resolution: "commander@npm:11.0.0"
-  checksum: 10c0/471c44cd2d31dee556753df6ceb5ef52ccded0ba6308d3ba7a76251aa0edeedf5ac66ca86cb6096cc8fe20997064233c476983d346265f85180e86312724de0c
   languageName: node
   linkType: hard
 
@@ -5942,12 +5910,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cronstrue@npm:2.54.0":
-  version: 2.54.0
-  resolution: "cronstrue@npm:2.54.0"
+"cronstrue@npm:2.55.0":
+  version: 2.55.0
+  resolution: "cronstrue@npm:2.55.0"
   bin:
     cronstrue: bin/cli.js
-  checksum: 10c0/1317b64003c368098c779493d6213804794da012b97c4e82b4b932560103d4b4168994bbc8dbef8deb956b4894dae8c4508ccdbe2a4a8e8ded0d680e9c63e54a
+  checksum: 10c0/0f91ceb3b8e191e2a168bdd0610671cab041bd6123a65ddca2c210b0c98e029825a09903814f8b7f2519303048f38d87b273f526378e66bb6d02c6e2d53a8fdd
   languageName: node
   linkType: hard
 
@@ -6426,17 +6394,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"editorconfig@npm:2.0.0":
-  version: 2.0.0
-  resolution: "editorconfig@npm:2.0.0"
+"editorconfig@npm:2.0.1":
+  version: 2.0.1
+  resolution: "editorconfig@npm:2.0.1"
   dependencies:
-    "@one-ini/wasm": "npm:0.1.1"
-    commander: "npm:^11.0.0"
-    minimatch: "npm:9.0.2"
-    semver: "npm:^7.5.3"
+    "@one-ini/wasm": "npm:0.2.0"
+    commander: "npm:^13.1.0"
+    minimatch: "npm:10.0.1"
+    semver: "npm:^7.7.1"
   bin:
     editorconfig: bin/editorconfig
-  checksum: 10c0/a722d5dbed61c5a29f33dd2ed4730d4284358e6b286768fd2e9d35ae3595252038d7ce1e1093fdfb08fcbedc15a93a5394d6892af4fc6ca93a9618f045b653c6
+  checksum: 10c0/2dfff7f9af6368a9ffd8f94de80bd35aa9cef4173c10c8f6e16985cea0364613f6879ab609492a26290faaef1e2b6918355e42cba3a2b7157ad7bc677981ccef
   languageName: node
   linkType: hard
 
@@ -8494,10 +8462,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"graph-data-structure@npm:4.3.1":
-  version: 4.3.1
-  resolution: "graph-data-structure@npm:4.3.1"
-  checksum: 10c0/1230dbacdc4014a6c6c1200d6e4aedac93b2e65a4a43c579d03542c08384155f9247c29acea04be48e7b3ebefaf941509c43cd6ff658030f4f8a11064024b561
+"graph-data-structure@npm:4.4.0":
+  version: 4.4.0
+  resolution: "graph-data-structure@npm:4.4.0"
+  checksum: 10c0/88c3d021ee6a5a1f3d2060fdc14fa6d48a5dd1b2e4d97d61df7001ebd7b3a9698f214b5b08be47e7e58132e632fa27aca0e24b5ac430add6bf0a0f0b30ec8619
   languageName: node
   linkType: hard
 
@@ -10858,7 +10826,7 @@ __metadata:
     jest-circus: "npm:29.7.0"
     jest-extended: "npm:4.0.2"
     json-schema-to-typescript: "npm:15.0.4"
-    renovate: "npm:39.178.1"
+    renovate: "npm:39.186.0"
     rimraf: "npm:6.0.1"
     semver: "npm:7.7.1"
     ts-jest: "npm:29.2.6"
@@ -11050,15 +11018,6 @@ __metadata:
   dependencies:
     brace-expansion: "npm:^1.1.7"
   checksum: 10c0/0262810a8fc2e72cca45d6fd86bd349eee435eb95ac6aa45c9ea2180e7ee875ef44c32b55b5973ceabe95ea12682f6e3725cbb63d7a2d1da3ae1163c8b210311
-  languageName: node
-  linkType: hard
-
-"minimatch@npm:9.0.2":
-  version: 9.0.2
-  resolution: "minimatch@npm:9.0.2"
-  dependencies:
-    brace-expansion: "npm:^2.0.1"
-  checksum: 10c0/39157d5fd831a7981f7c0c5b22a0e0c2ae8a987ec4a4aeaacc21d3e85da24ce812808cbf7c07cde0d63ad1cf307f73be581131a7a84eeda65f00be1f51972471
   languageName: node
   linkType: hard
 
@@ -12078,12 +12037,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier@npm:3.5.1":
-  version: 3.5.1
-  resolution: "prettier@npm:3.5.1"
+"prettier@npm:3.5.2":
+  version: 3.5.2
+  resolution: "prettier@npm:3.5.2"
   bin:
     prettier: bin/prettier.cjs
-  checksum: 10c0/9f6f810eae455d6e4213845151a484a2338f2e0d6a8b84ee8e13a83af8a2421ef6c1e31e61e4b135671fb57b9541f6624648880cc2061ac803e243ac898c0123
+  checksum: 10c0/d7b597ed33f39c32ace675896ad187f06a3e48dc8a1e80051b5c5f0dae3586d53981704b8fda5ac3b080e6c2e0e197d239131b953702674f044351621ca5e1ac
   languageName: node
   linkType: hard
 
@@ -12523,9 +12482,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"renovate@npm:39.178.1":
-  version: 39.178.1
-  resolution: "renovate@npm:39.178.1"
+"renovate@npm:39.186.0":
+  version: 39.186.0
+  resolution: "renovate@npm:39.186.0"
   dependencies:
     "@aws-sdk/client-codecommit": "npm:3.738.0"
     "@aws-sdk/client-ec2": "npm:3.738.0"
@@ -12539,7 +12498,7 @@ __metadata:
     "@opentelemetry/context-async-hooks": "npm:1.30.1"
     "@opentelemetry/exporter-trace-otlp-http": "npm:0.57.2"
     "@opentelemetry/instrumentation": "npm:0.57.2"
-    "@opentelemetry/instrumentation-bunyan": "npm:0.45.0"
+    "@opentelemetry/instrumentation-bunyan": "npm:0.45.1"
     "@opentelemetry/instrumentation-http": "npm:0.57.2"
     "@opentelemetry/resources": "npm:1.30.1"
     "@opentelemetry/sdk-trace-base": "npm:1.30.1"
@@ -12570,12 +12529,12 @@ __metadata:
     commander: "npm:13.1.0"
     conventional-commits-detector: "npm:1.0.3"
     croner: "npm:9.0.0"
-    cronstrue: "npm:2.54.0"
+    cronstrue: "npm:2.55.0"
     deepmerge: "npm:4.3.1"
     dequal: "npm:2.0.3"
     detect-indent: "npm:6.1.0"
     diff: "npm:7.0.0"
-    editorconfig: "npm:2.0.0"
+    editorconfig: "npm:2.0.1"
     email-addresses: "npm:5.0.0"
     emoji-regex: "npm:10.4.0"
     emojibase: "npm:16.0.0"
@@ -12591,7 +12550,7 @@ __metadata:
     good-enough-parser: "npm:1.1.23"
     google-auth-library: "npm:9.15.1"
     got: "npm:11.8.6"
-    graph-data-structure: "npm:4.3.1"
+    graph-data-structure: "npm:4.4.0"
     handlebars: "npm:4.7.8"
     ignore: "npm:7.0.3"
     ini: "npm:5.0.0"
@@ -12616,7 +12575,7 @@ __metadata:
     p-queue: "npm:6.6.2"
     p-throttle: "npm:4.1.1"
     parse-link-header: "npm:2.0.0"
-    prettier: "npm:3.5.1"
+    prettier: "npm:3.5.2"
     protobufjs: "npm:7.4.0"
     punycode: "npm:2.3.1"
     re2: "npm:1.21.4"
@@ -12650,7 +12609,7 @@ __metadata:
   bin:
     renovate: dist/renovate.js
     renovate-config-validator: dist/config-validator.js
-  checksum: 10c0/c411a904684463a1d266be81dfac4965afd4489c09029bfaf63046bd0d29501a2034eca1ff78b29c1105a7b82afc51e1ac3030deca440efa0b4ea7b3cb0c5f7c
+  checksum: 10c0/9570c2c1d7c0606a091dd3bb78bbba84f850c621456fd92b38dea09c17fcfb121eed43637327f070bb6696d6a0c599fd577d246648d2e644c4452933cb8a168d
   languageName: node
   linkType: hard
 
