@@ -7147,13 +7147,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-import-resolver-typescript@npm:4.1.1":
-  version: 4.1.1
-  resolution: "eslint-import-resolver-typescript@npm:4.1.1"
+"eslint-import-resolver-typescript@npm:4.2.0":
+  version: 4.2.0
+  resolution: "eslint-import-resolver-typescript@npm:4.2.0"
   dependencies:
     debug: "npm:^4.4.0"
     get-tsconfig: "npm:^4.10.0"
-    is-bun-module: "npm:^1.3.0"
     rspack-resolver: "npm:^1.1.2"
     stable-hash: "npm:^0.0.5"
     tinyglobby: "npm:^0.2.12"
@@ -7161,12 +7160,15 @@ __metadata:
     eslint: "*"
     eslint-plugin-import: "*"
     eslint-plugin-import-x: "*"
+    is-bun-module: "*"
   peerDependenciesMeta:
     eslint-plugin-import:
       optional: true
     eslint-plugin-import-x:
       optional: true
-  checksum: 10c0/7d5f58c017547cef6be171e459266a045eb0de94d30d1f8e5ca20fd9b49042dadc4d28dbd0547500f29e4637a3429f975b521155b7bede067b9d2514537c6140
+    is-bun-module:
+      optional: true
+  checksum: 10c0/6f9934aab6fa2a58712862b26ca4a9ed38c133312d194bdbc076418145b1e580b4d9cc78130506d8eba247857719fe5a506166456696901648ec27c63d2f3b00
   languageName: node
   linkType: hard
 
@@ -9197,15 +9199,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"is-bun-module@npm:^1.3.0":
-  version: 1.3.0
-  resolution: "is-bun-module@npm:1.3.0"
-  dependencies:
-    semver: "npm:^7.6.3"
-  checksum: 10c0/2966744188fcd28e0123c52158c7073973f88babfa9ab04e2846ec5862d6b0f8f398df6413429d930f7c5ee6111ce2cbfb3eb8652d9ec42d4a37dc5089a866fb
-  languageName: node
-  linkType: hard
-
 "is-callable@npm:^1.1.3, is-callable@npm:^1.2.7":
   version: 1.2.7
   resolution: "is-callable@npm:1.2.7"
@@ -10917,7 +10910,7 @@ __metadata:
     deepmerge: "npm:4.3.1"
     eslint: "npm:8.57.1"
     eslint-config-prettier: "npm:10.1.1"
-    eslint-import-resolver-typescript: "npm:4.1.1"
+    eslint-import-resolver-typescript: "npm:4.2.0"
     eslint-plugin-github: "npm:5.1.8"
     eslint-plugin-import: "npm:2.31.0"
     eslint-plugin-jest: "npm:28.11.0"
@@ -13181,7 +13174,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"semver@npm:^7.0.0, semver@npm:^7.6.3":
+"semver@npm:^7.0.0":
   version: 7.6.3
   resolution: "semver@npm:7.6.3"
   bin:
