@@ -24,7 +24,7 @@
     "ajv": "8.17.1",
     "deepmerge": "4.3.1",
     "renovate": "39.205.2",
-    "yaml": "2.7.0"
+    "yaml": "2.7.1"
   },
   "devDependencies": {
     "@tsconfig/node20": "20.1.5",
