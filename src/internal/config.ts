@@ -29,6 +29,7 @@ export type StaticVersioning =
   | "cargo"
   | "composer"
   | "conan"
+  | "conda"
   | "deb"
   | "debian"
   | "devbox"
