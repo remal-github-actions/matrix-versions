@@ -153,6 +153,7 @@
         "cargo",
         "composer",
         "conan",
+        "conda",
         "deb",
         "debian",
         "devbox",
