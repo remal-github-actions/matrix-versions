@@ -4,12 +4,14 @@ const path = require('path')
 const pkg = JSON.parse(fs.readFileSync('./package.json', 'utf8'))
 const renovateVersion = pkg.dependencies.renovate ?? 'unknown'
 
-const dir = path.resolve('.', 'dist')
+const distDir = path.resolve('.', 'dist')
 
-const fileNames = fs.readdirSync(dir)
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+const fileNames = fs.readdirSync(distDir)
     .filter(name => name.endsWith('.js'))
 for (const fileName of fileNames) {
-    const file = path.resolve(dir, fileName)
+    const file = path.resolve(distDir, fileName)
     const content = fs.readFileSync(file, 'utf-8')
 
     const newContent = content
@@ -21,4 +23,16 @@ for (const fileName of fileNames) {
     if (newContent !== content) {
         fs.writeFileSync(file, newContent, 'utf-8')
     }
+}
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+const rattlerDistDir = path.resolve('.', 'node_modules/@baszalmstra/rattler/dist')
+const rattlerWasmFiles = fs.readdirSync(rattlerDistDir)
+    .filter(name => name.endsWith('.wasm'))
+for (const fileName of rattlerWasmFiles) {
+    fs.copyFileSync(
+        path.resolve(rattlerDistDir, fileName),
+        path.resolve(distDir, fileName)
+    )
 }
