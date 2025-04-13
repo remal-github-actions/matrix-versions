@@ -3042,16 +3042,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@renovatebot/osv-offline@npm:1.6.4":
-  version: 1.6.4
-  resolution: "@renovatebot/osv-offline@npm:1.6.4"
+"@renovatebot/osv-offline@npm:1.6.5":
+  version: 1.6.5
+  resolution: "@renovatebot/osv-offline@npm:1.6.5"
   dependencies:
     "@renovatebot/osv-offline-db": "npm:1.7.3"
     adm-zip: "npm:~0.5.16"
     fs-extra: "npm:^11.3.0"
     got: "npm:^11.8.6"
-    luxon: "npm:^3.6.0"
-  checksum: 10c0/21a0e825fab2d986fdb69e05d07c8d72d88f10ecaedc3a367b1c652685db02f15e832abf0b580fdec91513452354638bff1d61fbed6217028c78209e05b2c851
+    luxon: "npm:^3.6.1"
+  checksum: 10c0/aaa30adc4fdf8d1bba2716c50f17e7e3c56c57b79123d4580b2a67ff3d5416ac75298300aa4b832ba01f83aec533a402e1c779f555e09ee7f9e01753d10c38f7
   languageName: node
   linkType: hard
 
@@ -6071,12 +6071,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cronstrue@npm:2.57.0":
-  version: 2.57.0
-  resolution: "cronstrue@npm:2.57.0"
+"cronstrue@npm:2.58.0":
+  version: 2.58.0
+  resolution: "cronstrue@npm:2.58.0"
   bin:
     cronstrue: bin/cli.js
-  checksum: 10c0/32c7d2c3212ac298e61f37f4a90735b4b6e281e0c09850060649ba43bea636e947b8a5aeb3cf44eec5d542f61945b0ba35d8939726b1986584e2e1b2d9d4b009
+  checksum: 10c0/d692b3ae56c8afbbd4aa5bf3a7905c6567f52f198fbb670df0a9ee08811615bf2fdd915fcf59be199b7841eec2aa3675887402a2a551e3bdc0964d967aa6b22b
   languageName: node
   linkType: hard
 
@@ -10841,14 +10841,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"luxon@npm:3.6.0":
-  version: 3.6.0
-  resolution: "luxon@npm:3.6.0"
-  checksum: 10c0/60cc3fe8f7dce51f0e406529b80eec815b335a7202d5c41e210a8acc8e698d8be797f3c77ed60efe581af07f2a88defbe7a77e506121e2f460a667690e71c0d1
-  languageName: node
-  linkType: hard
-
-"luxon@npm:^3.6.0":
+"luxon@npm:3.6.1, luxon@npm:^3.6.1":
   version: 3.6.1
   resolution: "luxon@npm:3.6.1"
   checksum: 10c0/906d57a9dc4d1de9383f2e9223e378c298607c1b4d17b6657b836a3cd120feb1c1de3b5d06d846a3417e1ca764de8476e8c23b3cd4083b5cdb870adcb06a99d5
@@ -10983,7 +10976,7 @@ __metadata:
     jest-circus: "npm:29.7.0"
     jest-extended: "npm:4.0.2"
     json-schema-to-typescript: "npm:15.0.4"
-    renovate: "npm:39.233.5"
+    renovate: "npm:39.240.1"
     rimraf: "npm:6.0.1"
     semver: "npm:7.7.1"
     ts-jest: "npm:29.3.2"
@@ -12639,9 +12632,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"renovate@npm:39.233.5":
-  version: 39.233.5
-  resolution: "renovate@npm:39.233.5"
+"renovate@npm:39.240.1":
+  version: 39.240.1
+  resolution: "renovate@npm:39.240.1"
   dependencies:
     "@aws-sdk/client-codecommit": "npm:3.777.0"
     "@aws-sdk/client-ec2": "npm:3.779.0"
@@ -12667,7 +12660,7 @@ __metadata:
     "@qnighy/marshal": "npm:0.1.3"
     "@renovatebot/detect-tools": "npm:1.1.0"
     "@renovatebot/kbpgp": "npm:4.0.1"
-    "@renovatebot/osv-offline": "npm:1.6.4"
+    "@renovatebot/osv-offline": "npm:1.6.5"
     "@renovatebot/pep440": "npm:4.1.0"
     "@renovatebot/ruby-semver": "npm:4.0.0"
     "@sindresorhus/is": "npm:4.6.0"
@@ -12688,7 +12681,7 @@ __metadata:
     commander: "npm:13.1.0"
     conventional-commits-detector: "npm:1.0.3"
     croner: "npm:9.0.0"
-    cronstrue: "npm:2.57.0"
+    cronstrue: "npm:2.58.0"
     deepmerge: "npm:4.3.1"
     dequal: "npm:2.0.3"
     detect-indent: "npm:6.1.0"
@@ -12719,7 +12712,7 @@ __metadata:
     jsonata: "npm:2.0.6"
     jsonc-parser: "npm:3.3.1"
     klona: "npm:2.0.6"
-    luxon: "npm:3.6.0"
+    luxon: "npm:3.6.1"
     markdown-it: "npm:14.1.0"
     markdown-table: "npm:2.0.0"
     minimatch: "npm:10.0.1"
@@ -12768,7 +12761,7 @@ __metadata:
   bin:
     renovate: dist/renovate.js
     renovate-config-validator: dist/config-validator.js
-  checksum: 10c0/d9a51c084c67c879bf5c17687fbd8b32ffe9e0c4202c72b7bf462c1730fd85341e91981000410e048a23193a2fbbe52bd3c7f04985e7347e0fbd08b69856dd66
+  checksum: 10c0/ee05dfbd7de5eff272e81ee00560365cd20e549d78c487f3ea2a7e8efae6b12c63f1135ab1e8ac34ae7c6726986523b5f758261e40efe6287804eb3eb86e84a6
   languageName: node
   linkType: hard
 
