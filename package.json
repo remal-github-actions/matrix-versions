@@ -5,7 +5,7 @@
   "engines": {
     "node": ">=20"
   },
-  "packageManager": "yarn@4.9.0",
+  "packageManager": "yarn@4.9.1",
   "type": "commonjs",
   "scripts": {
     "update-config-schema": "tsx config.schema-update.ts",
