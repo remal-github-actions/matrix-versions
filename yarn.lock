@@ -1656,12 +1656,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cdktf/hcl2json@npm:0.20.11":
-  version: 0.20.11
-  resolution: "@cdktf/hcl2json@npm:0.20.11"
+"@cdktf/hcl2json@npm:0.20.12":
+  version: 0.20.12
+  resolution: "@cdktf/hcl2json@npm:0.20.12"
   dependencies:
-    fs-extra: "npm:11.2.0"
-  checksum: 10c0/d1e38181a7ff253fbd115b7df523c9de8df20dad5dbe2a73fd878044c490a45f8dafd9c0722876682658fae0d54c6fc97f3c26135eb5f25a49a70beb03cb00e5
+    fs-extra: "npm:11.3.0"
+  checksum: 10c0/806d0b2e3ffe5bfa606a45ae114697bdc1a3586866f3deb184f59367b10fe431d54a48ed2ec7dbb478991126b32ca1589d67ac4ab3830b9d96de4eb9b29ce90e
   languageName: node
   linkType: hard
 
@@ -4749,15 +4749,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@yarnpkg/core@npm:4.4.0":
-  version: 4.4.0
-  resolution: "@yarnpkg/core@npm:4.4.0"
+"@yarnpkg/core@npm:4.4.1":
+  version: 4.4.1
+  resolution: "@yarnpkg/core@npm:4.4.1"
   dependencies:
     "@arcanis/slice-ansi": "npm:^1.1.1"
     "@types/semver": "npm:^7.1.0"
     "@types/treeify": "npm:^1.0.0"
     "@yarnpkg/fslib": "npm:^3.1.2"
-    "@yarnpkg/libzip": "npm:^3.2.0"
+    "@yarnpkg/libzip": "npm:^3.2.1"
     "@yarnpkg/parsers": "npm:^3.0.3"
     "@yarnpkg/shell": "npm:^4.1.2"
     camelcase: "npm:^5.3.1"
@@ -4779,7 +4779,7 @@ __metadata:
     treeify: "npm:^1.1.0"
     tslib: "npm:^2.4.0"
     tunnel: "npm:^0.0.6"
-  checksum: 10c0/8d6a7f63ed342fd6aa3808044124228c9bed4e4f94af331e570f0c452da838ebb2be98b5a87d5567f3eb03ef49e26547718fd9740de3c204802b121f3ac69e13
+  checksum: 10c0/203e78c3de1e2404f1ecfce5a305b2a39826e5aa7b3a70edc6758683c8746deee21ce3ab7f2d0ad1496e12b834524280c67ef735f70303e1ab8e3883586b91e8
   languageName: node
   linkType: hard
 
@@ -4792,7 +4792,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@yarnpkg/libzip@npm:^3.2.0":
+"@yarnpkg/libzip@npm:^3.2.1":
   version: 3.2.1
   resolution: "@yarnpkg/libzip@npm:3.2.1"
   dependencies:
@@ -8005,17 +8005,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fs-extra@npm:11.2.0, fs-extra@npm:^11.2.0":
-  version: 11.2.0
-  resolution: "fs-extra@npm:11.2.0"
-  dependencies:
-    graceful-fs: "npm:^4.2.0"
-    jsonfile: "npm:^6.0.1"
-    universalify: "npm:^2.0.0"
-  checksum: 10c0/d77a9a9efe60532d2e790e938c81a02c1b24904ef7a3efb3990b835514465ba720e99a6ea56fd5e2db53b4695319b644d76d5a0e9988a2beef80aa7b1da63398
-  languageName: node
-  linkType: hard
-
 "fs-extra@npm:11.3.0, fs-extra@npm:^11.3.0":
   version: 11.3.0
   resolution: "fs-extra@npm:11.3.0"
@@ -8024,6 +8013,17 @@ __metadata:
     jsonfile: "npm:^6.0.1"
     universalify: "npm:^2.0.0"
   checksum: 10c0/5f95e996186ff45463059feb115a22fb048bdaf7e487ecee8a8646c78ed8fdca63630e3077d4c16ce677051f5e60d3355a06f3cd61f3ca43f48cc58822a44d0a
+  languageName: node
+  linkType: hard
+
+"fs-extra@npm:^11.2.0":
+  version: 11.2.0
+  resolution: "fs-extra@npm:11.2.0"
+  dependencies:
+    graceful-fs: "npm:^4.2.0"
+    jsonfile: "npm:^6.0.1"
+    universalify: "npm:^2.0.0"
+  checksum: 10c0/d77a9a9efe60532d2e790e938c81a02c1b24904ef7a3efb3990b835514465ba720e99a6ea56fd5e2db53b4695319b644d76d5a0e9988a2beef80aa7b1da63398
   languageName: node
   linkType: hard
 
@@ -11059,7 +11059,7 @@ __metadata:
     jest-circus: "npm:29.7.0"
     jest-extended: "npm:4.0.2"
     json-schema-to-typescript: "npm:15.0.4"
-    renovate: "npm:39.252.0"
+    renovate: "npm:39.257.8"
     rimraf: "npm:6.0.1"
     semver: "npm:7.7.1"
     ts-jest: "npm:29.3.2"
@@ -12380,9 +12380,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"protobufjs@npm:7.4.0":
-  version: 7.4.0
-  resolution: "protobufjs@npm:7.4.0"
+"protobufjs@npm:7.5.0":
+  version: 7.5.0
+  resolution: "protobufjs@npm:7.5.0"
   dependencies:
     "@protobufjs/aspromise": "npm:^1.1.2"
     "@protobufjs/base64": "npm:^1.1.2"
@@ -12396,7 +12396,7 @@ __metadata:
     "@protobufjs/utf8": "npm:^1.1.0"
     "@types/node": "npm:>=13.7.0"
     long: "npm:^5.0.0"
-  checksum: 10c0/a5460a63fe596523b9a067cbce39a6b310d1a71750fda261f076535662aada97c24450e18c5bc98a27784f70500615904ff1227e1742183509f0db4fdede669b
+  checksum: 10c0/21ae56998d04e31ef7f58f49ccf6cd307f06b6257fee8b53016418176a2a03083f781c42907762bfdf632f425b5cd9707bc3f23aa73a9a774292e1b7190e3689
   languageName: node
   linkType: hard
 
@@ -12724,9 +12724,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"renovate@npm:39.252.0":
-  version: 39.252.0
-  resolution: "renovate@npm:39.252.0"
+"renovate@npm:39.257.8":
+  version: 39.257.8
+  resolution: "renovate@npm:39.257.8"
   dependencies:
     "@aws-sdk/client-codecommit": "npm:3.777.0"
     "@aws-sdk/client-ec2": "npm:3.779.0"
@@ -12737,7 +12737,7 @@ __metadata:
     "@aws-sdk/credential-providers": "npm:3.778.0"
     "@baszalmstra/rattler": "npm:0.2.1"
     "@breejs/later": "npm:4.2.0"
-    "@cdktf/hcl2json": "npm:0.20.11"
+    "@cdktf/hcl2json": "npm:0.20.12"
     "@opentelemetry/api": "npm:1.9.0"
     "@opentelemetry/context-async-hooks": "npm:2.0.0"
     "@opentelemetry/exporter-trace-otlp-http": "npm:0.200.0"
@@ -12760,7 +12760,7 @@ __metadata:
     "@renovatebot/pep440": "npm:4.1.0"
     "@renovatebot/ruby-semver": "npm:4.0.0"
     "@sindresorhus/is": "npm:4.6.0"
-    "@yarnpkg/core": "npm:4.4.0"
+    "@yarnpkg/core": "npm:4.4.1"
     "@yarnpkg/parsers": "npm:3.0.3"
     agentkeepalive: "npm:4.6.0"
     aggregate-error: "npm:3.1.0"
@@ -12824,7 +12824,7 @@ __metadata:
     p-throttle: "npm:4.1.1"
     parse-link-header: "npm:2.0.0"
     prettier: "npm:3.5.3"
-    protobufjs: "npm:7.4.0"
+    protobufjs: "npm:7.5.0"
     punycode: "npm:2.3.1"
     re2: "npm:1.21.4"
     redis: "npm:4.7.0"
@@ -12846,7 +12846,7 @@ __metadata:
     vuln-vects: "npm:1.1.0"
     xmldoc: "npm:1.3.0"
     yaml: "npm:2.7.1"
-    zod: "npm:3.24.2"
+    zod: "npm:3.24.3"
   dependenciesMeta:
     better-sqlite3:
       optional: true
@@ -12857,7 +12857,7 @@ __metadata:
   bin:
     renovate: dist/renovate.js
     renovate-config-validator: dist/config-validator.js
-  checksum: 10c0/bbed2c8a8ce8e1b891f8800ffce245d9fb1b625e49d2c09d940dc5f165dd8f8a6b317b09921fab53828f0a9aad2418248beb4a922c2a576eab85d227b90196ad
+  checksum: 10c0/f78273f7f1d0d90de6941c724155941402b6980755ae66c316d0e04fd39300dcaed8b9c3b109a88ce5bf01c676985b80227eb7ab8ba6b43382f0afec66fa9d9e
   languageName: node
   linkType: hard
 
@@ -15416,10 +15416,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"zod@npm:3.24.2":
-  version: 3.24.2
-  resolution: "zod@npm:3.24.2"
-  checksum: 10c0/c638c7220150847f13ad90635b3e7d0321b36cce36f3fc6050ed960689594c949c326dfe2c6fa87c14b126ee5d370ccdebd6efb304f41ef5557a4aaca2824565
+"zod@npm:3.24.3":
+  version: 3.24.3
+  resolution: "zod@npm:3.24.3"
+  checksum: 10c0/ab0369810968d0329a1a141e9418e01e5c9c2a4905cbb7cb7f5a131d6e9487596e1400e21eeff24c4a8ee28dacfa5bd6103893765c055b7a98c2006a5a4fc68d
   languageName: node
   linkType: hard
 
