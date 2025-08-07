@@ -59,7 +59,7 @@ export async function run(
                 + `Use batching mode.`,
             )
         } else if (versionMatrixLength > batchLimit / 2) {
-            core.error(
+            core.warning(
                 `Version, matrix consists of ${versionMatrixLength} elements`
                 + `, which is more than a half of what GitHub supports: ${batchLimit}. `
                 + `Consider using batching mode.`,
