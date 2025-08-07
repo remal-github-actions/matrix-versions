@@ -151,6 +151,8 @@ describe(run.name, () => {
                 - 'https://maven.pkg.github.com/remal-gradle-api/packages'
                 only:
                 - stable
+                include:
+                - '[3,)'
         `)
 
         const expectedVersionMatrix = await testRun(`
@@ -161,6 +163,8 @@ describe(run.name, () => {
                 dependency: gradle-wrapper
                 only:
                 - stable
+                include:
+                - '[3,)'
         `)
 
         expect(versionMatrix).toStrictEqual(expectedVersionMatrix)
