@@ -101,6 +101,7 @@ jobs:
       uses: ./
       with:
         githubToken: ${{github.token}}
+        batchLimit: 9999
         matrix: |
           spring-boot:
             dependency: maven:org.springframework.boot:spring-boot-dependencies

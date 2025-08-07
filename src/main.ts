@@ -6,8 +6,8 @@ import { run } from './run.js'
 
 initRenovateLogging()
 
-const batchLimit = 256
-const batchNumbers = 10
+const batchLimit = parseInt(core.getInput('batchLimit', { required: false }) ?? '256')
+const batchNumbers = 9
 
 const githubToken = core.getInput('githubToken', { required: false })
 
