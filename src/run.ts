@@ -100,7 +100,7 @@ function initRenovateConfig(config: Config, githubToken?: string | null) {
 
 
     const defaultHostRule: HostRule = {
-        timeout: 120_000,
+        timeout: 60_000,
         abortOnError: true,
     }
     const hostRules: HostRule[] = renovateConfig.hostRules = [defaultHostRule]

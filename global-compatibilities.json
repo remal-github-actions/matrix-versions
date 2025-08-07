@@ -5,87 +5,87 @@
       {
         "versionRange": "[8.14-alpha,)",
         "dependency": "java",
-        "dependencyVersionRange": "[17,24.9999)"
+        "dependencyVersionRange": "24"
       },
       {
         "versionRange": "[8.10-alpha,)",
         "dependency": "java",
-        "dependencyVersionRange": "[17,23.9999)"
+        "dependencyVersionRange": "23"
       },
       {
-        "versionRange": "[8.8-alpha,8.10-alpha)",
+        "versionRange": "[8.8-alpha,)",
         "dependency": "java",
-        "dependencyVersionRange": "[8,22.9999)"
+        "dependencyVersionRange": "22"
       },
       {
-        "versionRange": "[8.5-alpha,8.10-alpha)",
+        "versionRange": "[8.5-alpha,)",
         "dependency": "java",
-        "dependencyVersionRange": "[8,21.9999)"
+        "dependencyVersionRange": "21"
       },
       {
-        "versionRange": "[8.3-alpha,8.10-alpha)",
+        "versionRange": "[8.3-alpha,)",
         "dependency": "java",
-        "dependencyVersionRange": "[8,20.9999)"
+        "dependencyVersionRange": "20"
       },
       {
-        "versionRange": "[7.6-alpha,8.10-alpha)",
+        "versionRange": "[7.6-alpha,)",
         "dependency": "java",
-        "dependencyVersionRange": "[8,19.9999)"
+        "dependencyVersionRange": "19"
       },
       {
-        "versionRange": "[7.5-alpha,8.10-alpha)",
+        "versionRange": "[7.5-alpha,)",
         "dependency": "java",
-        "dependencyVersionRange": "[8,18.9999)"
+        "dependencyVersionRange": "18"
       },
       {
-        "versionRange": "[7.3-alpha,8.10-alpha)",
+        "versionRange": "[7.3-alpha,)",
         "dependency": "java",
-        "dependencyVersionRange": "[8,17.9999)"
+        "dependencyVersionRange": "17"
       },
       {
-        "versionRange": "[7.0-alpha,8.10-alpha)",
+        "versionRange": "[7.0-alpha,8.14.9999)",
         "dependency": "java",
-        "dependencyVersionRange": "[8,16.9999)"
+        "dependencyVersionRange": "16"
       },
       {
-        "versionRange": "[6.7-alpha,8.10-alpha)",
+        "versionRange": "[6.7-alpha,8.14.9999)",
         "dependency": "java",
-        "dependencyVersionRange": "[8,15.9999)"
+        "dependencyVersionRange": "15"
       },
       {
-        "versionRange": "[6.3-alpha,8.10-alpha)",
+        "versionRange": "[6.3-alpha,8.14.9999)",
         "dependency": "java",
-        "dependencyVersionRange": "[8,14.9999)"
+        "dependencyVersionRange": "14"
       },
       {
-        "versionRange": "[6.0-alpha,8.10-alpha)",
+        "versionRange": "[6.0-alpha,8.14.9999)",
         "dependency": "java",
-        "dependencyVersionRange": "[8,13.9999)"
+        "dependencyVersionRange": "13"
       },
       {
-        "versionRange": "[5.4-alpha,8.10-alpha)",
+        "versionRange": "[5.4-alpha,8.14.9999)",
         "dependency": "java",
-        "dependencyVersionRange": "[8,12.9999)"
+        "dependencyVersionRange": "12"
       },
       {
-        "versionRange": "[5.0-alpha,8.10-alpha)",
+        "versionRange": "[5.0-alpha,8.14.9999)",
         "dependency": "java",
-        "dependencyVersionRange": "[8,11.9999)"
+        "dependencyVersionRange": "11"
       },
       {
-        "versionRange": "[4.7-alpha,8.10-alpha)",
+        "versionRange": "[4.7-alpha,8.14.9999)",
         "dependency": "java",
-        "dependencyVersionRange": "[8,10.9999)"
+        "dependencyVersionRange": "10"
       },
       {
-        "versionRange": "[4.3-alpha,8.10-alpha)",
+        "versionRange": "[4.3-alpha,8.14.9999)",
         "dependency": "java",
-        "dependencyVersionRange": "[8,9.9999)"
+        "dependencyVersionRange": "9"
       },
       {
-        "versionRange": "[2-alpha,8.10-alpha)",
+        "versionRange": "[2.0-alpha,8.14.9999)",
         "dependency": "java",
-        "dependencyVersionRange": "[8,8.9999)"
+        "dependencyVersionRange": "8"
       }
     ],
     "maven:io.micronaut:micronaut-bom": [
