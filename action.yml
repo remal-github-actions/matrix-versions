@@ -18,6 +18,9 @@ inputs:
   globalCompatibilityAliases:
     required: false
     description: A YAML value of `globalCompatibilityAliases` config property
+  batchLimit:
+    required: false
+    description: Batch limit. If the number of result elements exceeds this number, as error will be risen.
 
 outputs:
   allMatrixIncludes:
