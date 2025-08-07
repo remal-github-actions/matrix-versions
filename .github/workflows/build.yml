@@ -106,7 +106,7 @@ jobs:
           spring-boot:
             dependency: maven:org.springframework.boot:spring-boot-dependencies
             include:
-            - '[2.3,4)'
+            - '[2.3,3.3.9999)'
 
     - name: Validate current action - Spring Boot
       env:
