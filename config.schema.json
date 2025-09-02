@@ -28,7 +28,7 @@
       "additionalProperties": false,
       "x-with-supported-dependency-key-types-pattern": true,
       "patternProperties": {
-        "^(gradle-wrapper|java|java/full|maven:.+|node|node/full)$": {
+        "^(gradle-plugin:.+|gradle-wrapper|java|java/full|maven:.+|node|node/full)$": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/compatibility-item"
@@ -42,7 +42,7 @@
       "additionalProperties": false,
       "x-with-supported-dependency-key-types-pattern": true,
       "patternProperties": {
-        "^(gradle-wrapper|java|java/full|maven:.+|node|node/full)$": {
+        "^(gradle-plugin:.+|gradle-wrapper|java|java/full|maven:.+|node|node/full)$": {
           "$ref": "#/definitions/compatibility-alias"
         }
       }
@@ -112,6 +112,7 @@
     "version-only-filter": {
       "type": "string",
       "enum": [
+        "once",
         "lts",
         "stable",
         "stable+current-unstable",
@@ -206,6 +207,7 @@
           "type": "string",
           "x-with-supported-dependency-types-enum": true,
           "enum": [
+            "gradle-plugin",
             "gradle-wrapper",
             "java",
             "java/full",
@@ -258,7 +260,7 @@
       "type": "string",
       "minLength": 1,
       "x-with-supported-dependency-types-pattern": true,
-      "pattern": "^(gradle-wrapper|java|java/full|maven:.+|node|node/full)$"
+      "pattern": "^(gradle-plugin:.+|gradle-wrapper|java|java/full|maven:.+|node|node/full)$"
     },
     "version-range": {
       "type": "string",

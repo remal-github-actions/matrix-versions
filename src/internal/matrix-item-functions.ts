@@ -60,9 +60,15 @@ export async function fetchMatrixItem(matrixItem: MatrixItem): Promise<FetchedMa
         .then(item => {
             if (!item.fetchedVersions.length) {
                 const filterStrings: string[] = []
-                if (isNotEmpty(item.only)) filterStrings.push(`only='${item.only.join('\', \'')}'`)
-                if (isNotEmpty(item.include)) filterStrings.push(`include='${item.include.join('\', \'')}'`)
-                if (isNotEmpty(item.exclude)) filterStrings.push(`exclude='${item.exclude.join('\', \'')}'`)
+                if (isNotEmpty(item.only)) {
+                    filterStrings.push(`only='${item.only.join('\', \'')}'`)
+                }
+                if (isNotEmpty(item.include)) {
+                    filterStrings.push(`include='${item.include.join('\', \'')}'`)
+                }
+                if (isNotEmpty(item.exclude)) {
+                    filterStrings.push(`exclude='${item.exclude.join('\', \'')}'`)
+                }
                 const filterString = filterStrings.join('; ')
                 throw new Error(`No versions left for '${item.dependency}' dependency after applying filters: ${filterString}`)
             }
@@ -214,6 +220,7 @@ type VersionsFilter = (versions: string[]) => string[]
 type VersionsFilterFactory = (versioning: VersioningApi) => VersionsFilter
 
 const onlyFilterFactories: Record<VersionOnlyFilter, VersionsFilterFactory> = {
+    'once': _ => versions => versions, // should be filtered in the composeVersionMatrix
     'lts': _ => versions => versions, // should be filtered in the fetcher
     'stable': versioning => versions => versions.filter(version => versioning.isStable(version)),
     'stable+current-unstable': versioning => versions => {
@@ -253,12 +260,18 @@ function createNumbersOnlyFilterFactory(
                 }
             }
 
-            if (numbersToInclude < 1) return false
+            if (numbersToInclude < 1) {
+                return false
+            }
 
-            if (!versioning.isStable(version)) return false
+            if (!versioning.isStable(version)) {
+                return false
+            }
 
             const major = versioning.getMajor(version)?.toString()
-            if (major == null) return false
+            if (major == null) {
+                return false
+            }
 
             let marker = major
             if (numbersToInclude >= 2) {
@@ -325,7 +338,10 @@ export function withFullFetcherSuffixDependency(dependency: string): string | un
 }
 
 export function isFullFetcherDependency(dependency: string): boolean {
-    if (dependency.includes('*')) return false
+    if (dependency.includes('*')) {
+        return false
+    }
+
     return parseMatrixItemDependency(dependency).fetcherId.endsWith(fullSupportedVersionFetcherSuffix)
 }
 

@@ -1,3 +1,4 @@
+import { GradlePluginVersionFetcher } from './version-fetchers/GradlePluginVersionFetcher'
 import { GradleWrapperVersionFetcher } from './version-fetchers/GradleWrapperVersionFetcher.js'
 import { JavaFullVersionFetcher } from './version-fetchers/JavaFullVersionFetcher.js'
 import { JavaVersionFetcher } from './version-fetchers/JavaVersionFetcher.js'
@@ -10,6 +11,7 @@ export const fullSupportedVersionFetcherSuffix = '/full'
 
 export const supportedVersionFetchers: Map<string, VersionFetcher> = new Map()
 supportedVersionFetchers.set('gradle-wrapper', new GradleWrapperVersionFetcher())
+supportedVersionFetchers.set('gradle-plugin', new GradlePluginVersionFetcher())
 supportedVersionFetchers.set('java', new JavaVersionFetcher())
 supportedVersionFetchers.set('java' + fullSupportedVersionFetcherSuffix, new JavaFullVersionFetcher())
 supportedVersionFetchers.set('maven', new MavenVersionFetcher())

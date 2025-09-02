@@ -51,7 +51,7 @@ const dependencyTypesPattern = (function() {
         } else {
             return type
         }
-    })
+    }).toSorted()
     return `^(${patterns.join('|')})$`
 })()
 

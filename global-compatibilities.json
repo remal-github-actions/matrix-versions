@@ -93,6 +93,23 @@
         "dependencyVersionRange": "8"
       }
     ],
+    "gradle-plugin:org.gradle.toolchains.foojay-resolver": [
+      {
+        "versionRange": "(0-alpha,)",
+        "dependency": "gradle-wrapper",
+        "dependencyVersionRange": "[7.6-alpha,)"
+      },
+      {
+        "versionRange": "[1-alpha,)",
+        "dependency": "java",
+        "dependencyVersionRange": "[17,)"
+      },
+      {
+        "versionRange": "(,0.9.9999)",
+        "dependency": "java",
+        "dependencyVersionRange": "[8,)"
+      }
+    ],
     "maven:io.micronaut:micronaut-bom": [
       {
         "versionRange": "[4,)",

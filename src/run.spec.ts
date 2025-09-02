@@ -1,5 +1,6 @@
 import dedent from 'dedent'
 import { VersionMatrixItem } from './internal/matrix-functions'
+import { onlyUnique } from './internal/utils'
 import { run } from './run.js'
 
 describe(run.name, () => {
@@ -168,6 +169,78 @@ describe(run.name, () => {
         `)
 
         expect(versionMatrix).toStrictEqual(expectedVersionMatrix)
+    })
+
+    it('different compatibilities', async () => {
+        const versionMatrix = await testRun(`
+            matrix:
+              java:
+                dependency: java
+                only:
+                - stable
+                include:
+                - '(,23]'
+              gradle:
+                dependency: gradle-wrapper
+                only:
+                - stable
+              foojay-resolver:
+                dependency: gradle-plugin:org.gradle.toolchains.foojay-resolver
+        `)
+
+        const gradle7Versions = versionMatrix
+            .map(it => it['gradle'])
+            .filter(it => it.startsWith('7.'))
+            .filter(onlyUnique)
+        expect(gradle7Versions).not.toBeEmpty()
+
+        const gradle6Versions = versionMatrix
+            .map(it => it['gradle'])
+            .filter(it => it.startsWith('6.'))
+            .filter(onlyUnique)
+        expect(gradle6Versions).toBeEmpty()
+
+        const foojayResolverIncompatibleVersions = versionMatrix
+            .filter(it =>
+                it['gradle'].startsWith('6.')
+                || (it['java'] === '11' && it['foojay-resolver'].startsWith('1.')),
+            )
+        expect(foojayResolverIncompatibleVersions).toBeEmpty()
+    })
+
+    it('only: once', async () => {
+        const versionMatrix = await testRun(`
+            matrix:
+              java:
+                dependency: java
+                only:
+                - once
+                - stable
+                include:
+                - '(,23]'
+              gradle:
+                dependency: gradle-wrapper
+                only:
+                - once
+                - stable
+              foojay-resolver:
+                dependency: gradle-plugin:org.gradle.toolchains.foojay-resolver
+        `)
+
+        const javaVersions = versionMatrix
+            .map(it => it['java'])
+            .filter(onlyUnique)
+        expect(javaVersions).toHaveLength(1)
+
+        const gradleVersions = versionMatrix
+            .map(it => it['gradle'])
+            .filter(onlyUnique)
+        expect(gradleVersions).toHaveLength(1)
+
+        const foojayResolverVersions = versionMatrix
+            .map(it => it['foojay-resolver'])
+            .filter(onlyUnique)
+        expect(foojayResolverVersions.length).toBeGreaterThanOrEqual(2)
     })
 
 })
