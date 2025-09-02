@@ -45,10 +45,6 @@ export function composeVersionMatrix(fetchedMatrix: FetchedMatrix): VersionMatri
         }
     }
 
-    if (!versionMatrix.length) {
-        throw new Error(`Empty version matrix. Check filters and compatibilities.`)
-    }
-
     return versionMatrix
 }
 

@@ -26,6 +26,7 @@ export async function run(
     githubToken: string | undefined | null,
     configFiles: string[],
     configContent: string,
+    allowEmptyResult: boolean,
 ): Promise<VersionMatrixItem[]> {
     try {
         // Init config:
@@ -47,8 +48,12 @@ export async function run(
 
 
         // Execute logic:
-        const fetchedMatrix = await fetchMatrix(config.matrix)
+        const fetchedMatrix = await fetchMatrix(config.matrix ?? {}, allowEmptyResult)
         const versionMatrix = composeVersionMatrix(fetchedMatrix)
+        if (!allowEmptyResult && !versionMatrix.length) {
+            throw new Error(`Empty version matrix. Check filters and compatibilities.`)
+        }
+
         core.setOutput('allMatrixIncludes', versionMatrix)
 
         const versionMatrixLength = versionMatrix.length

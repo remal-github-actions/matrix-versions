@@ -71,16 +71,7 @@ export abstract class VersionFetcherRenovateDatasource extends VersionFetcher {
             .map(release => release.version)
             .filter(isNotEmpty)
 
-        if (versions.length) {
-            return versions
-        }
-
-        let message = 'No versions found'
-        if (isNotEmpty(dependency)) {
-            message += ` of '${dependency}'`
-        }
-        message += ` in ${repositories.join(', ')}`
-        throw new Error(message)
+        return versions
     }
 
     get versioning(): Versioning {

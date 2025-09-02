@@ -19,10 +19,13 @@ export interface FetchedMatrixItem extends MatrixItem {
 
 export type FetchedMatrix = Record<string, FetchedMatrixItem>
 
-export async function fetchMatrix(matrix?: Record<string, MatrixItem>): Promise<FetchedMatrix> {
+export async function fetchMatrix(
+    matrix: Record<string, MatrixItem>,
+    allowEmptyResult: boolean,
+): Promise<FetchedMatrix> {
     const fetchedMatrix: FetchedMatrix = {}
-    for (const [property, matrixItem] of Object.entries(matrix ?? {})) {
-        const fetchedMatrixItem = await fetchMatrixItem(matrixItem)
+    for (const [property, matrixItem] of Object.entries(matrix)) {
+        const fetchedMatrixItem = await fetchMatrixItem(matrixItem, allowEmptyResult)
         fetchedMatrix[property] = fetchedMatrixItem
     }
     return Promise.resolve(fetchedMatrix)
@@ -30,7 +33,7 @@ export async function fetchMatrix(matrix?: Record<string, MatrixItem>): Promise<
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-export async function fetchMatrixItem(matrixItem: MatrixItem): Promise<FetchedMatrixItem> {
+export async function fetchMatrixItem(matrixItem: MatrixItem, allowEmptyResult: boolean): Promise<FetchedMatrixItem> {
     const { fetcherId, dependency } = parseMatrixItemDependency(matrixItem.dependency)
 
     const fetcher = getVersionFetcher(fetcherId)
@@ -38,46 +41,54 @@ export async function fetchMatrixItem(matrixItem: MatrixItem): Promise<FetchedMa
         dependency,
         repositories: matrixItem.repositories,
         only: matrixItem.only,
+    }).then(fetchedVersions => {
+        let item: FetchedMatrixItem = {
+            dependency: matrixItem.dependency,
+            only: matrixItem.only?.concat(),
+            include: matrixItem.include?.concat(),
+            exclude: matrixItem.exclude?.concat(),
+            versioning: matrixItem.versioning ?? fetcher.versioning,
+            compatibilities: matrixItem.compatibilities?.concat(),
+            fetchedVersions,
+        }
+
+        if (!fetchedVersions.length) {
+            const message = `No versions fetched for '${matrixItem.dependency}' dependency`
+            if (allowEmptyResult) {
+                core.warning(message)
+                return item
+            } else {
+                throw new Error(message)
+            }
+        }
+
+        item = filterFetchedVersions(item)
+
+        if (!item.fetchedVersions.length) {
+            const filterStrings: string[] = []
+            if (isNotEmpty(item.only)) {
+                filterStrings.push(`only='${item.only.join('\', \'')}'`)
+            }
+            if (isNotEmpty(item.include)) {
+                filterStrings.push(`include='${item.include.join('\', \'')}'`)
+            }
+            if (isNotEmpty(item.exclude)) {
+                filterStrings.push(`exclude='${item.exclude.join('\', \'')}'`)
+            }
+            const filterString = filterStrings.join('; ')
+            const message = `No versions left for '${item.dependency}' dependency after applying filters: ${filterString}`
+            if (allowEmptyResult) {
+                core.warning(message)
+                return item
+            } else {
+                throw new Error(message)
+            }
+        }
+
+        core.info(`Fetched versions for '${item.dependency}' dependency: ${item.fetchedVersions.join(', ')}`)
+
+        return item
     })
-        .then(versions => {
-            if (!versions.length) {
-                throw new Error(`No versions fetched for '${matrixItem.dependency}' dependency`)
-            }
-            return versions
-        })
-        .then(versions => {
-            return {
-                dependency: matrixItem.dependency,
-                only: matrixItem.only?.concat(),
-                include: matrixItem.include?.concat(),
-                exclude: matrixItem.exclude?.concat(),
-                versioning: matrixItem.versioning ?? fetcher.versioning,
-                compatibilities: matrixItem.compatibilities?.concat(),
-                fetchedVersions: versions,
-            }
-        })
-        .then(filterFetchedVersions)
-        .then(item => {
-            if (!item.fetchedVersions.length) {
-                const filterStrings: string[] = []
-                if (isNotEmpty(item.only)) {
-                    filterStrings.push(`only='${item.only.join('\', \'')}'`)
-                }
-                if (isNotEmpty(item.include)) {
-                    filterStrings.push(`include='${item.include.join('\', \'')}'`)
-                }
-                if (isNotEmpty(item.exclude)) {
-                    filterStrings.push(`exclude='${item.exclude.join('\', \'')}'`)
-                }
-                const filterString = filterStrings.join('; ')
-                throw new Error(`No versions left for '${item.dependency}' dependency after applying filters: ${filterString}`)
-            }
-            return item
-        })
-        .then(item => {
-            core.info(`Fetched versions for '${item.dependency}' dependency: ${item.fetchedVersions.join(', ')}`)
-            return item
-        })
 }
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */

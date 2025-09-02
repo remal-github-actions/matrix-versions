@@ -6,10 +6,12 @@ import { run } from './run.js'
 
 initRenovateLogging()
 
+const githubToken = core.getInput('githubToken', { required: false })
+
 const batchLimit = parseInt(core.getInput('batchLimit', { required: false }) ?? '256')
 const batchNumbers = 9
 
-const githubToken = core.getInput('githubToken', { required: false })
+const allowEmptyResult = core.getInput('allowEmptyResult', { required: false })?.toLowerCase() === 'true'
 
 const configFiles = core.getInput('files', { required: false })
     .split(byNewLineAndComma)
@@ -43,4 +45,5 @@ run(
     githubToken,
     configFiles,
     configContent,
+    allowEmptyResult,
 )

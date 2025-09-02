@@ -21,6 +21,9 @@ inputs:
   batchLimit:
     required: false
     description: Batch limit. If the number of result elements exceeds this number, as error will be risen.
+  allowEmptyResult:
+    required: false
+    description: Allow empty result.
 
 outputs:
   allMatrixIncludes:

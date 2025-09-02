@@ -4,13 +4,13 @@ import { onlyUnique } from './internal/utils'
 import { run } from './run.js'
 
 describe(run.name, () => {
-    async function testRun(config: string) {
+    async function testRun(config: string, allowEmptyResult: boolean = false) {
         // eslint-disable-next-line no-useless-concat
         const gitHubToken = 'g' + 'hp_xmGQ2dHvCiK685' + 'qNEFuA3IAvv6Vfg62WM1hG'
 
         config = dedent(config)
 
-        return run(1000, 0, gitHubToken, [], config)
+        return run(1000, 0, gitHubToken, [], config, allowEmptyResult)
     }
 
     function groupMatrix(
@@ -241,6 +241,35 @@ describe(run.name, () => {
             .map(it => it['foojay-resolver'])
             .filter(onlyUnique)
         expect(foojayResolverVersions.length).toBeGreaterThanOrEqual(2)
+    })
+
+    it('allowEmptyResult: disabled', async () => {
+        let exception: any = null
+        try {
+            await testRun(`
+                matrix:
+                  java:
+                    dependency: java
+                  unknown:
+                    dependency: maven:unknown
+            `, false)
+
+        } catch (e) {
+            exception = e
+        }
+
+        expect(exception).not.toBeNull()
+    })
+
+    it('allowEmptyResult: enabled', async () => {
+        const versionMatrix = await testRun(`
+            matrix:
+              java:
+                dependency: java
+              unknown:
+                dependency: maven:unknown
+        `, true)
+        expect(versionMatrix).toBeEmpty()
     })
 
 })
