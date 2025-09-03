@@ -141,11 +141,11 @@ export function escapeRegex(string: string): string {
 export const getErrorOf = async <TError>(call: () => Promise<unknown>): Promise<TError> => {
     try {
         await call()
-        throw new NoErrorThrownError()
+        throw new NoErrorThrown()
     } catch (error: unknown) {
         return error as TError
     }
 }
 
-export class NoErrorThrownError extends Error {
+export class NoErrorThrown {
 }

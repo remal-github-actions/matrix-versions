@@ -1,6 +1,6 @@
 import dedent from 'dedent'
 import { VersionMatrixItem } from './internal/matrix-functions'
-import { getErrorOf, onlyUnique } from './internal/utils'
+import { getErrorOf, NoErrorThrown, onlyUnique } from './internal/utils'
 import { run } from './run.js'
 
 describe(run.name, () => {
@@ -315,6 +315,7 @@ describe(run.name, () => {
                         dependency: maven:unknown
                 `, false),
             )
+            expect(error).not.toBeInstanceOf(NoErrorThrown)
             expect(error).toBeInstanceOf(Error)
         })
 

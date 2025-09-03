@@ -28,67 +28,61 @@ export async function run(
     configContent: string,
     allowEmptyResult: boolean,
 ): Promise<VersionMatrixItem[]> {
-    try {
-        // Init config:
-        const config = mergeConfigs(
-            parseConfigContent(configContent),
-            await parseConfigFiles(...configFiles),
-            defaultCompatibilitiesConfig,
-        )
-        processGlobalCompatibilityAliases(config)
-        populateGlobalCompatibilities(config)
+    // Init config:
+    const config = mergeConfigs(
+        parseConfigContent(configContent),
+        await parseConfigFiles(...configFiles),
+        defaultCompatibilitiesConfig,
+    )
+    processGlobalCompatibilityAliases(config)
+    populateGlobalCompatibilities(config)
 
 
-        // Init Renovate:
-        process.env.RENOVATE_X_IGNORE_RE2 = 'true'
-        process.env.TMPDIR = process.env.RENOVATE_TMPDIR ?? os.tmpdir()
-        initRenovateLogging()
-        initRenovateConfig(config, githubToken)
-        initProxyForRenovate()
+    // Init Renovate:
+    process.env.RENOVATE_X_IGNORE_RE2 = 'true'
+    process.env.TMPDIR = process.env.RENOVATE_TMPDIR ?? os.tmpdir()
+    initRenovateLogging()
+    initRenovateConfig(config, githubToken)
+    initProxyForRenovate()
 
 
-        // Execute logic:
-        const fetchedMatrix = await fetchMatrix(config.matrix ?? {}, allowEmptyResult)
-        const versionMatrix = composeVersionMatrix(fetchedMatrix)
-        if (!allowEmptyResult && !versionMatrix.length) {
-            throw new Error(`Empty version matrix. Check filters and compatibilities.`)
-        }
-
-        core.setOutput('allMatrixIncludes', versionMatrix)
-
-        const versionMatrixLength = versionMatrix.length
-        if (versionMatrixLength > batchLimit) {
-            core.error(
-                `Version, matrix consists of ${versionMatrixLength} elements`
-                + `, which is greater than GitHub supports: ${batchLimit}. `
-                + `Use batching mode.`,
-            )
-        } else if (versionMatrixLength > batchLimit / 2) {
-            core.warning(
-                `Version, matrix consists of ${versionMatrixLength} elements`
-                + `, which is more than a half of what GitHub supports: ${batchLimit}. `
-                + `Consider using batching mode.`,
-            )
-        }
-
-        for (let batchNumber = 1; batchNumber <= batchNumbers; ++batchNumber) {
-            const batchElements: VersionMatrixItem[] = []
-            for (
-                let i = batchLimit * (batchNumber - 1);
-                i < Math.min(versionMatrix.length, batchLimit * batchNumber);
-                ++i
-            ) {
-                batchElements.push(versionMatrix[i])
-            }
-            core.setOutput(`batchMatrixIncludes${batchNumber}`, batchElements)
-        }
-
-        return versionMatrix
-
-    } catch (error) {
-        core.setFailed(error instanceof Error ? error : (error as any).toString())
-        throw error
+    // Execute logic:
+    const fetchedMatrix = await fetchMatrix(config.matrix ?? {}, allowEmptyResult)
+    const versionMatrix = composeVersionMatrix(fetchedMatrix)
+    if (!allowEmptyResult && !versionMatrix.length) {
+        throw new Error(`Empty version matrix. Check filters and compatibilities.`)
     }
+
+    core.setOutput('allMatrixIncludes', versionMatrix)
+
+    const versionMatrixLength = versionMatrix.length
+    if (versionMatrixLength > batchLimit) {
+        core.error(
+            `Version, matrix consists of ${versionMatrixLength} elements`
+            + `, which is greater than GitHub supports: ${batchLimit}. `
+            + `Use batching mode.`,
+        )
+    } else if (versionMatrixLength > batchLimit / 2) {
+        core.warning(
+            `Version, matrix consists of ${versionMatrixLength} elements`
+            + `, which is more than a half of what GitHub supports: ${batchLimit}. `
+            + `Consider using batching mode.`,
+        )
+    }
+
+    for (let batchNumber = 1; batchNumber <= batchNumbers; ++batchNumber) {
+        const batchElements: VersionMatrixItem[] = []
+        for (
+            let i = batchLimit * (batchNumber - 1);
+            i < Math.min(versionMatrix.length, batchLimit * batchNumber);
+            ++i
+        ) {
+            batchElements.push(versionMatrix[i])
+        }
+        core.setOutput(`batchMatrixIncludes${batchNumber}`, batchElements)
+    }
+
+    return versionMatrix
 }
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */

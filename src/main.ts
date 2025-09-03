@@ -39,11 +39,23 @@ const configContent = (function() {
     return lines.join('\n')
 })()
 
-run(
-    batchLimit,
-    batchNumbers,
-    githubToken,
-    configFiles,
-    configContent,
-    allowEmptyResult,
-)
+async function main(): Promise<void> {
+    try {
+        run(
+            batchLimit,
+            batchNumbers,
+            githubToken,
+            configFiles,
+            configContent,
+            allowEmptyResult,
+        )
+
+    } catch (error) {
+        core.setFailed(error instanceof Error ? error : (error as any).toString())
+        throw error
+    }
+}
+
+//noinspection JSIgnoredPromiseFromCall
+main()
+
