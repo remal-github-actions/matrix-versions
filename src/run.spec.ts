@@ -1,6 +1,6 @@
 import dedent from 'dedent'
 import { VersionMatrixItem } from './internal/matrix-functions'
-import { onlyUnique } from './internal/utils'
+import { getErrorOf, onlyUnique } from './internal/utils'
 import { run } from './run.js'
 
 describe(run.name, () => {
@@ -306,21 +306,16 @@ describe(run.name, () => {
     describe('allowEmptyResult', () => {
 
         it('disabled', async () => {
-            let exception: any = null
-            try {
-                await testRun(`
-                matrix:
-                  java:
-                    dependency: java
-                  unknown:
-                    dependency: maven:unknown
-            `, false)
-
-            } catch (e) {
-                exception = e
-            }
-
-            expect(exception).not.toBeNull()
+            const error = await getErrorOf(async () =>
+                testRun(`
+                    matrix:
+                      java:
+                        dependency: java
+                      unknown:
+                        dependency: maven:unknown
+                `, false),
+            )
+            expect(error).toBeInstanceOf(Error)
         })
 
         it('enabled', async () => {

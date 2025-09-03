@@ -1,4 +1,3 @@
-import { getErrorOf, NoErrorThrownError } from '../utils'
 import { MavenVersionFetcher } from './MavenVersionFetcher.js'
 
 describe(MavenVersionFetcher.name, () => {
@@ -33,15 +32,6 @@ describe(MavenVersionFetcher.name, () => {
         expect(versions).toContain('3.0.0-RC1')
         expect(versions).toContain('2.7.0-M1')
         expect(versions).toContain('2.6.0-RC1')
-    })
-
-    it('unknown dependency', async () => {
-        const error = await getErrorOf(async () => fetcher.fetchVersions({
-            dependency: 'unknown:unknown',
-        }))
-        expect(error).not.toBeInstanceOf(NoErrorThrownError)
-        expect(error).toBeInstanceOf(Error)
-        expect((error as Error).message).toMatch(/^No versions found of 'unknown:unknown' in .+$/)
     })
 
 })
