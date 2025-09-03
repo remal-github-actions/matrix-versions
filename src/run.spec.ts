@@ -10,7 +10,7 @@ describe(run.name, () => {
 
         config = dedent(config)
 
-        return run(1000, 0, gitHubToken, [], config, allowEmptyResult)
+        return run(99999, 0, gitHubToken, [], config, allowEmptyResult)
     }
 
     function groupMatrix(
