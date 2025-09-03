@@ -208,45 +208,107 @@ describe(run.name, () => {
         expect(foojayResolverIncompatibleVersions).toBeEmpty()
     })
 
-    it('only: once', async () => {
-        const versionMatrix = await testRun(`
-            matrix:
-              java:
-                dependency: java
-                only:
-                - once
-                - stable
-                include:
-                - '(,23]'
-              gradle:
-                dependency: gradle-wrapper
-                only:
-                - once
-                - stable
-              foojay-resolver:
-                dependency: gradle-plugin:org.gradle.toolchains.foojay-resolver
-        `)
+    describe('only: once', () => {
 
-        const javaVersions = versionMatrix
-            .map(it => it['java'])
-            .filter(onlyUnique)
-        expect(javaVersions).toHaveLength(1)
+        it('single', async () => {
+            const versionMatrix = await testRun(`
+                matrix:
+                  java:
+                    dependency: java
+                    only:
+                    - once
+                    - stable
+                    include:
+                    - '(,23]'
+            `)
 
-        const gradleVersions = versionMatrix
-            .map(it => it['gradle'])
-            .filter(onlyUnique)
-        expect(gradleVersions).toHaveLength(1)
+            expect(versionMatrix).toHaveLength(1)
+            expect(versionMatrix).toIncludeAllMembers([
+                {
+                    'java': '23',
+                },
+            ])
+        })
 
-        const foojayResolverVersions = versionMatrix
-            .map(it => it['foojay-resolver'])
-            .filter(onlyUnique)
-        expect(foojayResolverVersions.length).toBeGreaterThanOrEqual(2)
+        it('all', async () => {
+            const versionMatrix = await testRun(`
+                matrix:
+                  java:
+                    dependency: java
+                    only:
+                    - once
+                    - stable
+                    include:
+                    - '(,23]'
+                  gradle:
+                    dependency: gradle-wrapper
+                    only:
+                    - once
+                    - stable
+                    include:
+                    - '[8-alpha,)'
+            `)
+
+            expect(versionMatrix).toHaveLength(1)
+
+            const javaVersions = versionMatrix
+                .map(it => it['java'])
+                .filter(onlyUnique)
+            expect(javaVersions).toHaveLength(1)
+
+            const gradleVersions = versionMatrix
+                .map(it => it['gradle'])
+                .filter(onlyUnique)
+            expect(gradleVersions).toHaveLength(1)
+        })
+
+        it('some', async () => {
+            const versionMatrix = await testRun(`
+                matrix:
+                  java:
+                    dependency: java
+                    only:
+                    - once
+                    - stable
+                    include:
+                    - '(,23]'
+                  gradle:
+                    dependency: gradle-wrapper
+                    only:
+                    - once
+                    - stable
+                    include:
+                    - '[8-alpha,)'
+                  foojay-resolver:
+                    dependency: gradle-plugin:org.gradle.toolchains.foojay-resolver
+                    only:
+                    - stable
+            `)
+
+            const javaVersions = versionMatrix
+                .map(it => it['java'])
+                .filter(onlyUnique)
+            expect(javaVersions).toHaveLength(1)
+
+            const gradleVersions = versionMatrix
+                .map(it => it['gradle'])
+                .filter(onlyUnique)
+            expect(gradleVersions).toHaveLength(1)
+
+            const foojayResolverVersions = versionMatrix
+                .map(it => it['foojay-resolver'])
+                .filter(onlyUnique)
+            expect(foojayResolverVersions.length).toBeGreaterThanOrEqual(2)
+        })
+
     })
 
-    it('allowEmptyResult: disabled', async () => {
-        let exception: any = null
-        try {
-            await testRun(`
+    describe('allowEmptyResult', () => {
+
+        it('disabled', async () => {
+            let exception: any = null
+            try {
+                await testRun(`
                 matrix:
                   java:
                     dependency: java
@@ -254,22 +316,24 @@ describe(run.name, () => {
                     dependency: maven:unknown
             `, false)
 
-        } catch (e) {
-            exception = e
-        }
+            } catch (e) {
+                exception = e
+            }
 
-        expect(exception).not.toBeNull()
-    })
+            expect(exception).not.toBeNull()
+        })
 
-    it('allowEmptyResult: enabled', async () => {
-        const versionMatrix = await testRun(`
+        it('enabled', async () => {
+            const versionMatrix = await testRun(`
             matrix:
               java:
                 dependency: java
               unknown:
                 dependency: maven:unknown
         `, true)
-        expect(versionMatrix).toBeEmpty()
+            expect(versionMatrix).toBeEmpty()
+        })
+
     })
 
 })
