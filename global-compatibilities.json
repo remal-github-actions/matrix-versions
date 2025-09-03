@@ -3,204 +3,247 @@
   "globalCompatibilities": {
     "gradle-wrapper": [
       {
-        "versionRange": "[9.1.0-alpha,)",
+        "versionRange": "[9.1.0-alpha, )",
         "dependency": "java",
         "dependencyVersionRange": "25"
       },
       {
-        "versionRange": "[8.14-alpha,)",
+        "versionRange": "[8.14-alpha, )",
         "dependency": "java",
         "dependencyVersionRange": "24"
       },
       {
-        "versionRange": "[8.10-alpha,)",
+        "versionRange": "[8.10-alpha, )",
         "dependency": "java",
         "dependencyVersionRange": "23"
       },
       {
-        "versionRange": "[8.8-alpha,)",
+        "versionRange": "[8.8-alpha, )",
         "dependency": "java",
         "dependencyVersionRange": "22"
       },
       {
-        "versionRange": "[8.5-alpha,)",
+        "versionRange": "[8.5-alpha, )",
         "dependency": "java",
         "dependencyVersionRange": "21"
       },
       {
-        "versionRange": "[8.3-alpha,)",
+        "versionRange": "[8.3-alpha, )",
         "dependency": "java",
         "dependencyVersionRange": "20"
       },
       {
-        "versionRange": "[7.6-alpha,)",
+        "versionRange": "[7.6-alpha, )",
         "dependency": "java",
         "dependencyVersionRange": "19"
       },
       {
-        "versionRange": "[7.5-alpha,)",
+        "versionRange": "[7.5-alpha, )",
         "dependency": "java",
         "dependencyVersionRange": "18"
       },
       {
-        "versionRange": "[7.3-alpha,)",
+        "versionRange": "[7.3-alpha, )",
         "dependency": "java",
         "dependencyVersionRange": "17"
       },
       {
-        "versionRange": "[7.0-alpha,8.9999)",
+        "versionRange": "[7.0-alpha, 8.9999)",
         "dependency": "java",
         "dependencyVersionRange": "16"
       },
       {
-        "versionRange": "[6.7-alpha,8.9999)",
+        "versionRange": "[6.7-alpha, 8.9999)",
         "dependency": "java",
         "dependencyVersionRange": "15"
       },
       {
-        "versionRange": "[6.3-alpha,8.9999)",
+        "versionRange": "[6.3-alpha, 8.9999)",
         "dependency": "java",
         "dependencyVersionRange": "14"
       },
       {
-        "versionRange": "[6.0-alpha,8.9999)",
+        "versionRange": "[6.0-alpha, 8.9999)",
         "dependency": "java",
         "dependencyVersionRange": "13"
       },
       {
-        "versionRange": "[5.4-alpha,8.9999)",
+        "versionRange": "[5.4-alpha, 8.9999)",
         "dependency": "java",
         "dependencyVersionRange": "12"
       },
       {
-        "versionRange": "[5.0-alpha,8.9999)",
+        "versionRange": "[5.0-alpha, 8.9999)",
         "dependency": "java",
         "dependencyVersionRange": "11"
       },
       {
-        "versionRange": "[4.7-alpha,8.9999)",
+        "versionRange": "[4.7-alpha, 8.9999)",
         "dependency": "java",
         "dependencyVersionRange": "10"
       },
       {
-        "versionRange": "[4.3-alpha,8.9999)",
+        "versionRange": "[4.3-alpha, 8.9999)",
         "dependency": "java",
         "dependencyVersionRange": "9"
       },
       {
-        "versionRange": "[2.0-alpha,8.9999)",
+        "versionRange": "[2.0-alpha, 8.9999)",
         "dependency": "java",
         "dependencyVersionRange": "8"
       }
     ],
     "gradle-plugin:org.gradle.toolchains.foojay-resolver": [
       {
-        "versionRange": "(0-alpha,)",
+        "versionRange": "(0-alpha, )",
         "dependency": "gradle-wrapper",
-        "dependencyVersionRange": "[7.6-alpha,)"
+        "dependencyVersionRange": "[7.6-alpha, )"
       },
       {
-        "versionRange": "[1-alpha,)",
+        "versionRange": "[1-alpha, )",
         "dependency": "java",
-        "dependencyVersionRange": "[17,)"
+        "dependencyVersionRange": "[17, )"
       },
       {
-        "versionRange": "(,0.9.9999)",
+        "versionRange": "( , 0.9.9999)",
         "dependency": "java",
-        "dependencyVersionRange": "[8,)"
+        "dependencyVersionRange": "[8, )"
+      }
+    ],
+    "gradle-plugin:org.jetbrains.kotlin": [
+      {
+        "versionRange": "[2.3-alpha, )",
+        "dependency": "gradle-wrapper",
+        "dependencyVersionRange": "(9999, )"
+      },
+      {
+        "versionRange": "[2.2.0-alpha, 2.2.9999)",
+        "dependency": "gradle-wrapper",
+        "dependencyVersionRange": "[7.6.3-alpha, 8.14.9999)"
+      },
+      {
+        "versionRange": "[2.1.20-alpha, 2.1.21-alpha)",
+        "dependency": "gradle-wrapper",
+        "dependencyVersionRange": "[7.6.3-alpha, 8.12.9999)"
+      },
+      {
+        "versionRange": "[2.1.0-alpha, 2.1.20-alpha)",
+        "dependency": "gradle-wrapper",
+        "dependencyVersionRange": "[7.6.3-alpha, 8.10.9999)"
+      },
+      {
+        "versionRange": "[2.0.20-alpha, 2.1-alpha)",
+        "dependency": "gradle-wrapper",
+        "dependencyVersionRange": "[7.5-alpha, 8.8.9999)"
+      },
+      {
+        "versionRange": "[2.0-alpha, 2.0.20-alpha)",
+        "dependency": "gradle-wrapper",
+        "dependencyVersionRange": "[7.5-alpha, 8.5.9999)"
+      },
+      {
+        "versionRange": "[1.9-alpha, 1.9.9999)",
+        "dependency": "gradle-wrapper",
+        "dependencyVersionRange": "[7.5-alpha, 8.1.9999)"
+      },
+      {
+        "versionRange": "( , 1.8.9999)",
+        "dependency": "gradle-wrapper",
+        "dependencyVersionRange": "( , 0)"
       }
     ],
     "maven:io.micronaut:micronaut-bom": [
       {
-        "versionRange": "[4,)",
+        "versionRange": "[4, )",
         "dependency": "java",
-        "dependencyVersionRange": "[17,)"
+        "dependencyVersionRange": "[17, )"
       },
       {
-        "versionRange": "(,3.9999)",
+        "versionRange": "( , 3.9999)",
         "dependency": "java",
-        "dependencyVersionRange": "[8,)"
+        "dependencyVersionRange": "[8, )"
       }
     ],
     "maven:org.springframework.boot:spring-boot-dependencies": [
       {
-        "versionRange": "[3,)",
+        "versionRange": "[3, )",
         "dependency": "java",
-        "dependencyVersionRange": "[17,)"
+        "dependencyVersionRange": "[17, )"
       },
       {
-        "versionRange": "[2,2.9999)",
+        "versionRange": "[2, 2.9999)",
         "dependency": "java",
-        "dependencyVersionRange": "[8,)"
+        "dependencyVersionRange": "[8, )"
       },
       {
-        "versionRange": "[1,1.9999)",
+        "versionRange": "[1, 1.9999)",
         "dependency": "java",
-        "dependencyVersionRange": "[6,8.9999)"
+        "dependencyVersionRange": "[6, 8.9999)"
       }
     ],
     "maven:org.springframework.cloud:spring-cloud-dependencies": [
       {
-        "versionRange": "[2023,)",
+        "versionRange": "[2023, )",
         "dependency": "maven:org.springframework.boot:spring-boot-dependencies",
-        "dependencyVersionRange": "[3.2,)"
+        "dependencyVersionRange": "[3.2, )"
       },
       {
-        "versionRange": "[2022,2023)",
+        "versionRange": "[2022, 2023)",
         "dependency": "maven:org.springframework.boot:spring-boot-dependencies",
-        "dependencyVersionRange": "[3,3.1.9999)"
+        "dependencyVersionRange": "[3, 3.1.9999)"
       },
       {
-        "versionRange": "[2021.0.3,2022)",
+        "versionRange": "[2021.0.3, 2022)",
         "dependency": "maven:org.springframework.boot:spring-boot-dependencies",
-        "dependencyVersionRange": "[2.6,2.7.9999)"
+        "dependencyVersionRange": "[2.6, 2.7.9999)"
       },
       {
-        "versionRange": "[2020.0.3,2021)",
+        "versionRange": "[2020.0.3, 2021)",
         "dependency": "maven:org.springframework.boot:spring-boot-dependencies",
-        "dependencyVersionRange": "[2.4,2.5.9999)"
+        "dependencyVersionRange": "[2.4, 2.5.9999)"
       },
       {
         "versionRange": "[Hoxton.SR5,I)",
         "dependency": "maven:org.springframework.boot:spring-boot-dependencies",
-        "dependencyVersionRange": "[2.2,2.3.9999)"
+        "dependencyVersionRange": "[2.2, 2.3.9999)"
       },
       {
         "versionRange": "[G,H)",
         "dependency": "maven:org.springframework.boot:spring-boot-dependencies",
-        "dependencyVersionRange": "[2.1,2.1.9999)"
+        "dependencyVersionRange": "[2.1, 2.1.9999)"
       },
       {
         "versionRange": "[F,G)",
         "dependency": "maven:org.springframework.boot:spring-boot-dependencies",
-        "dependencyVersionRange": "[2,2.0.9999)"
+        "dependencyVersionRange": "[2, 2.0.9999)"
       },
       {
         "versionRange": "[D,F)",
         "dependency": "maven:org.springframework.boot:spring-boot-dependencies",
-        "dependencyVersionRange": "[1.5,1.9999)"
+        "dependencyVersionRange": "[1.5, 1.9999)"
       }
     ],
     "maven:org.zalando:problem-spring-web": [
       {
-        "versionRange": "[0.28,)",
+        "versionRange": "[0.28, )",
         "dependency": "maven:org.springframework.boot:spring-boot-dependencies",
-        "dependencyVersionRange": "[3,)"
+        "dependencyVersionRange": "[3, )"
       },
       {
-        "versionRange": "[0.27,0.27.9999)",
+        "versionRange": "[0.27, 0.27.9999)",
         "dependency": "maven:org.springframework.boot:spring-boot-dependencies",
-        "dependencyVersionRange": "[2,2.9999)"
+        "dependencyVersionRange": "[2, 2.9999)"
       },
       {
-        "versionRange": "[0.23,0.26.9999)",
+        "versionRange": "[0.23, 0.26.9999)",
         "dependency": "maven:org.springframework.boot:spring-boot-dependencies",
-        "dependencyVersionRange": "[1.5,1.9999)"
+        "dependencyVersionRange": "[1.5, 1.9999)"
       }
     ]
   },
   "globalCompatibilityAliases": {
     "maven:name.remal.gradle-api:*": "gradle-wrapper",
+    "gradle-plugin:org.jetbrains.kotlin.*": "gradle-plugin:org.jetbrains.kotlin",
     "maven:org.zalando:problem-spring-web-*": "maven:org.zalando:problem-spring-web"
   }
 }
