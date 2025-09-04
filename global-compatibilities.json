@@ -147,6 +147,11 @@
         "dependencyVersionRange": "[7.5-alpha, 8.1.9999)"
       },
       {
+        "versionRange": "[1.5-alpha, 1.9-alpha)",
+        "dependency": "gradle-wrapper",
+        "dependencyVersionRange": "(, 7.5-alpha)"
+      },
+      {
         "versionRange": "( , 1.8.9999)",
         "dependency": "gradle-wrapper",
         "dependencyVersionRange": "( , 0)"
