@@ -28,7 +28,7 @@
       "additionalProperties": false,
       "x-with-supported-dependency-key-types-pattern": true,
       "patternProperties": {
-        "^(gradle-plugin:.+|gradle-wrapper|java|java/full|maven:.+|node|node/full)$": {
+        "^(gradle-plugin:.+|gradle-wrapper|java|maven:.+|node)$": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/compatibility-item"
@@ -42,7 +42,7 @@
       "additionalProperties": false,
       "x-with-supported-dependency-key-types-pattern": true,
       "patternProperties": {
-        "^(gradle-plugin:.+|gradle-wrapper|java|java/full|maven:.+|node|node/full)$": {
+        "^(gradle-plugin:.+|gradle-wrapper|java|maven:.+|node)$": {
           "$ref": "#/definitions/compatibility-alias"
         }
       }
@@ -210,10 +210,8 @@
             "gradle-plugin",
             "gradle-wrapper",
             "java",
-            "java/full",
             "maven",
-            "node",
-            "node/full"
+            "node"
           ]
         },
         "token": {
@@ -265,7 +263,7 @@
       "type": "string",
       "minLength": 1,
       "x-with-supported-dependency-types-pattern": true,
-      "pattern": "^(gradle-plugin:.+|gradle-wrapper|java|java/full|maven:.+|node|node/full)$"
+      "pattern": "^(gradle-plugin:.+|gradle-wrapper|java|maven:.+|node)$"
     },
     "version-range": {
       "type": "string",

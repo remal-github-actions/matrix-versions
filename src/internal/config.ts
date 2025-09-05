@@ -66,7 +66,7 @@ export type StaticVersioning =
   | "unity3d";
 /**
  * This interface was referenced by `undefined`'s JSON-Schema definition
- * via the `patternProperty` "^(gradle-plugin:.+|gradle-wrapper|java|java/full|maven:.+|node|node/full)$".
+ * via the `patternProperty` "^(gradle-plugin:.+|gradle-wrapper|java|maven:.+|node)$".
  */
 export type CompatibilityAlias = string;
 
@@ -90,7 +90,7 @@ export interface Config {
   globalCompatibilities?: {
     /**
      * This interface was referenced by `undefined`'s JSON-Schema definition
-     * via the `patternProperty` "^(gradle-plugin:.+|gradle-wrapper|java|java/full|maven:.+|node|node/full)$".
+     * via the `patternProperty` "^(gradle-plugin:.+|gradle-wrapper|java|maven:.+|node)$".
      */
     [k: string]: CompatibilityItem[];
   };
@@ -150,7 +150,7 @@ export interface CompatibilityItem {
    */
   dependencyVersionRange: string;
   /**
-   * Match version suffixes
+   * If version suffixes should be included into matching
    */
   includeVersionSuffixes?: boolean;
 }
@@ -162,7 +162,7 @@ export interface HostAuth {
   /**
    * Repository type
    */
-  type?: "gradle-plugin" | "gradle-wrapper" | "java" | "java/full" | "maven" | "node" | "node/full";
+  type?: "gradle-plugin" | "gradle-wrapper" | "java" | "maven" | "node";
   /**
    * Token for the repository
    */
