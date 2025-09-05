@@ -250,6 +250,11 @@
         "dependencyVersionRange": {
           "description": "Compatibility dependency range",
           "$ref": "#/definitions/version-range"
+        },
+        "includeVersionSuffixes": {
+          "description": "If version suffixes should be included into matching",
+          "type": "boolean",
+          "default": false
         }
       }
     },

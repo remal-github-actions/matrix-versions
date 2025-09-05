@@ -1,3 +1,3 @@
-import * as defaultVersioning from 'renovate/dist/modules/versioning/semver-coerced'
+import * as semverCoerced from 'renovate/dist/modules/versioning/semver-coerced'
 
-export const DEFAULT_VERSIONING = defaultVersioning.id
+export const DEFAULT_VERSIONING = semverCoerced.id

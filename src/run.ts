@@ -18,7 +18,7 @@ import { Config } from './internal/config.js'
 import { initRenovateLogging } from './internal/initRenovateLogging.js'
 import { composeVersionMatrix, VersionMatrixItem } from './internal/matrix-functions.js'
 import { fetchMatrix } from './internal/matrix-item-functions.js'
-import { isNotEmpty } from './internal/utils.js'
+import { isNotEmpty, substringBefore } from './internal/utils.js'
 
 export async function run(
     batchLimit: number,
@@ -36,6 +36,24 @@ export async function run(
     )
     processGlobalCompatibilityAliases(config)
     populateGlobalCompatibilities(config)
+
+    {
+        function normalizeDependency(dep: string): string {
+            return substringBefore(dep, '/')
+        }
+
+        const seenDependencies = new Set<string>()
+        Object.values(config.matrix ?? {}).forEach(item => {
+            const normalizedDependency = normalizeDependency(item.dependency)
+            if (seenDependencies.has(normalizedDependency)) {
+                throw new Error(
+                    `${item.dependency} dependency was already used for another property (probably, as ${normalizedDependency})`,
+                )
+            } else {
+                seenDependencies.add(normalizedDependency)
+            }
+        })
+    }
 
 
     // Init Renovate:

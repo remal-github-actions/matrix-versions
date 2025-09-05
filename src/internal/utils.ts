@@ -137,6 +137,27 @@ export function escapeRegex(string: string): string {
         .replaceAll('$', '\\$')
 }
 
+export function toSortedByKey<V>(
+    obj: Record<string, V>,
+    compareFn?: (k1: string, k2: string) => number,
+): Record<string, V> {
+    const result: Record<string, V> = {}
+
+    const sortedKeys = Object.keys(obj).toSorted(compareFn)
+    for (const key of sortedKeys) {
+        result[key] = obj[key]
+    }
+
+    return result
+}
+
+export function substringBefore(str: string, delim: string, defaultValue?: string): string {
+    const pos = str.indexOf(delim)
+    return pos >= 0
+        ? str.substring(0, pos)
+        : (defaultValue ?? str)
+}
+
 
 export const getErrorOf = async <TError>(call: () => Promise<unknown>): Promise<TError> => {
     try {

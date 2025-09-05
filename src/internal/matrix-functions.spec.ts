@@ -1,13 +1,5 @@
-import { MatrixItem } from './config.js'
-import {
-    composeVersionMatrix,
-    processFullCompatibilities,
-    removeUnusedCompatibilities,
-    reorderCompatibilities,
-    VersionMatrixItem,
-} from './matrix-functions.js'
+import { composeVersionMatrix, removeUnusedCompatibilities, VersionMatrixItem } from './matrix-functions.js'
 import { FetchedMatrix } from './matrix-item-functions.js'
-import { fullSupportedVersionFetcherSuffix } from './version-fetcher-api.js'
 
 describe(composeVersionMatrix.name, () => {
 
@@ -29,8 +21,8 @@ describe(composeVersionMatrix.name, () => {
                 prop1: '1.2',
             },
         ]
-        expect(composeVersionMatrix(fetchedMatrix))
-            .toEqual(expectedVersionMatrix)
+        const versionMatrix = composeVersionMatrix(fetchedMatrix)
+        expect(versionMatrix).toEqual(expectedVersionMatrix)
     })
 
     it(`two`, () => {
@@ -68,8 +60,8 @@ describe(composeVersionMatrix.name, () => {
                 prop2: '2.2',
             },
         ]
-        expect(composeVersionMatrix(fetchedMatrix))
-            .toEqual(expectedVersionMatrix)
+        const versionMatrix = composeVersionMatrix(fetchedMatrix)
+        expect(versionMatrix).toEqual(expectedVersionMatrix)
     })
 
     it(`compatibility - partial`, () => {
@@ -107,8 +99,8 @@ describe(composeVersionMatrix.name, () => {
                 prop2: '2.3',
             },
         ]
-        expect(composeVersionMatrix(fetchedMatrix))
-            .toEqual(expectedVersionMatrix)
+        const versionMatrix = composeVersionMatrix(fetchedMatrix)
+        expect(versionMatrix).toEqual(expectedVersionMatrix)
     })
 
     it(`compatibility - full`, () => {
@@ -152,138 +144,8 @@ describe(composeVersionMatrix.name, () => {
                 prop2: '2.2',
             },
         ]
-        expect(composeVersionMatrix(fetchedMatrix))
-            .toEqual(expectedVersionMatrix)
-    })
-
-})
-
-describe(processFullCompatibilities.name, () => {
-
-    it('java', () => {
-        const matrixItems: MatrixItem[] = [
-            {
-                dependency: '1',
-                compatibilities: [
-                    {
-                        versionRange: '1',
-                        dependency: 'java',
-                        dependencyVersionRange: '1',
-                    },
-                ],
-            },
-        ]
-        const expectedMatrixItems: MatrixItem[] = [
-            {
-                dependency: '1',
-                compatibilities: [
-                    {
-                        versionRange: '1',
-                        dependency: 'java',
-                        dependencyVersionRange: '1',
-                    },
-                    {
-                        versionRange: '1',
-                        dependency: 'java' + fullSupportedVersionFetcherSuffix,
-                        dependencyVersionRange: '1',
-                    },
-                ],
-            },
-        ]
-        processFullCompatibilities(matrixItems)
-        expect(matrixItems).toEqual(expectedMatrixItems)
-    })
-
-    it('node', () => {
-        const matrixItems: MatrixItem[] = [
-            {
-                dependency: '1',
-                compatibilities: [
-                    {
-                        versionRange: '1',
-                        dependency: 'node',
-                        dependencyVersionRange: '1',
-                    },
-                ],
-            },
-        ]
-        const expectedMatrixItems: MatrixItem[] = [
-            {
-                dependency: '1',
-                compatibilities: [
-                    {
-                        versionRange: '1',
-                        dependency: 'node',
-                        dependencyVersionRange: '1',
-                    },
-                    {
-                        versionRange: '1',
-                        dependency: 'node' + fullSupportedVersionFetcherSuffix,
-                        dependencyVersionRange: '1',
-                    },
-                ],
-            },
-        ]
-        processFullCompatibilities(matrixItems)
-        expect(matrixItems).toEqual(expectedMatrixItems)
-    })
-
-    it('other', () => {
-        const matrixItems: MatrixItem[] = [
-            {
-                dependency: '1',
-                compatibilities: [
-                    {
-                        versionRange: '1',
-                        dependency: 'other',
-                        dependencyVersionRange: '1',
-                    },
-                ],
-            },
-        ]
-        const expectedMatrixItems: MatrixItem[] = [
-            {
-                dependency: '1',
-                compatibilities: [
-                    {
-                        versionRange: '1',
-                        dependency: 'other',
-                        dependencyVersionRange: '1',
-                    },
-                ],
-            },
-        ]
-        processFullCompatibilities(matrixItems)
-        expect(matrixItems).toEqual(expectedMatrixItems)
-    })
-
-    it('java-full', () => {
-        const matrixItems: MatrixItem[] = [
-            {
-                dependency: '1',
-                compatibilities: [
-                    {
-                        versionRange: '1',
-                        dependency: 'java' + fullSupportedVersionFetcherSuffix,
-                        dependencyVersionRange: '1',
-                    },
-                ],
-            },
-        ]
-        const expectedMatrixItems: MatrixItem[] = [
-            {
-                dependency: '1',
-                compatibilities: [
-                    {
-                        versionRange: '1',
-                        dependency: 'java' + fullSupportedVersionFetcherSuffix,
-                        dependencyVersionRange: '1',
-                    },
-                ],
-            },
-        ]
-        processFullCompatibilities(matrixItems)
-        expect(matrixItems).toEqual(expectedMatrixItems)
+        const versionMatrix = composeVersionMatrix(fetchedMatrix)
+        expect(versionMatrix).toEqual(expectedVersionMatrix)
     })
 
 })
@@ -291,8 +153,8 @@ describe(processFullCompatibilities.name, () => {
 describe(removeUnusedCompatibilities.name, () => {
 
     it('remove self', () => {
-        const matrixItems: MatrixItem[] = [
-            {
+        const fetchedMatrix: FetchedMatrix = {
+            prop1: {
                 dependency: '1',
                 compatibilities: [
                     {
@@ -301,20 +163,17 @@ describe(removeUnusedCompatibilities.name, () => {
                         dependencyVersionRange: '1',
                     },
                 ],
+                fetchedVersions: [],
             },
-        ]
-        const expectedMatrixItems: MatrixItem[] = [
-            {
-                dependency: '1',
-            },
-        ]
-        removeUnusedCompatibilities(matrixItems)
-        expect(matrixItems).toEqual(expectedMatrixItems)
+        }
+        const expectedFetchedMatrix = { ...fetchedMatrix }
+        removeUnusedCompatibilities(fetchedMatrix)
+        expect(fetchedMatrix).toEqual(expectedFetchedMatrix)
     })
 
     it('remove unused', () => {
-        const matrixItems: MatrixItem[] = [
-            {
+        const fetchedMatrix: FetchedMatrix = {
+            prop1: {
                 dependency: '1',
                 compatibilities: [
                     {
@@ -323,142 +182,12 @@ describe(removeUnusedCompatibilities.name, () => {
                         dependencyVersionRange: '2',
                     },
                 ],
+                fetchedVersions: [],
             },
-        ]
-        const expectedMatrixItems: MatrixItem[] = [
-            {
-                dependency: '1',
-            },
-        ]
-        removeUnusedCompatibilities(matrixItems)
-        expect(matrixItems).toEqual(expectedMatrixItems)
-    })
-
-})
-
-describe(reorderCompatibilities.name, () => {
-
-    it('first on second', () => {
-        const matrixItems: MatrixItem[] = [
-            {
-                dependency: '1',
-                compatibilities: [
-                    {
-                        versionRange: '1',
-                        dependency: '2',
-                        dependencyVersionRange: '2',
-                    },
-                ],
-            },
-            {
-                dependency: '2',
-            },
-        ]
-        const expectedMatrixItems: MatrixItem[] = [
-            ...matrixItems,
-        ]
-        reorderCompatibilities(matrixItems)
-        expect(matrixItems).toEqual(expectedMatrixItems)
-    })
-
-    it('second on first', () => {
-        const matrixItems: MatrixItem[] = [
-            {
-                dependency: '1',
-            },
-            {
-                dependency: '2',
-                compatibilities: [
-                    {
-                        versionRange: '2',
-                        dependency: '1',
-                        dependencyVersionRange: '1',
-                    },
-                ],
-            },
-        ]
-        const expectedMatrixItems: MatrixItem[] = [
-            {
-                dependency: '1',
-                compatibilities: [
-                    {
-                        versionRange: '1',
-                        dependency: '2',
-                        dependencyVersionRange: '2',
-                    },
-                ],
-            },
-            {
-                dependency: '2',
-            },
-        ]
-        reorderCompatibilities(matrixItems)
-        expect(matrixItems).toEqual(expectedMatrixItems)
-    })
-
-    it('third on second and first, second on first', () => {
-        const matrixItems: MatrixItem[] = [
-            {
-                dependency: '1',
-            },
-            {
-                dependency: '2',
-                compatibilities: [
-                    {
-                        versionRange: '2',
-                        dependency: '1',
-                        dependencyVersionRange: '1',
-                    },
-                ],
-            },
-            {
-                dependency: '3',
-                compatibilities: [
-                    {
-                        versionRange: '3',
-                        dependency: '2',
-                        dependencyVersionRange: '2',
-                    },
-                    {
-                        versionRange: '3',
-                        dependency: '1',
-                        dependencyVersionRange: '1',
-                    },
-                ],
-            },
-        ]
-        const expectedMatrixItems: MatrixItem[] = [
-            {
-                dependency: '1',
-                compatibilities: [
-                    {
-                        versionRange: '1',
-                        dependency: '2',
-                        dependencyVersionRange: '2',
-                    },
-                    {
-                        versionRange: '1',
-                        dependency: '3',
-                        dependencyVersionRange: '3',
-                    },
-                ],
-            },
-            {
-                dependency: '2',
-                compatibilities: [
-                    {
-                        versionRange: '2',
-                        dependency: '3',
-                        dependencyVersionRange: '3',
-                    },
-                ],
-            },
-            {
-                dependency: '3',
-            },
-        ]
-        reorderCompatibilities(matrixItems)
-        expect(matrixItems).toEqual(expectedMatrixItems)
+        }
+        const expectedFetchedMatrix = { ...fetchedMatrix }
+        removeUnusedCompatibilities(fetchedMatrix)
+        expect(fetchedMatrix).toEqual(expectedFetchedMatrix)
     })
 
 })

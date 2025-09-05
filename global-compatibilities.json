@@ -3,104 +3,104 @@
   "globalCompatibilities": {
     "gradle-wrapper": [
       {
-        "versionRange": "[9.1.0-alpha, )",
+        "versionRange": "[9.1.0, )",
         "dependency": "java",
         "dependencyVersionRange": "25"
       },
       {
-        "versionRange": "[8.14-alpha, )",
+        "versionRange": "[8.14, )",
         "dependency": "java",
         "dependencyVersionRange": "24"
       },
       {
-        "versionRange": "[8.10-alpha, )",
+        "versionRange": "[8.10, )",
         "dependency": "java",
         "dependencyVersionRange": "23"
       },
       {
-        "versionRange": "[8.8-alpha, )",
+        "versionRange": "[8.8, )",
         "dependency": "java",
         "dependencyVersionRange": "22"
       },
       {
-        "versionRange": "[8.5-alpha, )",
+        "versionRange": "[8.5, )",
         "dependency": "java",
         "dependencyVersionRange": "21"
       },
       {
-        "versionRange": "[8.3-alpha, )",
+        "versionRange": "[8.3, )",
         "dependency": "java",
         "dependencyVersionRange": "20"
       },
       {
-        "versionRange": "[7.6-alpha, )",
+        "versionRange": "[7.6, )",
         "dependency": "java",
         "dependencyVersionRange": "19"
       },
       {
-        "versionRange": "[7.5-alpha, )",
+        "versionRange": "[7.5, )",
         "dependency": "java",
         "dependencyVersionRange": "18"
       },
       {
-        "versionRange": "[7.3-alpha, )",
+        "versionRange": "[7.3, )",
         "dependency": "java",
         "dependencyVersionRange": "17"
       },
       {
-        "versionRange": "[7.0-alpha, 8.9999)",
+        "versionRange": "[7.0, 8.9999)",
         "dependency": "java",
         "dependencyVersionRange": "16"
       },
       {
-        "versionRange": "[6.7-alpha, 8.9999)",
+        "versionRange": "[6.7, 8.9999)",
         "dependency": "java",
         "dependencyVersionRange": "15"
       },
       {
-        "versionRange": "[6.3-alpha, 8.9999)",
+        "versionRange": "[6.3, 8.9999)",
         "dependency": "java",
         "dependencyVersionRange": "14"
       },
       {
-        "versionRange": "[6.0-alpha, 8.9999)",
+        "versionRange": "[6.0, 8.9999)",
         "dependency": "java",
         "dependencyVersionRange": "13"
       },
       {
-        "versionRange": "[5.4-alpha, 8.9999)",
+        "versionRange": "[5.4, 8.9999)",
         "dependency": "java",
         "dependencyVersionRange": "12"
       },
       {
-        "versionRange": "[5.0-alpha, 8.9999)",
+        "versionRange": "[5.0, 8.9999)",
         "dependency": "java",
         "dependencyVersionRange": "11"
       },
       {
-        "versionRange": "[4.7-alpha, 8.9999)",
+        "versionRange": "[4.7, 8.9999)",
         "dependency": "java",
         "dependencyVersionRange": "10"
       },
       {
-        "versionRange": "[4.3-alpha, 8.9999)",
+        "versionRange": "[4.3, 8.9999)",
         "dependency": "java",
         "dependencyVersionRange": "9"
       },
       {
-        "versionRange": "[2.0-alpha, 8.9999)",
+        "versionRange": "[2.0, 8.9999)",
         "dependency": "java",
         "dependencyVersionRange": "8"
       }
     ],
     "gradle-plugin:org.gradle.toolchains.foojay-resolver": [
       {
-        "versionRange": "(0-alpha, )",
+        "versionRange": "(0, )",
         "dependency": "gradle-wrapper",
-        "dependencyVersionRange": "[7.6-alpha, )"
+        "dependencyVersionRange": "[7.6, )"
       },
       {
-        "versionRange": "[1-alpha, )",
+        "versionRange": "[1, )",
         "dependency": "java",
         "dependencyVersionRange": "[17, )"
       },
@@ -112,44 +112,44 @@
     ],
     "gradle-plugin:org.jetbrains.kotlin": [
       {
-        "versionRange": "[2.3-alpha, )",
+        "versionRange": "[2.3, )",
         "dependency": "gradle-wrapper",
         "dependencyVersionRange": "(9999, )"
       },
       {
-        "versionRange": "[2.2.0-alpha, 2.2.9999)",
+        "versionRange": "[2.2.0, 2.2.9999)",
         "dependency": "gradle-wrapper",
-        "dependencyVersionRange": "[7.6.3-alpha, 8.14.9999)"
+        "dependencyVersionRange": "[7.6.3, 8.14.9999)"
       },
       {
-        "versionRange": "[2.1.20-alpha, 2.1.21-alpha)",
+        "versionRange": "[2.1.20, 2.1.21)",
         "dependency": "gradle-wrapper",
-        "dependencyVersionRange": "[7.6.3-alpha, 8.12.9999)"
+        "dependencyVersionRange": "[7.6.3, 8.12.9999)"
       },
       {
-        "versionRange": "[2.1.0-alpha, 2.1.20-alpha)",
+        "versionRange": "[2.1.0, 2.1.20)",
         "dependency": "gradle-wrapper",
-        "dependencyVersionRange": "[7.6.3-alpha, 8.10.9999)"
+        "dependencyVersionRange": "[7.6.3, 8.10.9999)"
       },
       {
-        "versionRange": "[2.0.20-alpha, 2.1-alpha)",
+        "versionRange": "[2.0.20, 2.1)",
         "dependency": "gradle-wrapper",
-        "dependencyVersionRange": "[7.5-alpha, 8.8.9999)"
+        "dependencyVersionRange": "[7.5, 8.8.9999)"
       },
       {
-        "versionRange": "[2.0-alpha, 2.0.20-alpha)",
+        "versionRange": "[2.0, 2.0.20)",
         "dependency": "gradle-wrapper",
-        "dependencyVersionRange": "[7.5-alpha, 8.5.9999)"
+        "dependencyVersionRange": "[7.5, 8.5.9999)"
       },
       {
-        "versionRange": "[1.9-alpha, 1.9.9999)",
+        "versionRange": "[1.9, 1.9.9999)",
         "dependency": "gradle-wrapper",
-        "dependencyVersionRange": "[7.5-alpha, 8.1.9999)"
+        "dependencyVersionRange": "[7.5, 8.1.9999)"
       },
       {
-        "versionRange": "[1.5-alpha, 1.9-alpha)",
+        "versionRange": "[1.5, 1.9)",
         "dependency": "gradle-wrapper",
-        "dependencyVersionRange": "(, 7.5-alpha)"
+        "dependencyVersionRange": "(, 7.5)"
       },
       {
         "versionRange": "( , 1.8.9999)",

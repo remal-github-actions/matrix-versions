@@ -149,6 +149,10 @@ export interface CompatibilityItem {
    * Compatibility dependency range
    */
   dependencyVersionRange: string;
+  /**
+   * Match version suffixes
+   */
+  includeVersionSuffixes?: boolean;
 }
 export interface HostAuth {
   /**

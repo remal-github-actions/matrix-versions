@@ -208,6 +208,37 @@ describe(run.name, () => {
         expect(foojayResolverIncompatibleVersions).toBeEmpty()
     })
 
+    it('disabled compatibilities', async () => {
+        const versionMatrix = await testRun(`
+            matrix:
+              gradle:
+                dependency: gradle-wrapper
+                only:
+                - once
+                - stable-minors
+                include:
+                - '[7.0, )'
+              kotlin-jvm:
+                dependency: 'gradle-plugin:org.jetbrains.kotlin.jvm'
+                only:
+                - stable-minors
+        `)
+
+        const kotlinJvmVersions = versionMatrix
+            .map(it => it['kotlin-jvm'])
+            .filter(onlyUnique)
+
+        const incompatibleVersions = kotlinJvmVersions.filter(ver =>
+            ver.startsWith('0.')
+            || ver.startsWith('1.0.')
+            || ver.startsWith('1.1.')
+            || ver.startsWith('1.2.')
+            || ver.startsWith('1.3.')
+            || ver.startsWith('1.4.'),
+        )
+        expect(incompatibleVersions).toBeEmpty()
+    })
+
     describe('only: once', () => {
 
         it('single', async () => {
@@ -262,7 +293,7 @@ describe(run.name, () => {
             expect(gradleVersions).toHaveLength(1)
         })
 
-        it('some', async () => {
+        it('some in the beginning', async () => {
             const versionMatrix = await testRun(`
                 matrix:
                   java:
