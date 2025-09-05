@@ -138,6 +138,7 @@ export function composeVersionMatrixIn(
     forEachVersion: for (const version of fetchedItem.fetchedVersions) {
         for (let prevIndex = 0; prevIndex < index; prevIndex++) {
             const [prevProperty, prevFetchedItem] = fetchedMatrixEntries[prevIndex]
+            const prevFetchedItemVersion = currentVersionMatrixItem[prevProperty]
             // compatibilities of the prev item that are for the current item:
             const prevCompatibilities = (prevFetchedItem.compatibilities ?? [])
                 .filter(prevCompatibility => matchDependencies(
@@ -148,7 +149,7 @@ export function composeVersionMatrixIn(
             const prevMatchedCompatibilities = prevCompatibilities
                 .filter(prevCompatibility => matchVersionToCompatibilityRange(
                     prevFetchedItem.dependency,
-                    currentVersionMatrixItem[prevProperty],
+                    prevFetchedItemVersion,
                     prevFetchedItem.versioning,
                     prevCompatibility.versionRange,
                     prevCompatibility.includeVersionSuffixes,
@@ -170,6 +171,8 @@ export function composeVersionMatrixIn(
 
         currentVersionMatrixItem[property] = version
 
+        const prevVersionMatrixLength = versionMatrix.length
+
         if (index === fetchedMatrixEntries.length - 1) {
             versionMatrix.push({ ...currentVersionMatrixItem })
         } else {
@@ -180,9 +183,12 @@ export function composeVersionMatrixIn(
             )
         }
 
+        const curVersionMatrixLength = versionMatrix.length
+        const isVersionAdded = curVersionMatrixLength > prevVersionMatrixLength
+
         delete currentVersionMatrixItem[property]
 
-        if (fetchedItem.only?.includes('once')) {
+        if (isVersionAdded && fetchedItem.only?.includes('once')) {
             break forEachVersion
         }
     }

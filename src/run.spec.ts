@@ -211,6 +211,18 @@ describe(run.name, () => {
     it('disabled compatibilities', async () => {
         const versionMatrix = await testRun(`
             matrix:
+              kotlin-jvm:
+                dependency: 'gradle-plugin:org.jetbrains.kotlin.jvm'
+                only:
+                - stable-minors
+              java:
+                dependency: java
+                only:
+                - lts
+                - stable
+                - once
+                include:
+                - '[11,)'
               gradle:
                 dependency: gradle-wrapper
                 only:
@@ -218,15 +230,12 @@ describe(run.name, () => {
                 - stable-minors
                 include:
                 - '[7.0, )'
-              kotlin-jvm:
-                dependency: 'gradle-plugin:org.jetbrains.kotlin.jvm'
-                only:
-                - stable-minors
         `)
 
         const kotlinJvmVersions = versionMatrix
             .map(it => it['kotlin-jvm'])
             .filter(onlyUnique)
+        expect(kotlinJvmVersions.length).toBeGreaterThan(1)
 
         const incompatibleVersions = kotlinJvmVersions.filter(ver =>
             ver.startsWith('0.')
@@ -293,16 +302,9 @@ describe(run.name, () => {
             expect(gradleVersions).toHaveLength(1)
         })
 
-        it('some in the beginning', async () => {
+        it('some', async () => {
             const versionMatrix = await testRun(`
                 matrix:
-                  java:
-                    dependency: java
-                    only:
-                    - once
-                    - stable
-                    include:
-                    - '(,23]'
                   gradle:
                     dependency: gradle-wrapper
                     only:
@@ -314,6 +316,13 @@ describe(run.name, () => {
                     dependency: gradle-plugin:org.gradle.toolchains.foojay-resolver
                     only:
                     - stable
+                  java:
+                    dependency: java
+                    only:
+                    - once
+                    - stable
+                    include:
+                    - '(,23]'
             `)
 
             const javaVersions = versionMatrix
