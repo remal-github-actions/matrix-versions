@@ -6,7 +6,7 @@ import * as fs from 'fs'
 import { getVersionings } from 'renovate/dist/modules/versioning'
 import { isVersioningApiConstructor } from 'renovate/dist/modules/versioning/common.js'
 import { isNotEmpty, isPlainObject } from './src/internal/utils.js'
-import { supportedVersionFetchers } from './src/internal/version-fetcher-api.js'
+import { supportedVersionFetchers } from './src/internal/version-fetchers/version-fetcher-api.js'
 
 
 const supportedDependencyTypes = Array.from(supportedVersionFetchers.keys()).sort()

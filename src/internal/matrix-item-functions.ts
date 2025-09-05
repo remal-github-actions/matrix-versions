@@ -10,7 +10,7 @@ import {
     fullSupportedVersionFetcherSuffix,
     getVersionFetcher,
     supportedVersionFetchers,
-} from './version-fetcher-api.js'
+} from './version-fetchers/version-fetcher-api'
 import { isInVersioningRange } from './version-utils.js'
 
 export interface FetchedMatrixItem extends MatrixItem {
@@ -366,8 +366,10 @@ export function createMatrixItemDependency(parsedDependency: ParsedDependency): 
 
 
 export function matchDependencies(dependency1: string, dependency2: string): boolean {
-    if (!dependency1.includes('*') && !dependency2.includes('*')) {
-        return dependency1 === dependency2
+    if (dependency1 === dependency2) {
+        return true
+    } else if (!dependency1.includes('*') && !dependency2.includes('*')) {
+        return false
     }
 
 

@@ -6,8 +6,8 @@ import {
     RenovateDatasourceSimpleWrapper,
 } from '../RenovateDatasource'
 import { RenovateReleaseFilter } from '../RenovateReleaseFilter'
-import { VersionFetchParams } from '../VersionFetcher'
-import { VersionFetcherRenovateDatasource } from '../VersionFetcherRenovateDatasource.js'
+import { VersionFetchParams } from './VersionFetcher'
+import { VersionFetcherRenovateDatasource } from './VersionFetcherRenovateDatasource'
 
 interface ReleaseWithLts extends Release {
     isLts?: boolean

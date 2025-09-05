@@ -1,12 +1,5 @@
+import { mergeConfigs, newEmptyConfig, validateConfig } from './config-functions.js'
 import { Config, VersionOnlyFilter } from './config.js'
-import {
-    mergeConfigs,
-    newEmptyConfig,
-    populateGlobalCompatibilities,
-    processGlobalCompatibilityAliases,
-    validateConfig,
-} from './config-functions.js'
-import { clone } from './utils.js'
 
 describe(validateConfig.name, () => {
 
@@ -49,9 +42,9 @@ describe(validateConfig.name, () => {
                 matrix: {
                     'name': {
                         dependency: 'maven:unknown',
-                        only
-                    }
-                }
+                        only,
+                    },
+                },
             }
             const assertion = expect(() => validateConfig(config))
             if (valid) {
@@ -75,30 +68,30 @@ describe(mergeConfigs.name, () => {
         const config1: Config = {
             matrix: {
                 'name': {
-                    dependency: 'test'
-                }
-            }
+                    dependency: 'test',
+                },
+            },
         }
         const config2: Config = {
             auth: [
                 {
                     host: 'host',
                     token: 'token',
-                }
-            ]
+                },
+            ],
         }
         const expected: Config = {
             matrix: {
                 'name': {
-                    dependency: 'test'
-                }
+                    dependency: 'test',
+                },
             },
             auth: [
                 {
                     host: 'host',
                     token: 'token',
-                }
-            ]
+                },
+            ],
         }
         expect(mergeConfigs(config1, config2))
             .toEqual(expected)
@@ -110,16 +103,16 @@ describe(mergeConfigs.name, () => {
                 {
                     host: 'host1',
                     token: 'token',
-                }
-            ]
+                },
+            ],
         }
         const config2: Config = {
             auth: [
                 {
                     host: 'host2',
                     token: 'token',
-                }
-            ]
+                },
+            ],
         }
         const expected: Config = {
             auth: [
@@ -130,8 +123,8 @@ describe(mergeConfigs.name, () => {
                 {
                     host: 'host2',
                     token: 'token',
-                }
-            ]
+                },
+            ],
         }
         expect(mergeConfigs(config1, config2))
             .toEqual(expected)
@@ -145,9 +138,9 @@ describe(mergeConfigs.name, () => {
                         versionRange: '[1,2)',
                         dependency: 'other',
                         dependencyVersionRange: '[1,2)',
-                    }
-                ]
-            }
+                    },
+                ],
+            },
         }
         const config2: Config = {
             globalCompatibilities: {
@@ -156,9 +149,9 @@ describe(mergeConfigs.name, () => {
                         versionRange: '[2,3)',
                         dependency: 'other',
                         dependencyVersionRange: '[2,3)',
-                    }
-                ]
-            }
+                    },
+                ],
+            },
         }
         const expected: Config = {
             globalCompatibilities: {
@@ -172,161 +165,12 @@ describe(mergeConfigs.name, () => {
                         versionRange: '[2,3)',
                         dependency: 'other',
                         dependencyVersionRange: '[2,3)',
-                    }
-                ]
-            }
+                    },
+                ],
+            },
         }
         expect(mergeConfigs(config1, config2))
             .toEqual(expected)
-    })
-
-})
-
-describe(processGlobalCompatibilityAliases.name, () => {
-
-    it('simple', () => {
-        const config: Config = {
-            globalCompatibilities: {
-                '1': [
-                    {
-                        versionRange: '1',
-                        dependency: '2',
-                        dependencyVersionRange: '2',
-                    },
-                ],
-            },
-            globalCompatibilityAliases: {
-                '3': '1',
-            },
-        }
-        const expectedConfig: Config = {
-            globalCompatibilities: {
-                '1': clone(config.globalCompatibilities!['1']),
-                '3': clone(config.globalCompatibilities!['1']),
-            },
-        }
-        processGlobalCompatibilityAliases(config)
-        expect(config).toEqual(expectedConfig)
-    })
-
-    it('not found alias', () => {
-        const config: Config = {
-            globalCompatibilityAliases: {
-                '3': '1',
-            },
-        }
-        expect(() => processGlobalCompatibilityAliases(config)).toThrow()
-    })
-
-    it('alias for defined compatibilities', () => {
-        const config: Config = {
-            globalCompatibilities: {
-                '1': [
-                    {
-                        versionRange: '1',
-                        dependency: '2',
-                        dependencyVersionRange: '2',
-                    },
-                ],
-                '3': [
-                    {
-                        versionRange: '1',
-                        dependency: '2',
-                        dependencyVersionRange: '2',
-                    },
-                ],
-            },
-            globalCompatibilityAliases: {
-                '3': '1',
-            },
-        }
-        expect(() => processGlobalCompatibilityAliases(config)).toThrow()
-    })
-
-})
-
-describe(populateGlobalCompatibilities.name, () => {
-
-    it('simple', () => {
-        const config: Config = {
-            matrix: {
-                'prop1': {
-                    dependency: '1',
-                },
-            },
-            globalCompatibilities: {
-                '1': [
-                    {
-                        versionRange: '1',
-                        dependency: '2',
-                        dependencyVersionRange: '2',
-                    },
-                ],
-            },
-        }
-        const expectedConfig: Config = {
-            matrix: {
-                'prop1': {
-                    dependency: '1',
-                    compatibilities: clone(config.globalCompatibilities!['1']),
-                },
-            },
-        }
-        populateGlobalCompatibilities(config)
-        expect(config).toEqual(expectedConfig)
-    })
-
-    it('not present in matrix', () => {
-        const config: Config = {
-            matrix: {
-                'prop2': {
-                    dependency: '2',
-                },
-            },
-            globalCompatibilities: {
-                '1': [
-                    {
-                        versionRange: '1',
-                        dependency: '2',
-                        dependencyVersionRange: '2',
-                    },
-                ],
-            },
-        }
-        const expectedConfig: Config = {
-            matrix: {
-                'prop2': {
-                    dependency: '2',
-                },
-            },
-        }
-        populateGlobalCompatibilities(config)
-        expect(config).toEqual(expectedConfig)
-    })
-
-    it('withoutGlobalCompatibilities', () => {
-        const config: Config = {
-            matrix: {
-                'prop1': {
-                    dependency: '1',
-                    withoutGlobalCompatibilities: true,
-                },
-            },
-            globalCompatibilities: {
-                '1': [
-                    {
-                        versionRange: '1',
-                        dependency: '2',
-                        dependencyVersionRange: '2',
-                    },
-                ],
-            },
-        }
-        const expectedConfig: Config = {
-            matrix: clone(config.matrix),
-        }
-        populateGlobalCompatibilities(config)
-        expect(config).toEqual(expectedConfig)
     })
 
 })

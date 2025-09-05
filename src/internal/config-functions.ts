@@ -4,7 +4,7 @@ import merge from 'deepmerge'
 import { promises as fs } from 'fs'
 import YAML from 'yaml'
 import configSchema from '../../config.schema.json'
-import { Config, MatrixItem } from './config.js'
+import { CompatibilityItem, Config, MatrixItem } from './config.js'
 import { matchDependencies } from './matrix-item-functions.js'
 import { byNewLineAndComma, isNotEmpty, onlyUnique, processObjectFieldsRecursively } from './utils.js'
 
@@ -48,7 +48,9 @@ export function validateConfig(config: any, configSource?: string): Config {
 
     for (const [property, matrixItem] of Object.entries(matrix)) {
         const filters = matrixItem.only
-        if (filters == null || filters.length <= 1) continue
+        if (filters == null || filters.length <= 1) {
+            continue
+        }
 
         if (filters.includes('current-unstable')) {
             throw throwValidationError(`Matrix item ${property}: `
@@ -130,42 +132,67 @@ export async function parseConfigFiles(...configFileGlobs: string[]): Promise<Co
 
 export function processGlobalCompatibilityAliases(config: Config): void {
     const compatibilityAliases = config.globalCompatibilityAliases
-    delete config.globalCompatibilityAliases
-    if (!isNotEmpty(compatibilityAliases)) return
+    if (!isNotEmpty(compatibilityAliases)) {
+        return
+    }
 
-    const compatibilities = config.globalCompatibilities = config.globalCompatibilities ?? {}
+    const compatibilities = (config.globalCompatibilities ??= {})
 
-    for (const [dependency, alias] of Object.entries(compatibilityAliases)) {
+    for (const [aliasDependency, alias] of Object.entries(compatibilityAliases)) {
         const aliasCompatibilities = compatibilities[alias]
         if (aliasCompatibilities == null) {
             throw new Error(`Dependency not found for global compatibility alias: ${alias}`)
         }
 
         for (const compatibilityDependency of Object.keys(compatibilities)) {
-            if (matchDependencies(compatibilityDependency, dependency)) {
-                throw new Error(`Dependency alias is set for '${dependency}', which has global compatibilities defined`)
+            if (matchDependencies(compatibilityDependency, aliasDependency)) {
+                throw new Error(`Dependency alias is set for '${aliasDependency}', which has global compatibilities defined`)
             }
         }
 
-        compatibilities[dependency] = aliasCompatibilities
+        compatibilities[aliasDependency] = aliasCompatibilities
     }
 }
 
+// TODO: test separately
 export function populateGlobalCompatibilities(config: Config): void {
-    const compatibilities = config.globalCompatibilities
-    delete config.globalCompatibilities
-    if (!isNotEmpty(compatibilities)) return
+    const allGlobalCompatibilities = config.globalCompatibilities ?? {}
+    const globalCompatibilityAliases = config.globalCompatibilityAliases ?? {}
+    for (const [dependency, aliasRef] of Object.entries(globalCompatibilityAliases)) {
+        if (allGlobalCompatibilities[dependency] != null) {
+            throw new Error(`Alias ${dependency} redefining global compatibility`)
+        }
 
-    const matrix = config.matrix
-    if (!isNotEmpty(matrix)) return
+        const aliasCompatibilities = allGlobalCompatibilities[aliasRef]
+        if (aliasCompatibilities == null) {
+            throw new Error(`No global compatibilities set for alias ${dependency}`)
+        }
 
-    for (const matrixItem of Object.values(matrix)) {
-        if (matrixItem.withoutGlobalCompatibilities) continue
+        allGlobalCompatibilities[dependency] = aliasCompatibilities
+    }
 
-        for (const [compatibilityDependency, compatibility] of Object.entries(compatibilities)) {
-            if (!isNotEmpty(compatibility)) continue
-            if (matchDependencies(compatibilityDependency, matrixItem.dependency)) {
-                matrixItem.compatibilities = (matrixItem.compatibilities ?? []).concat(compatibility)
+    for (const matrixItem of Object.values(config.matrix ?? {})) {
+        if (matrixItem.withoutGlobalCompatibilities) {
+            continue
+        }
+
+        const itemCompatibilities = (matrixItem.compatibilities ??= [])
+
+        for (const [dependency, globalCompatibilities] of Object.entries(allGlobalCompatibilities)) {
+            if (matchDependencies(dependency, matrixItem.dependency)) {
+                globalCompatibilities.forEach(it => itemCompatibilities.push(it))
+            }
+        }
+
+        for (const itemCompatibility of [...itemCompatibilities]) {
+            for (const [aliasDependency, aliasRef] of Object.entries(globalCompatibilityAliases)) {
+                if (matchDependencies(aliasRef, itemCompatibility.dependency)) {
+                    const aliasCompatibility: CompatibilityItem = {
+                        ...itemCompatibility,
+                        dependency: aliasDependency,
+                    }
+                    itemCompatibilities.push(aliasCompatibility)
+                }
             }
         }
     }

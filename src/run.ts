@@ -12,7 +12,6 @@ import {
     parseConfigContent,
     parseConfigFiles,
     populateGlobalCompatibilities,
-    processGlobalCompatibilityAliases,
 } from './internal/config-functions.js'
 import { Config } from './internal/config.js'
 import { initRenovateLogging } from './internal/initRenovateLogging.js'
@@ -34,7 +33,6 @@ export async function run(
         await parseConfigFiles(...configFiles),
         defaultCompatibilitiesConfig,
     )
-    processGlobalCompatibilityAliases(config)
     populateGlobalCompatibilities(config)
 
     {

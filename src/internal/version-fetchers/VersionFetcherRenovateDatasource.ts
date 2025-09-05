@@ -1,10 +1,10 @@
 import { ReleaseResult } from 'renovate/dist/modules/datasource/types.js'
 import * as versionings from 'renovate/dist/modules/versioning'
-import { Versioning } from './config.js'
-import { RenovateDatasourceSimple } from './RenovateDatasource.js'
-import { RenovateReleaseFilter } from './RenovateReleaseFilter'
-import { isFunction, isNotEmpty, onlyUniqueBy } from './utils.js'
-import { VersionFetcher, VersionFetchParams } from './VersionFetcher.js'
+import { Versioning } from '../config'
+import { RenovateDatasourceSimple } from '../RenovateDatasource'
+import { RenovateReleaseFilter } from '../RenovateReleaseFilter'
+import { isFunction, isNotEmpty, onlyUniqueBy } from '../utils'
+import { VersionFetcher, VersionFetchParams } from './VersionFetcher'
 
 export abstract class VersionFetcherRenovateDatasource extends VersionFetcher {
 
