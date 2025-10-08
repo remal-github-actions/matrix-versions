@@ -18,9 +18,9 @@ inputs:
   globalCompatibilityAliases:
     required: false
     description: A YAML value of `globalCompatibilityAliases` config property
-  batchLimit:
+  elementsPerBatch:
     required: false
-    description: Batch limit. If the number of result elements exceeds this number, as error will be risen.
+    description: The maximum number of elements per batch. If the number of result elements exceeds this number, as error will be risen.
   allowEmptyResult:
     required: false
     description: Allow empty result.

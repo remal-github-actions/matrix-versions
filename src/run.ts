@@ -19,14 +19,16 @@ import { composeVersionMatrix, VersionMatrixItem } from './internal/matrix-funct
 import { fetchMatrix } from './internal/matrix-item-functions.js'
 import { isNotEmpty, substringBefore } from './internal/utils.js'
 
+type RunResult = { allMatrixIncludes: VersionMatrixItem[] } & Record<string, VersionMatrixItem[]>
+
 export async function run(
-    batchLimit: number,
-    batchNumbers: number,
+    elementsPerBatch: number,
+    batchesCount: number,
     githubToken: string | undefined | null,
     configFiles: string[],
     configContent: string,
     allowEmptyResult: boolean,
-): Promise<VersionMatrixItem[]> {
+): Promise<RunResult> {
     // Init config:
     const config = mergeConfigs(
         parseConfigContent(configContent),
@@ -69,36 +71,50 @@ export async function run(
         throw new Error(`Empty version matrix. Check filters and compatibilities.`)
     }
 
-    core.setOutput('allMatrixIncludes', versionMatrix)
 
     const versionMatrixLength = versionMatrix.length
-    if (versionMatrixLength > batchLimit) {
+    if (versionMatrixLength > elementsPerBatch) {
         core.error(
             `Version, matrix consists of ${versionMatrixLength} elements`
-            + `, which is greater than GitHub supports: ${batchLimit}. `
+            + `, which is greater than GitHub supports: ${elementsPerBatch}. `
             + `Use batching mode.`,
         )
-    } else if (versionMatrixLength > batchLimit / 2) {
+    } else if (versionMatrixLength > elementsPerBatch / 1.5) {
         core.warning(
             `Version, matrix consists of ${versionMatrixLength} elements`
-            + `, which is more than a half of what GitHub supports: ${batchLimit}. `
+            + `, which is more than a half of what GitHub supports: ${elementsPerBatch}. `
             + `Consider using batching mode.`,
         )
     }
 
-    for (let batchNumber = 1; batchNumber <= batchNumbers; ++batchNumber) {
-        const batchElements: VersionMatrixItem[] = []
-        for (
-            let i = batchLimit * (batchNumber - 1);
-            i < Math.min(versionMatrix.length, batchLimit * batchNumber);
-            ++i
-        ) {
-            batchElements.push(versionMatrix[i])
-        }
+    if (versionMatrixLength > elementsPerBatch * batchesCount) {
+        core.error(
+            `Version, matrix consists of ${versionMatrixLength} elements`
+            + `, which is greater than ${batchesCount} batches of ${elementsPerBatch} elements each.`,
+        )
+    } else if (versionMatrixLength > elementsPerBatch * batchesCount / 1.5) {
+        core.error(
+            `Version, matrix consists of ${versionMatrixLength} elements`
+            + `, which is relatively close to ${batchesCount} batches of ${elementsPerBatch} elements each.`,
+        )
+    }
+
+
+    const result: RunResult = {
+        allMatrixIncludes: versionMatrix,
+    }
+
+    core.setOutput('allMatrixIncludes', versionMatrix)
+
+    for (let batchNumber = 1; batchNumber <= batchesCount; ++batchNumber) {
+        const start = elementsPerBatch * (batchNumber - 1)
+        const end = elementsPerBatch * batchNumber
+        const batchElements = versionMatrix.slice(start, end)
+        result[`batchMatrixIncludes${batchNumber}`] = batchElements
         core.setOutput(`batchMatrixIncludes${batchNumber}`, batchElements)
     }
 
-    return versionMatrix
+    return result
 }
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -135,14 +151,16 @@ function initRenovateConfig(config: Config, githubToken?: string | null) {
     hostRules.push(...hostRulesFromEnv(process.env))
 
     if (isNotEmpty(githubToken)) {
-        hostRules.push({
-            matchHost: new URL(process.env.GITHUB_SERVER_URL ?? 'https://github.com/').hostname,
-            token: githubToken,
-        })
-        hostRules.push({
-            matchHost: new URL(process.env.GITHUB_API_URL ?? 'https://api.github.com/').hostname,
-            token: githubToken,
-        })
+        hostRules.push(
+            {
+                matchHost: new URL(process.env.GITHUB_SERVER_URL ?? 'https://github.com/').hostname,
+                token: githubToken,
+            },
+            {
+                matchHost: new URL(process.env.GITHUB_API_URL ?? 'https://api.github.com/').hostname,
+                token: githubToken,
+            },
+        )
     }
 
     hostRules.forEach(hostRule => {

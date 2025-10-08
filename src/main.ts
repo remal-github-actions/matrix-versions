@@ -8,8 +8,8 @@ initRenovateLogging()
 
 const githubToken = core.getInput('githubToken', { required: false })
 
-const batchLimit = parseInt(core.getInput('batchLimit', { required: false }) ?? '256')
-const batchNumbers = 9
+const elementsPerBatch = Number.parseInt(core.getInput('elementsPerBatch', { required: false }) || '256')
+const batchesCount = 9
 
 const allowEmptyResult = core.getInput('allowEmptyResult', { required: false })?.toLowerCase() === 'true'
 
@@ -32,8 +32,10 @@ const configContent = (function() {
     const lines: string[] = []
     for (const [property, string] of Object.entries(strings)) {
         if (string.trim().length) {
-            lines.push(`${property}:`)
-            lines.push(indent(string, 2))
+            lines.push(
+                `${property}:`,
+                indent(string, 2),
+            )
         }
     }
     return lines.join('\n')
@@ -41,9 +43,9 @@ const configContent = (function() {
 
 async function main(): Promise<void> {
     try {
-        run(
-            batchLimit,
-            batchNumbers,
+        await run(
+            elementsPerBatch,
+            batchesCount,
             githubToken,
             configFiles,
             configContent,

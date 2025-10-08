@@ -4,13 +4,18 @@ import { getErrorOf, NoErrorThrown, onlyUnique } from './internal/utils'
 import { run } from './run.js'
 
 describe(run.name, () => {
-    async function testRun(config: string, allowEmptyResult: boolean = false) {
+    async function testRun(
+        config: string,
+        allowEmptyResult: boolean = false,
+        elementsPerBatch: number = 99999,
+        batchesCount: number = 0,
+    ) {
         // eslint-disable-next-line no-useless-concat
         const gitHubToken = 'g' + 'hp_xmGQ2dHvCiK685' + 'qNEFuA3IAvv6Vfg62WM1hG'
 
         config = dedent(config)
 
-        return run(99999, 0, gitHubToken, [], config, allowEmptyResult)
+        return run(elementsPerBatch, batchesCount, gitHubToken, [], config, allowEmptyResult)
     }
 
     function groupMatrix(
@@ -41,7 +46,7 @@ describe(run.name, () => {
                 dependency: maven:org.springframework.boot:spring-boot-dependencies
                 include:
                 - '[2,)'
-        `)
+        `).then(it => it.allMatrixIncludes)
 
         expect(versionMatrix).toIncludeAllMembers([
             { 'spring-boot': '3.0.6' },
@@ -65,7 +70,7 @@ describe(run.name, () => {
                 dependency: gradle-wrapper
                 only:
                 - stable
-        `)
+        `).then(it => it.allMatrixIncludes)
 
         const groupedVersions = groupMatrix(versionMatrix, 'java', 'gradle')
 
@@ -154,7 +159,7 @@ describe(run.name, () => {
                 - stable
                 include:
                 - '[3,)'
-        `)
+        `).then(it => it.allMatrixIncludes)
 
         const expectedVersionMatrix = await testRun(`
             matrix:
@@ -166,7 +171,7 @@ describe(run.name, () => {
                 - stable
                 include:
                 - '[3,)'
-        `)
+        `).then(it => it.allMatrixIncludes)
 
         expect(versionMatrix).toStrictEqual(expectedVersionMatrix)
     })
@@ -186,7 +191,7 @@ describe(run.name, () => {
                 - stable
               foojay-resolver:
                 dependency: gradle-plugin:org.gradle.toolchains.foojay-resolver
-        `)
+        `).then(it => it.allMatrixIncludes)
 
         const gradle7Versions = versionMatrix
             .map(it => it['gradle'])
@@ -230,7 +235,7 @@ describe(run.name, () => {
                 - stable-minors
                 include:
                 - '[7.0, )'
-        `)
+        `).then(it => it.allMatrixIncludes)
 
         const kotlinJvmVersions = versionMatrix
             .map(it => it['kotlin-jvm'])
@@ -272,7 +277,7 @@ describe(run.name, () => {
                 - stable-minors
                 include:
                 - '[7.0, )'
-        `)
+        `).then(it => it.allMatrixIncludes)
 
         const kotlinJvmVersions = versionMatrix
             .map(it => it['kotlin-jvm'])
@@ -302,7 +307,7 @@ describe(run.name, () => {
                     - stable
                     include:
                     - '(,23]'
-            `)
+            `).then(it => it.allMatrixIncludes)
 
             expect(versionMatrix).toHaveLength(1)
             expect(versionMatrix).toIncludeAllMembers([
@@ -329,7 +334,7 @@ describe(run.name, () => {
                     - stable
                     include:
                     - '[8-alpha,)'
-            `)
+            `).then(it => it.allMatrixIncludes)
 
             expect(versionMatrix).toHaveLength(1)
 
@@ -365,7 +370,7 @@ describe(run.name, () => {
                     - stable
                     include:
                     - '(,23]'
-            `)
+            `).then(it => it.allMatrixIncludes)
 
             const javaVersions = versionMatrix
                 .map(it => it['java'])
@@ -395,7 +400,7 @@ describe(run.name, () => {
                         dependency: java
                       unknown:
                         dependency: maven:unknown
-                `, false),
+                `, false).then(it => it.allMatrixIncludes),
             )
             expect(error).not.toBeInstanceOf(NoErrorThrown)
             expect(error).toBeInstanceOf(Error)
@@ -408,8 +413,75 @@ describe(run.name, () => {
                 dependency: java
               unknown:
                 dependency: maven:unknown
-        `, true)
+        `, true).then(it => it.allMatrixIncludes)
             expect(versionMatrix).toBeEmpty()
+        })
+
+    })
+
+    describe('batches', () => {
+
+        it('0 batches', async () => {
+            const result = await testRun(`
+                matrix:
+                  gradle:
+                    dependency: gradle-wrapper
+                    only:
+                    - stable
+            `, true, 99999, 0)
+
+            expect(Object.keys(result)).toEqual(['allMatrixIncludes'])
+            expect(result.allMatrixIncludes).not.toBeEmpty()
+        })
+
+        it('1 batch without limit', async () => {
+            const result = await testRun(`
+                matrix:
+                  gradle:
+                    dependency: gradle-wrapper
+                    only:
+                    - stable
+            `, true, 99999, 1)
+
+            expect(Object.keys(result)).toEqual(['allMatrixIncludes', 'batchMatrixIncludes1'])
+            expect(result.allMatrixIncludes).not.toBeEmpty()
+            expect(result.batchMatrixIncludes1).not.toBeEmpty()
+        })
+
+        it('2 batches without limit', async () => {
+            const result = await testRun(`
+                matrix:
+                  gradle:
+                    dependency: gradle-wrapper
+                    only:
+                    - stable
+            `, true, 99999, 2)
+
+            expect(Object.keys(result)).toEqual(['allMatrixIncludes', 'batchMatrixIncludes1', 'batchMatrixIncludes2'])
+            expect(result.allMatrixIncludes).not.toBeEmpty()
+            expect(result.batchMatrixIncludes1).not.toBeEmpty()
+            expect(result.batchMatrixIncludes2).toBeEmpty()
+        })
+
+        it('3 batches with limit', async () => {
+            const result = await testRun(`
+                matrix:
+                  gradle:
+                    dependency: gradle-wrapper
+                    only:
+                    - stable
+            `, true, 2, 3)
+
+            expect(Object.keys(result)).toEqual([
+                'allMatrixIncludes',
+                'batchMatrixIncludes1',
+                'batchMatrixIncludes2',
+                'batchMatrixIncludes3',
+            ])
+            expect(result.allMatrixIncludes).not.toBeEmpty()
+            expect(result.batchMatrixIncludes1).toBeArrayOfSize(2)
+            expect(result.batchMatrixIncludes2).toBeArrayOfSize(2)
+            expect(result.batchMatrixIncludes3).toBeArrayOfSize(2)
         })
 
     })

@@ -28,7 +28,7 @@ export async function fetchMatrix(
         const fetchedMatrixItem = await fetchMatrixItem(matrixItem, allowEmptyResult)
         fetchedMatrix[property] = fetchedMatrixItem
     }
-    return Promise.resolve(fetchedMatrix)
+    return fetchedMatrix
 }
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
