@@ -75,13 +75,13 @@ export async function run(
     const versionMatrixLength = versionMatrix.length
     if (versionMatrixLength > elementsPerBatch) {
         core.error(
-            `Version, matrix consists of ${versionMatrixLength} elements`
+            `Version matrix consists of ${versionMatrixLength} elements`
             + `, which is greater than GitHub supports: ${elementsPerBatch}. `
             + `Use batching mode.`,
         )
     } else if (versionMatrixLength > elementsPerBatch / 1.5) {
         core.warning(
-            `Version, matrix consists of ${versionMatrixLength} elements`
+            `Version matrix consists of ${versionMatrixLength} elements`
             + `, which is more than a half of what GitHub supports: ${elementsPerBatch}. `
             + `Consider using batching mode.`,
         )
@@ -89,12 +89,12 @@ export async function run(
 
     if (versionMatrixLength > elementsPerBatch * batchesCount) {
         core.error(
-            `Version, matrix consists of ${versionMatrixLength} elements`
+            `Version matrix consists of ${versionMatrixLength} elements`
             + `, which is greater than ${batchesCount} batches of ${elementsPerBatch} elements each.`,
         )
     } else if (versionMatrixLength > elementsPerBatch * batchesCount / 1.5) {
         core.error(
-            `Version, matrix consists of ${versionMatrixLength} elements`
+            `Version matrix consists of ${versionMatrixLength} elements`
             + `, which is relatively close to ${batchesCount} batches of ${elementsPerBatch} elements each.`,
         )
     }
