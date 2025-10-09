@@ -176,123 +176,152 @@ describe(run.name, () => {
         expect(versionMatrix).toStrictEqual(expectedVersionMatrix)
     })
 
-    it('different compatibilities', async () => {
-        const versionMatrix = await testRun(`
-            matrix:
-              java:
-                dependency: java
-                only:
-                - stable
-                include:
-                - '(,23]'
-              gradle:
-                dependency: gradle-wrapper
-                only:
-                - stable
-              foojay-resolver:
-                dependency: gradle-plugin:org.gradle.toolchains.foojay-resolver
-        `).then(it => it.allMatrixIncludes)
+    describe('includes', () => {
 
-        const gradle7Versions = versionMatrix
-            .map(it => it['gradle'])
-            .filter(it => it.startsWith('7.'))
-            .filter(onlyUnique)
-        expect(gradle7Versions).not.toBeEmpty()
+        it('range + regex', async () => {
+            const versionMatrix = await testRun(`
+                matrix:
+                  gradle:
+                    dependency: gradle-wrapper
+                    include:
+                    - '[7,9)'
+                    - /^\\d(\\.\\d)*(-RC-?\\d*)?$/i
+            `).then(it => it.allMatrixIncludes)
 
-        const gradle6Versions = versionMatrix
-            .map(it => it['gradle'])
-            .filter(it => it.startsWith('6.'))
-            .filter(onlyUnique)
-        expect(gradle6Versions).toBeEmpty()
+            expect(versionMatrix).not.toBeEmpty()
 
-        const foojayResolverIncompatibleVersions = versionMatrix
-            .filter(it =>
-                it['gradle'].startsWith('6.')
-                || (it['java'] === '11' && it['foojay-resolver'].startsWith('1.')),
+            const rcVersions = versionMatrix
+                .filter(it => it.gradle.toLowerCase().includes('rc'))
+            expect(rcVersions).not.toBeEmpty()
+
+            const milestoneVersions = versionMatrix
+                .filter(it => it.gradle.toLowerCase().includes('milestone'))
+            expect(milestoneVersions).toBeEmpty()
+        })
+
+    })
+
+    describe('compatibilities', () => {
+
+        it('different compatibilities', async () => {
+            const versionMatrix = await testRun(`
+                matrix:
+                  java:
+                    dependency: java
+                    only:
+                    - stable
+                    include:
+                    - '(,23]'
+                  gradle:
+                    dependency: gradle-wrapper
+                    only:
+                    - stable
+                  foojay-resolver:
+                    dependency: gradle-plugin:org.gradle.toolchains.foojay-resolver
+            `).then(it => it.allMatrixIncludes)
+
+            const gradle7Versions = versionMatrix
+                .map(it => it['gradle'])
+                .filter(it => it.startsWith('7.'))
+                .filter(onlyUnique)
+            expect(gradle7Versions).not.toBeEmpty()
+
+            const gradle6Versions = versionMatrix
+                .map(it => it['gradle'])
+                .filter(it => it.startsWith('6.'))
+                .filter(onlyUnique)
+            expect(gradle6Versions).toBeEmpty()
+
+            const foojayResolverIncompatibleVersions = versionMatrix
+                .filter(it =>
+                    it['gradle'].startsWith('6.')
+                    || (it['java'] === '11' && it['foojay-resolver'].startsWith('1.')),
+                )
+            expect(foojayResolverIncompatibleVersions).toBeEmpty()
+        })
+
+        it('disabled compatibilities', async () => {
+            const versionMatrix = await testRun(`
+                matrix:
+                  kotlin-jvm:
+                    dependency: 'gradle-plugin:org.jetbrains.kotlin.jvm'
+                    only:
+                    - stable-minors
+                  java:
+                    dependency: java
+                    only:
+                    - lts
+                    - stable
+                    - once
+                    include:
+                    - '[11,)'
+                  gradle:
+                    dependency: gradle-wrapper
+                    only:
+                    - once
+                    - stable-minors
+                    include:
+                    - '[7.0, )'
+            `).then(it => it.allMatrixIncludes)
+
+            const kotlinJvmVersions = versionMatrix
+                .map(it => it['kotlin-jvm'])
+                .filter(onlyUnique)
+            expect(kotlinJvmVersions.length).toBeGreaterThan(1)
+
+            const incompatibleVersions = kotlinJvmVersions.filter(ver =>
+                ver.startsWith('0.')
+                || ver.startsWith('1.0.')
+                || ver.startsWith('1.1.')
+                || ver.startsWith('1.2.')
+                || ver.startsWith('1.3.')
+                || ver.startsWith('1.4.'),
             )
-        expect(foojayResolverIncompatibleVersions).toBeEmpty()
-    })
+            expect(incompatibleVersions).toBeEmpty()
+        })
 
-    it('disabled compatibilities', async () => {
-        const versionMatrix = await testRun(`
-            matrix:
-              kotlin-jvm:
-                dependency: 'gradle-plugin:org.jetbrains.kotlin.jvm'
-                only:
-                - stable-minors
-              java:
-                dependency: java
-                only:
-                - lts
-                - stable
-                - once
-                include:
-                - '[11,)'
-              gradle:
-                dependency: gradle-wrapper
-                only:
-                - once
-                - stable-minors
-                include:
-                - '[7.0, )'
-        `).then(it => it.allMatrixIncludes)
+        it('disabled compatibilities with aliases', async () => {
+            const versionMatrix = await testRun(`
+                matrix:
+                  kotlin-jvm:
+                    dependency: 'gradle-plugin:org.jetbrains.kotlin.jvm'
+                    only:
+                    - stable-minors
+                  java:
+                    dependency: java
+                    only:
+                    - lts
+                    - stable
+                    - once
+                    include:
+                    - '[11,)'
+                  gradle:
+                    dependency: 'maven:name.remal.gradle-api:gradle-api'
+                    repositories:
+                    - 'https://maven.pkg.github.com/remal-gradle-api/packages'
+                    only:
+                    - once
+                    - stable-minors
+                    include:
+                    - '[7.0, )'
+            `).then(it => it.allMatrixIncludes)
 
-        const kotlinJvmVersions = versionMatrix
-            .map(it => it['kotlin-jvm'])
-            .filter(onlyUnique)
-        expect(kotlinJvmVersions.length).toBeGreaterThan(1)
+            const kotlinJvmVersions = versionMatrix
+                .map(it => it['kotlin-jvm'])
+                .filter(onlyUnique)
+            expect(kotlinJvmVersions.length).toBeGreaterThan(1)
 
-        const incompatibleVersions = kotlinJvmVersions.filter(ver =>
-            ver.startsWith('0.')
-            || ver.startsWith('1.0.')
-            || ver.startsWith('1.1.')
-            || ver.startsWith('1.2.')
-            || ver.startsWith('1.3.')
-            || ver.startsWith('1.4.'),
-        )
-        expect(incompatibleVersions).toBeEmpty()
-    })
+            const incompatibleVersions = kotlinJvmVersions.filter(ver =>
+                ver.startsWith('0.')
+                || ver.startsWith('1.0.')
+                || ver.startsWith('1.1.')
+                || ver.startsWith('1.2.')
+                || ver.startsWith('1.3.')
+                || ver.startsWith('1.4.'),
+            )
+            expect(incompatibleVersions).toBeEmpty()
+        })
 
-    it('disabled compatibilities with aliases', async () => {
-        const versionMatrix = await testRun(`
-            matrix:
-              kotlin-jvm:
-                dependency: 'gradle-plugin:org.jetbrains.kotlin.jvm'
-                only:
-                - stable-minors
-              java:
-                dependency: java
-                only:
-                - lts
-                - stable
-                - once
-                include:
-                - '[11,)'
-              gradle:
-                dependency: 'maven:name.remal.gradle-api:gradle-api'
-                repositories:
-                - 'https://maven.pkg.github.com/remal-gradle-api/packages'
-                only:
-                - once
-                - stable-minors
-                include:
-                - '[7.0, )'
-        `).then(it => it.allMatrixIncludes)
-
-        const kotlinJvmVersions = versionMatrix
-            .map(it => it['kotlin-jvm'])
-            .filter(onlyUnique)
-        expect(kotlinJvmVersions.length).toBeGreaterThan(1)
-
-        const incompatibleVersions = kotlinJvmVersions.filter(ver =>
-            ver.startsWith('0.')
-            || ver.startsWith('1.0.')
-            || ver.startsWith('1.1.')
-            || ver.startsWith('1.2.')
-            || ver.startsWith('1.3.')
-            || ver.startsWith('1.4.'),
-        )
-        expect(incompatibleVersions).toBeEmpty()
     })
 
     describe('only: once', () => {
