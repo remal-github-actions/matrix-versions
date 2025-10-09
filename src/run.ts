@@ -87,7 +87,7 @@ export async function run(
         )
     }
 
-    if (batchesCount > 0) {
+    if (elementsPerBatch * batchesCount > 0) {
         if (versionMatrixLength > elementsPerBatch * batchesCount) {
             core.error(
                 `Version matrix consists of ${versionMatrixLength} elements`
