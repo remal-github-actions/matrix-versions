@@ -87,16 +87,18 @@ export async function run(
         )
     }
 
-    if (versionMatrixLength > elementsPerBatch * batchesCount) {
-        core.error(
-            `Version matrix consists of ${versionMatrixLength} elements`
-            + `, which is greater than ${batchesCount} batches of ${elementsPerBatch} elements each.`,
-        )
-    } else if (versionMatrixLength > elementsPerBatch * batchesCount / 1.5) {
-        core.error(
-            `Version matrix consists of ${versionMatrixLength} elements`
-            + `, which is relatively close to ${batchesCount} batches of ${elementsPerBatch} elements each.`,
-        )
+    if (batchesCount > 0) {
+        if (versionMatrixLength > elementsPerBatch * batchesCount) {
+            core.error(
+                `Version matrix consists of ${versionMatrixLength} elements`
+                + `, which is greater than ${batchesCount} batches of ${elementsPerBatch} elements each.`,
+            )
+        } else if (versionMatrixLength > elementsPerBatch * batchesCount / 1.5) {
+            core.error(
+                `Version matrix consists of ${versionMatrixLength} elements`
+                + `, which is relatively close to ${batchesCount} batches of ${elementsPerBatch} elements each.`,
+            )
+        }
     }
 
 
