@@ -42,6 +42,7 @@ export async function fetchMatrixItem(matrixItem: MatrixItem, allowEmptyResult: 
         repositories: matrixItem.repositories,
         only: matrixItem.only,
     }).then(fetchedVersions => {
+
         let item: FetchedMatrixItem = {
             dependency: matrixItem.dependency,
             only: matrixItem.only?.concat(),
@@ -60,6 +61,8 @@ export async function fetchMatrixItem(matrixItem: MatrixItem, allowEmptyResult: 
             } else {
                 throw new Error(message)
             }
+        } else {
+            actionDebug(`Versions fetched for '${matrixItem.dependency}' dependency: '${fetchedVersions.join('\', \'')}'`)
         }
 
         item = filterFetchedVersions(item)
