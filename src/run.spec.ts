@@ -176,6 +176,34 @@ describe(run.name, () => {
         expect(versionMatrix).toStrictEqual(expectedVersionMatrix)
     })
 
+    describe('only', () => {
+
+        it('unstable', async () => {
+            const versionMatrix = await testRun(`
+                matrix:
+                  gradle:
+                    dependency: gradle-wrapper
+                    only:
+                    - unstable
+            `).then(it => it.allMatrixIncludes)
+
+            expect(versionMatrix).not.toBeEmpty()
+
+            const stableVersions = versionMatrix
+                .filter(it => it.gradle.match(/^\d+(\.\d+)*$/))
+            expect(stableVersions).toBeEmpty()
+
+            const rcVersions = versionMatrix
+                .filter(it => it.gradle.toLowerCase().includes('rc'))
+            expect(rcVersions).not.toBeEmpty()
+
+            const milestoneVersions = versionMatrix
+                .filter(it => it.gradle.toLowerCase().includes('milestone'))
+            expect(milestoneVersions).not.toBeEmpty()
+        })
+
+    })
+
     describe('includes', () => {
 
         it('range + regex', async () => {

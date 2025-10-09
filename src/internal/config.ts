@@ -16,6 +16,7 @@ export type VersionOnlyFilter =
   | "stable-minors+current-unstable"
   | "stable-patches"
   | "stable-patches+current-unstable"
+  | "unstable"
   | "current-unstable";
 export type VersionFilter = string;
 /**

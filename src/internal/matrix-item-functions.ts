@@ -253,6 +253,7 @@ const onlyFilterFactories: Record<VersionOnlyFilter, VersionsFilterFactory> = {
     'stable-minors+current-unstable': createNumbersOnlyFilterFactory(2, true),
     'stable-patches': createNumbersOnlyFilterFactory(3, false),
     'stable-patches+current-unstable': createNumbersOnlyFilterFactory(3, true),
+    'unstable': versioning => versions => versions.filter(version => !versioning.isStable(version)),
     'current-unstable': createNumbersOnlyFilterFactory(0, true),
 }
 
