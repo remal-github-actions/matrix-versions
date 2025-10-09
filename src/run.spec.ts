@@ -176,6 +176,29 @@ describe(run.name, () => {
         expect(versionMatrix).toStrictEqual(expectedVersionMatrix)
     })
 
+    it('gradle wrapper v2 + stable+current-unstable + includes', async () => {
+        const versionMatrix = await testRun(`
+                matrix:
+                  gradle:
+                    dependency: gradle-wrapper
+                    only:
+                    - stable+current-unstable
+                    include:
+                    - '[2.4,9999)'
+                    - /^\\d+(\\.\\d+)*(-rc-?\\d*)?$/i
+            `).then(it => it.allMatrixIncludes)
+
+        expect(versionMatrix).not.toBeEmpty()
+
+        const v2Versions = versionMatrix
+            .filter(it => it.gradle.startsWith('2.'))
+        expect(v2Versions).not.toBeEmpty()
+        expect(v2Versions).toIncludeAllMembers([
+            { 'gradle': '2.14.1' },
+            { 'gradle': '2.14' },
+        ])
+    })
+
     describe('only', () => {
 
         it('unstable', async () => {

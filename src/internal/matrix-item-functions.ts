@@ -42,7 +42,6 @@ export async function fetchMatrixItem(matrixItem: MatrixItem, allowEmptyResult: 
         repositories: matrixItem.repositories,
         only: matrixItem.only,
     }).then(fetchedVersions => {
-
         let item: FetchedMatrixItem = {
             dependency: matrixItem.dependency,
             only: matrixItem.only?.concat(),
@@ -62,7 +61,9 @@ export async function fetchMatrixItem(matrixItem: MatrixItem, allowEmptyResult: 
                 throw new Error(message)
             }
         } else {
-            actionDebug(`Versions fetched for '${matrixItem.dependency}' dependency: '${fetchedVersions.join('\', \'')}'`)
+            actionDebug(`Versions initially fetched for '${matrixItem.dependency}' dependency: `
+                + `'${fetchedVersions.join('\', \'')}'`,
+            )
         }
 
         item = filterFetchedVersions(item)
@@ -88,7 +89,9 @@ export async function fetchMatrixItem(matrixItem: MatrixItem, allowEmptyResult: 
             }
         }
 
-        core.info(`Fetched versions for '${item.dependency}' dependency: ${item.fetchedVersions.join(', ')}`)
+        core.info(`Fetched versions for '${item.dependency}' dependency (with filters): `
+            + `${item.fetchedVersions.join(', ')}`,
+        )
 
         return item
     })

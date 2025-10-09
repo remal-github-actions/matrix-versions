@@ -31,10 +31,8 @@ export abstract class VersionFetcherRenovateDatasource extends VersionFetcher {
 
         let repositories = params.repositories ?? []
         if (!repositories.length) {
-            const defaultRepositories = this.renovateDatasource.defaultRegistryUrls
-            if (defaultRepositories == null) {
-                repositories = []
-            } else if (isFunction(defaultRepositories)) {
+            const defaultRepositories = this.renovateDatasource.defaultRegistryUrls ?? []
+            if (isFunction(defaultRepositories)) {
                 repositories = defaultRepositories()
             } else {
                 repositories = defaultRepositories
