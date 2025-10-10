@@ -89,7 +89,7 @@ export async function fetchMatrixItem(matrixItem: MatrixItem, allowEmptyResult: 
             }
         }
 
-        core.info(`Fetched versions for '${item.dependency}' dependency (with filters): `
+        core.info(`Fetched versions for '${item.dependency}' dependency: `
             + `${item.fetchedVersions.join(', ')}`,
         )
 
