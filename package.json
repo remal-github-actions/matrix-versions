@@ -49,7 +49,7 @@
     "ts-jest": "29.4.5",
     "tsx": "4.20.6",
     "typescript": "5.9.3",
-    "typescript-eslint": "8.46.3"
+    "typescript-eslint": "8.46.4"
   },
   "resolutions": {
     "re2": "npm:@favware/skip-dependency@1.2.2"
