@@ -6,6 +6,9 @@ on:
     - main
   pull_request: { }
 
+env:
+  SHRINK_RELEASES: 'false'
+
 defaults:
   run:
     shell: bash
@@ -177,6 +180,7 @@ jobs:
       uses: remal-github-actions/read-nodejs-package-version@v1
 
     - name: Remove files listed in .releaseignore
+      if: ${{github.event_name == 'push' && github.ref == 'refs/heads/main' && fromJSON(env.SHRINK_RELEASES)}}
       uses: actions/github-script@v8
       with:
         script: |
@@ -202,20 +206,21 @@ jobs:
             return
           }
 
-          patternsToIgnore = `!.git/**\n${patternsToIgnore}`
+          const gitDirPath = path.resolve(cwdPath, '.git')
 
           const globber = await glob.create(patternsToIgnore)
           const files = await globber.glob()
           files
             .map(file => path.resolve(cwdPath, file))
             .filter(file => file != cwdPath)
+            .filter(file => file != gitDirPath && !file.startsWith(gitDirPath + path.sep))
             .forEach(file => {
               core.debug(`Removing: ${file}`)
               fs.rmSync(file, { recursive: true, force: true })
             })
 
     - name: Prepare release commit
-      if: ${{github.event_name == 'push' && github.ref == 'refs/heads/main'}}
+      if: ${{github.event_name == 'push' && github.ref == 'refs/heads/main' && fromJSON(env.SHRINK_RELEASES)}}
       run: |
         RELEASE_BRANCH="release/v${{steps.readVersion.outputs.majorVersion}}"
         git switch --force-create "$RELEASE_BRANCH"
@@ -224,6 +229,7 @@ jobs:
         git push --force origin "$RELEASE_BRANCH"
 
     - name: Create tag
+      if: ${{github.event_name == 'push' && github.ref == 'refs/heads/main'}}
       uses: remal-github-actions/create-tag@v2
       with:
         tagName: 'v${{steps.readVersion.outputs.majorVersion}}'
