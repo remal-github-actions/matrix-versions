@@ -6,9 +6,6 @@ on:
     - main
   pull_request: { }
 
-env:
-  SHRINK_RELEASES: 'false'
-
 defaults:
   run:
     shell: bash
@@ -180,7 +177,8 @@ jobs:
       uses: remal-github-actions/read-nodejs-package-version@v1
 
     - name: Remove files listed in .releaseignore
-      if: ${{github.event_name == 'push' && github.ref == 'refs/heads/main' && fromJSON(env.SHRINK_RELEASES)}}
+      if: ${{github.event_name == 'push' && github.ref == 'refs/heads/main'}}
+      id: releaseignore
       uses: actions/github-script@v8
       with:
         script: |
@@ -192,7 +190,8 @@ jobs:
           const releaseIgnorePath = '.releaseignore'
           const releaseIgnoreFullPath = path.resolve(cwdPath, releaseIgnorePath)
           if (!fs.existsSync(releaseIgnoreFullPath)) {
-            core.warning(`${releaseIgnorePath} file does not exist. Skipping removal of files.`)
+            core.info(`${releaseIgnorePath} file does not exist, skipping removal of files.`)
+            core.setOutput('skipped', 'true')
             return
           }
 
@@ -202,7 +201,8 @@ jobs:
             .filter(line => line.length)
             .join('\n')
           if (!patternsToIgnore.length) {
-            core.info(`${releaseIgnorePath} file does not have patterns. Skipping removal of files.`)
+            core.info(`${releaseIgnorePath} file does not have patterns, skipping removal of files.`)
+            core.setOutput('skipped', 'true')
             return
           }
 
@@ -220,7 +220,7 @@ jobs:
             })
 
     - name: Prepare release commit
-      if: ${{github.event_name == 'push' && github.ref == 'refs/heads/main' && fromJSON(env.SHRINK_RELEASES)}}
+      if: ${{github.event_name == 'push' && github.ref == 'refs/heads/main' && !steps.releaseignore.outputs.skipped}}
       run: |
         RELEASE_BRANCH="release/v${{steps.readVersion.outputs.majorVersion}}"
         git switch --force-create "$RELEASE_BRANCH"
