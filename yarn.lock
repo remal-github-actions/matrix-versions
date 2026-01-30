@@ -12,23 +12,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@actions/core@npm:2.0.3":
+"@actions/core@npm:2.0.3, @actions/core@npm:^2.0.3":
   version: 2.0.3
   resolution: "@actions/core@npm:2.0.3"
   dependencies:
     "@actions/exec": "npm:^2.0.0"
     "@actions/http-client": "npm:^3.0.2"
   checksum: 10c0/aaee1cf8a43ef07549ef7959d66cce85ffc254e3ceb893735b463c73c042596825d5ada067fe513e276da7dc75e78cc4de971748249ace17df7e232fa8081f07
-  languageName: node
-  linkType: hard
-
-"@actions/core@npm:^1.9.1":
-  version: 1.10.0
-  resolution: "@actions/core@npm:1.10.0"
-  dependencies:
-    "@actions/http-client": "npm:^2.0.1"
-    uuid: "npm:^8.3.2"
-  checksum: 10c0/9214d1e0cf5cf2a5d48b8f3b12488c6be9f6722ea60f2397409226e8410b5a3e12e558d9b66c93469d180399865ec20180119408a1770f026bd9ecac6965fcda
   languageName: node
   linkType: hard
 
@@ -41,22 +31,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@actions/glob@npm:0.5.0":
-  version: 0.5.0
-  resolution: "@actions/glob@npm:0.5.0"
+"@actions/glob@npm:0.5.1":
+  version: 0.5.1
+  resolution: "@actions/glob@npm:0.5.1"
   dependencies:
-    "@actions/core": "npm:^1.9.1"
+    "@actions/core": "npm:^2.0.3"
     minimatch: "npm:^3.0.4"
-  checksum: 10c0/ba4a8f6cfb0ecacf40ef5943d9a618a5a7c95d88189f6c86982aba8eed464a686c1b4860972618c75c00732571d43f5cff6c515cc4ef339f9bf1ab57df484337
-  languageName: node
-  linkType: hard
-
-"@actions/http-client@npm:^2.0.1":
-  version: 2.0.1
-  resolution: "@actions/http-client@npm:2.0.1"
-  dependencies:
-    tunnel: "npm:^0.0.6"
-  checksum: 10c0/b58987ba2f53d7988f612ede7ff834573a3360c21f8fdea9fea92f26ada0fd0efafb22aa7d83f49c18965a5b765775d5253e2edb8d9476d924c4b304ef726b67
+  checksum: 10c0/636c144ecbf99006ec3f235dcef4387de53dc377435699ec66f55a9bde4f42e250d86f81ffc25fb45460e9e06aba3e5c561ffb800e7c7f8375b4a9cfe6468752
   languageName: node
   linkType: hard
 
@@ -11571,7 +11552,7 @@ __metadata:
   resolution: "matrix-versions@workspace:."
   dependencies:
     "@actions/core": "npm:2.0.3"
-    "@actions/glob": "npm:0.5.0"
+    "@actions/glob": "npm:0.5.1"
     "@tsconfig/node20": "npm:20.1.8"
     "@types/jest": "npm:30.0.0"
     "@types/node": "npm:20.19.30"
@@ -15587,15 +15568,6 @@ __metadata:
     is-typed-array: "npm:^1.1.3"
     which-typed-array: "npm:^1.1.2"
   checksum: 10c0/c27054de2cea2229a66c09522d0fa1415fb12d861d08523a8846bf2e4cbf0079d4c3f725f09dcb87493549bcbf05f5798dce1688b53c6c17201a45759e7253f3
-  languageName: node
-  linkType: hard
-
-"uuid@npm:^8.3.2":
-  version: 8.3.2
-  resolution: "uuid@npm:8.3.2"
-  bin:
-    uuid: dist/bin/uuid
-  checksum: 10c0/bcbb807a917d374a49f475fae2e87fdca7da5e5530820ef53f65ba1d12131bd81a92ecf259cc7ce317cbe0f289e7d79fdfebcef9bfa3087c8c8a2fa304c9be54
   languageName: node
   linkType: hard
 
