@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "@actions/core": "2.0.3",
-    "@actions/glob": "0.5.1",
+    "@actions/glob": "0.6.1",
     "ajv": "8.17.1",
     "deepmerge": "4.3.1",
     "renovate": "39.264.1",
