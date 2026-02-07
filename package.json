@@ -27,7 +27,7 @@
     "yaml": "2.8.2"
   },
   "devDependencies": {
-    "@tsconfig/node20": "20.1.8",
+    "@tsconfig/node20": "20.1.9",
     "@types/jest": "30.0.0",
     "@types/node": "20.19.31",
     "@types/semver": "7.7.1",
