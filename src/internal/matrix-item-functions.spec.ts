@@ -1,3 +1,4 @@
+/* eslint-disable jest/valid-title */
 import {
     FetchedMatrixItem,
     filterFetchedVersions,
@@ -512,3 +513,4 @@ describe(matchDependencies.name, () => {
     })
 
 })
+/* eslint-enable jest/valid-title */

@@ -1,3 +1,4 @@
+/* eslint-disable jest/valid-title */
 import { MavenVersionFetcher } from './MavenVersionFetcher.js'
 
 describe(MavenVersionFetcher.name, () => {
@@ -35,3 +36,4 @@ describe(MavenVersionFetcher.name, () => {
     })
 
 })
+/* eslint-enable jest/valid-title */

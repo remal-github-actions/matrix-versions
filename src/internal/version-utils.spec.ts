@@ -1,3 +1,4 @@
+/* eslint-disable jest/valid-title */
 import { isInVersioningRange } from './version-utils.js'
 import * as versionings from 'renovate/dist/modules/versioning'
 
@@ -57,3 +58,4 @@ describe(isInVersioningRange.name, () => {
     })
 
 })
+/* eslint-enable jest/valid-title */

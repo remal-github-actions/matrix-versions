@@ -1,3 +1,4 @@
+/* eslint-disable jest/valid-title */
 import { composeVersionMatrix, removeUnusedCompatibilities, VersionMatrixItem } from './matrix-functions.js'
 import { FetchedMatrix } from './matrix-item-functions.js'
 
@@ -191,3 +192,4 @@ describe(removeUnusedCompatibilities.name, () => {
     })
 
 })
+/* eslint-enable jest/valid-title */

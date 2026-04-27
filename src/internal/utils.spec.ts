@@ -1,3 +1,4 @@
+/* eslint-disable jest/valid-title */
 import { clone, indent } from './utils.js'
 
 describe(indent.name, () => {
@@ -38,3 +39,4 @@ describe(clone.name, () => {
     })
 
 })
+/* eslint-enable jest/valid-title */

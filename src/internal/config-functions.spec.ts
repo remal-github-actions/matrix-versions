@@ -1,3 +1,4 @@
+/* eslint-disable jest/valid-title */
 import { mergeConfigs, newEmptyConfig, validateConfig } from './config-functions.js'
 import { Config, VersionOnlyFilter } from './config.js'
 
@@ -46,6 +47,7 @@ describe(validateConfig.name, () => {
                     },
                 },
             }
+            // eslint-disable-next-line jest/valid-expect
             const assertion = expect(() => validateConfig(config))
             if (valid) {
                 assertion.not.toThrow()
@@ -174,3 +176,4 @@ describe(mergeConfigs.name, () => {
     })
 
 })
+/* eslint-enable jest/valid-title */

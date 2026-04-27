@@ -1,3 +1,4 @@
+/* eslint-disable jest/valid-title */
 import { NodeFullVersionFetcher } from './NodeFullVersionFetcher.js'
 
 describe(NodeFullVersionFetcher.name, () => {
@@ -31,3 +32,4 @@ describe(NodeFullVersionFetcher.name, () => {
     })
 
 })
+/* eslint-enable jest/valid-title */

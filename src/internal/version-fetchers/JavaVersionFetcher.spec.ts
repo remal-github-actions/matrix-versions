@@ -1,3 +1,4 @@
+/* eslint-disable jest/valid-title */
 import { JavaVersionFetcher } from './JavaVersionFetcher.js'
 
 describe(JavaVersionFetcher.name, () => {
@@ -36,3 +37,4 @@ describe(JavaVersionFetcher.name, () => {
     })
 
 })
+/* eslint-enable jest/valid-title */

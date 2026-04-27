@@ -1,3 +1,4 @@
+/* eslint-disable jest/valid-title */
 import dedent from 'dedent'
 import { VersionMatrixItem } from './internal/matrix-functions'
 import { getErrorOf, NoErrorThrown, onlyUnique } from './internal/utils'
@@ -10,7 +11,7 @@ describe(run.name, () => {
         elementsPerBatch: number = 99999,
         batchesCount: number = 0,
     ) {
-        // eslint-disable-next-line no-useless-concat
+         
         const gitHubToken = 'g' + 'hp_xmGQ2dHvCiK685' + 'qNEFuA3IAvv6Vfg62WM1hG'
 
         config = dedent(config)
@@ -567,3 +568,4 @@ describe(run.name, () => {
     })
 
 })
+/* eslint-enable jest/valid-title */

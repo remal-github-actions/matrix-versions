@@ -1,3 +1,4 @@
+/* eslint-disable jest/valid-title */
 import { GradleWrapperVersionFetcher } from './GradleWrapperVersionFetcher.js'
 
 describe(GradleWrapperVersionFetcher.name, () => {
@@ -22,3 +23,4 @@ describe(GradleWrapperVersionFetcher.name, () => {
     })
 
 })
+/* eslint-enable jest/valid-title */

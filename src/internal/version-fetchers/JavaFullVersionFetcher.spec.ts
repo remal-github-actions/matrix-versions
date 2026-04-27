@@ -1,3 +1,4 @@
+/* eslint-disable jest/valid-title */
 import { JavaFullVersionFetcher } from './JavaFullVersionFetcher.js'
 
 describe(JavaFullVersionFetcher.name, () => {
@@ -28,3 +29,4 @@ describe(JavaFullVersionFetcher.name, () => {
     })
 
 })
+/* eslint-enable jest/valid-title */
