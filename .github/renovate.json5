@@ -20,7 +20,8 @@
 
   packageRules: [
     {
-      matchCategories: ["node"],
+      matchCategories: ["node", "asdf"],
+      matchUpdateTypes: ["major", "replacement"],
       enabled: false,
     },
     {
