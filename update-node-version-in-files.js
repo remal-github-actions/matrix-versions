@@ -24,7 +24,10 @@ function writeJsonFile(path, json) {
         fs.readFileSync('.nvmrc', encoding).trim().replace(/^v/, '')
     )
     if (currentVer !== nodeVersion) {
+        console.log(`.nvmrc: ${currentVer} -> ${nodeVersion}`)
         fs.writeFileSync('.nvmrc', `v${nodeVersion}`, encoding)
+    } else {
+        console.log(`.nvmrc: ${currentVer} (up to date)`)
     }
 })()
 
@@ -33,11 +36,14 @@ function writeJsonFile(path, json) {
     const match = content.match(/^nodejs\s+(\d+)\.\d+\.\d+$/m)
     const currentVer = match && parseInt(match[1])
     if (currentVer != null && currentVer !== nodeVersion) {
+        console.log(`.tool-versions: ${currentVer} -> ${nodeVersion}`)
         const modifiedContent = content.replace(
             /^(nodejs\s+)\d+\.\d+\.\d+$/m,
             `$1${nodeVersion}.0.0`
         )
         fs.writeFileSync('.tool-versions', modifiedContent, encoding)
+    } else if (currentVer != null) {
+        console.log(`.tool-versions: ${currentVer} (up to date)`)
     }
 })()
 
@@ -45,7 +51,13 @@ function writeJsonFile(path, json) {
     const json = readJsonFile('package.json')
 
     json.engines = json.engines || {}
+    const currentEngineNode = json.engines.node
     json.engines.node = `>=${nodeVersion}`
+    if (currentEngineNode !== json.engines.node) {
+        console.log(`package.json engines.node: ${currentEngineNode || '(not set)'} -> ${json.engines.node}`)
+    } else {
+        console.log(`package.json engines.node: ${currentEngineNode} (up to date)`)
+    }
 
     if (json.devDependencies[`@tsconfig/node${nodeVersion}`] == null) {
         console.log(`Adding @tsconfig/node${nodeVersion} dependency`)
@@ -88,7 +100,13 @@ function writeJsonFile(path, json) {
     const json = readJsonFile('tsconfig.json')
 
     if ((json.extends || '').startsWith('@tsconfig/node')) {
+        const currentExtends = json.extends
         json.extends = `@tsconfig/node${nodeVersion}/tsconfig.json`
+        if (currentExtends !== json.extends) {
+            console.log(`tsconfig.json extends: ${currentExtends} -> ${json.extends}`)
+        } else {
+            console.log(`tsconfig.json extends: ${currentExtends} (up to date)`)
+        }
     }
 
     writeJsonFile('tsconfig.json', json)
