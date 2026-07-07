@@ -33,7 +33,7 @@
     "@types/jest": "30.0.0",
     "@types/node": "20.19.43",
     "@types/semver": "7.7.1",
-    "@vercel/ncc": "0.44.0",
+    "@vercel/ncc": "0.44.1",
     "dedent": "1.7.2",
     "eslint": "10.6.0",
     "eslint-config-prettier": "10.1.8",
