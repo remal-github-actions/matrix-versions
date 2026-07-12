@@ -1,5 +1,5 @@
-const fs = require('fs')
-const path = require('path')
+import * as fs from 'fs'
+import * as path from 'path'
 
 const pkg = JSON.parse(fs.readFileSync('./package.json', 'utf8'))
 const renovateVersion = pkg.dependencies.renovate ?? 'unknown'
@@ -18,6 +18,11 @@ for (const fileName of fileNames) {
         .replaceAll(
             /const (\w+) = path\.join\(__dirname, '\.\.', 'package\.json'\);\s*const pkg = \(\(\) => __nccwpck_require__\(\d+\)\(\1\)\)\(\);/g,
             `const pkg = { version: "${renovateVersion}" };`
+        )
+        // __dirname is not defined in ES modules: load wasm files relative to the current module
+        .replaceAll(
+            /const ([$\w]+) = ([$\w]+)\.join\(__dirname, '([-\w.]+\.wasm)'\);\s*const bytes = ([$\w]+)\.readFileSync\(\1\);/g,
+            `const bytes = $4.readFileSync(new URL('$3', import.meta.url));`
         )
 
     if (newContent !== content) {
