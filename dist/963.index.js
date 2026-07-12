@@ -1,7 +1,6 @@
-"use strict";
-exports.id = 963;
-exports.ids = [963];
-exports.modules = {
+export const id = 963;
+export const ids = [963];
+export const modules = {
 
 /***/ 95963:
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
@@ -36,4 +35,3 @@ ${Me.join(`
 /***/ })
 
 };
-;

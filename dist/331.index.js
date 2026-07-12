@@ -1,7 +1,6 @@
-"use strict";
-exports.id = 331;
-exports.ids = [331];
-exports.modules = {
+export const id = 331;
+export const ids = [331];
+export const modules = {
 
 /***/ 16331:
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
@@ -48,4 +47,3 @@ Expecting `+pe.join(", ")+", got '"+(this.terminals_[O]||O)+"'":Ve="Parse error 
 /***/ })
 
 };
-;

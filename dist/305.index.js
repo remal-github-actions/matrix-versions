@@ -1,7 +1,6 @@
-"use strict";
-exports.id = 305;
-exports.ids = [305];
-exports.modules = {
+export const id = 305;
+export const ids = [305];
+export const modules = {
 
 /***/ 86686:
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
@@ -284,4 +283,3 @@ const pMapSkip = Symbol('skip');
 /***/ })
 
 };
-;

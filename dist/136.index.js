@@ -1,7 +1,6 @@
-"use strict";
-exports.id = 136;
-exports.ids = [136];
-exports.modules = {
+export const id = 136;
+export const ids = [136];
+export const modules = {
 
 /***/ 9136:
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
@@ -18,4 +17,3 @@ var $s=Object.defineProperty;var Xt=t=>{throw TypeError(t)};var Jt=(t,e)=>{for(v
 /***/ })
 
 };
-;

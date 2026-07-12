@@ -1,7 +1,6 @@
-"use strict";
-exports.id = 545;
-exports.ids = [545];
-exports.modules = {
+export const id = 545;
+export const ids = [545];
+export const modules = {
 
 /***/ 7545:
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
@@ -31,4 +30,3 @@ Defaulting to 2020, but this will stop working in the future.`)),t.ecmaVersion=1
 /***/ })
 
 };
-;
