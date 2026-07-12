@@ -228,59 +228,94 @@
     ],
     "maven:org.springframework.cloud:spring-cloud-dependencies": [
       {
-        "versionRange": "[2025.1, )",
+        "versionRange": "[2025.2, )",
         "dependency": "maven:org.springframework.boot:spring-boot-dependencies",
-        "dependencyVersionRange": "[4, )"
+        "dependencyVersionRange": "(9999, )"
       },
       {
-        "versionRange": "[2025, 2025.1)",
+        "versionRange": "[2025.1.2, 2025.2)",
+        "dependency": "maven:org.springframework.boot:spring-boot-dependencies",
+        "dependencyVersionRange": "[4.0, 4.1.9999)"
+      },
+      {
+        "versionRange": "[2025.1, 2025.1.2)",
+        "dependency": "maven:org.springframework.boot:spring-boot-dependencies",
+        "dependencyVersionRange": "[4.0, 4.0.9999)"
+      },
+      {
+        "versionRange": "[2025.0, 2025.1)",
         "dependency": "maven:org.springframework.boot:spring-boot-dependencies",
         "dependencyVersionRange": "[3.5, 3.5.9999)"
       },
       {
-        "versionRange": "[2024, 2025)",
+        "versionRange": "[2024.0, 2025.0)",
         "dependency": "maven:org.springframework.boot:spring-boot-dependencies",
         "dependencyVersionRange": "[3.4, 3.4.9999)"
       },
       {
-        "versionRange": "[2023, 2024)",
+        "versionRange": "[2023.0.2, 2024.0)",
         "dependency": "maven:org.springframework.boot:spring-boot-dependencies",
         "dependencyVersionRange": "[3.2, 3.3.9999)"
       },
       {
-        "versionRange": "[2022, 2023)",
+        "versionRange": "[2023.0, 2023.0.2)",
         "dependency": "maven:org.springframework.boot:spring-boot-dependencies",
-        "dependencyVersionRange": "[3, 3.1.9999)"
+        "dependencyVersionRange": "[3.2, 3.2.9999)"
       },
       {
-        "versionRange": "[2021.0.3, 2022)",
+        "versionRange": "[2022.0.3, 2023.0)",
+        "dependency": "maven:org.springframework.boot:spring-boot-dependencies",
+        "dependencyVersionRange": "[3.0, 3.1.9999)"
+      },
+      {
+        "versionRange": "[2022.0, 2022.0.3)",
+        "dependency": "maven:org.springframework.boot:spring-boot-dependencies",
+        "dependencyVersionRange": "[3.0, 3.0.9999)"
+      },
+      {
+        "versionRange": "[2021.0.3, 2022.0)",
         "dependency": "maven:org.springframework.boot:spring-boot-dependencies",
         "dependencyVersionRange": "[2.6, 2.7.9999)"
       },
       {
-        "versionRange": "[2020.0.3, 2021)",
+        "versionRange": "[2021.0, 2021.0.3)",
+        "dependency": "maven:org.springframework.boot:spring-boot-dependencies",
+        "dependencyVersionRange": "[2.6, 2.6.9999)"
+      },
+      {
+        "versionRange": "[2020.0.3, 2021.0)",
         "dependency": "maven:org.springframework.boot:spring-boot-dependencies",
         "dependencyVersionRange": "[2.4, 2.5.9999)"
       },
       {
-        "versionRange": "[Hoxton.SR5,I)",
+        "versionRange": "[2020.0, 2020.0.3)",
+        "dependency": "maven:org.springframework.boot:spring-boot-dependencies",
+        "dependencyVersionRange": "[2.4, 2.4.9999)"
+      },
+      {
+        "versionRange": "[Hoxton.SR5, I)",
         "dependency": "maven:org.springframework.boot:spring-boot-dependencies",
         "dependencyVersionRange": "[2.2, 2.3.9999)"
       },
       {
-        "versionRange": "[G,H)",
+        "versionRange": "[H, Hoxton.SR5)",
+        "dependency": "maven:org.springframework.boot:spring-boot-dependencies",
+        "dependencyVersionRange": "[2.2, 2.2.9999)"
+      },
+      {
+        "versionRange": "[G, H)",
         "dependency": "maven:org.springframework.boot:spring-boot-dependencies",
         "dependencyVersionRange": "[2.1, 2.1.9999)"
       },
       {
-        "versionRange": "[F,G)",
+        "versionRange": "[F, G)",
         "dependency": "maven:org.springframework.boot:spring-boot-dependencies",
-        "dependencyVersionRange": "[2, 2.0.9999)"
+        "dependencyVersionRange": "[2.0, 2.0.9999)"
       },
       {
-        "versionRange": "[D,F)",
+        "versionRange": "[D, F)",
         "dependency": "maven:org.springframework.boot:spring-boot-dependencies",
-        "dependencyVersionRange": "[1.5, 1.9999)"
+        "dependencyVersionRange": "[1.5, 1.5.9999)"
       }
     ],
     "maven:org.zalando:problem-spring-web": [
