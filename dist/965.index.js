@@ -1,7 +1,6 @@
-"use strict";
-exports.id = 965;
-exports.ids = [965];
-exports.modules = {
+export const id = 965;
+export const ids = [965];
+export const modules = {
 
 /***/ 19965:
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
@@ -41,4 +40,3 @@ ${e}`,r),i=n;if(i||(i=e==="+++"?"toml":"yaml"),s===-1&&e==="---"&&i==="yaml"&&(s
 /***/ })
 
 };
-;

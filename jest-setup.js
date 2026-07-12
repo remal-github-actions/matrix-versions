@@ -1,3 +1,7 @@
-expect.extend(require('jest-extended'))
+import { expect } from '@jest/globals'
+import jestExtendedMatchers from 'jest-extended'
+import { initRenovateLogging } from './src/internal/initRenovateLogging.js'
 
-require('./src/internal/initRenovateLogging').initRenovateLogging()
+expect.extend(jestExtendedMatchers)
+
+initRenovateLogging()

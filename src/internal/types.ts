@@ -1,4 +1,4 @@
-import { MatrixItem } from './config'
+import { MatrixItem } from './config.js'
 
 export type NonNullable<T> = Exclude<T, null | undefined>
 

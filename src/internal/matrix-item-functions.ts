@@ -1,6 +1,6 @@
 import * as core from '@actions/core'
-import * as versionings from 'renovate/dist/modules/versioning'
-import { VersioningApi } from 'renovate/dist/modules/versioning/types.js'
+import * as versionings from 'renovate/dist/modules/versioning/index.js'
+import type { VersioningApi } from 'renovate/dist/modules/versioning/types.js'
 import { getRegexPredicate } from 'renovate/dist/util/string-match.js'
 import { actionDebug } from './actionDebug.js'
 import { MatrixItem, VersionOnlyFilter } from './config.js'
@@ -10,7 +10,7 @@ import {
     fullSupportedVersionFetcherSuffix,
     getVersionFetcher,
     supportedVersionFetchers,
-} from './version-fetchers/version-fetcher-api'
+} from './version-fetchers/version-fetcher-api.js'
 import { isInVersioningRange } from './version-utils.js'
 
 export interface FetchedMatrixItem extends MatrixItem {

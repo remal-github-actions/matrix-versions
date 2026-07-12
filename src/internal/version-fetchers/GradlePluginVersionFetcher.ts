@@ -1,7 +1,7 @@
-import { MavenDatasource } from 'renovate/dist/modules/datasource/maven'
-import { GetReleasesConfig, ReleaseResult } from 'renovate/dist/modules/datasource/types.js'
-import { RenovateDatasourceSimple, RenovateDatasourceSimpleWrapper } from '../RenovateDatasource'
-import { VersionFetcherRenovateDatasource } from './VersionFetcherRenovateDatasource'
+import { MavenDatasource } from 'renovate/dist/modules/datasource/maven/index.js'
+import type { GetReleasesConfig, ReleaseResult } from 'renovate/dist/modules/datasource/types.js'
+import { RenovateDatasourceSimple, RenovateDatasourceSimpleWrapper } from '../RenovateDatasource.js'
+import { VersionFetcherRenovateDatasource } from './VersionFetcherRenovateDatasource.js'
 
 function createDatasource(): RenovateDatasourceSimple {
     const datasource = new MavenDatasource()

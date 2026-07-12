@@ -1,4 +1,4 @@
-import { GetReleasesConfig, ReleaseResult } from 'renovate/dist/modules/datasource/types.js'
+import type { GetReleasesConfig, ReleaseResult } from 'renovate/dist/modules/datasource/types.js'
 
 export interface RenovateDatasourceSimple {
 

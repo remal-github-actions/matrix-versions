@@ -1,7 +1,7 @@
 /* eslint-disable jest/valid-title */
 import dedent from 'dedent'
-import { VersionMatrixItem } from './internal/matrix-functions'
-import { getErrorOf, NoErrorThrown, onlyUnique } from './internal/utils'
+import { VersionMatrixItem } from './internal/matrix-functions.js'
+import { getErrorOf, NoErrorThrown, onlyUnique } from './internal/utils.js'
 import { run } from './run.js'
 
 describe(run.name, () => {

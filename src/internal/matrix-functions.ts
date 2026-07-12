@@ -1,4 +1,4 @@
-import * as versionings from 'renovate/dist/modules/versioning'
+import * as versionings from 'renovate/dist/modules/versioning/index.js'
 import { CompatibilityItem } from './config.js'
 import { DEFAULT_VERSIONING } from './constants.js'
 import { FetchedMatrix, matchDependencies } from './matrix-item-functions.js'

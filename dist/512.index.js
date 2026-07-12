@@ -1,6 +1,6 @@
-exports.id = 512;
-exports.ids = [512];
-exports.modules = {
+export const id = 512;
+export const ids = [512];
+export const modules = {
 
 /***/ 69512:
 /***/ ((module) => {
@@ -22,4 +22,3 @@ module.exports = webpackEmptyAsyncContext;
 /***/ })
 
 };
-;

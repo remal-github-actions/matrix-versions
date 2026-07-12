@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     clearMocks: true,
     moduleFileExtensions: ['ts', 'js', 'mjs'],
     testEnvironment: 'node',
@@ -8,7 +8,7 @@ module.exports = {
         '^(\\.{1,2}/.*)\\.js$': '$1'
     },
     transform: {
-        '^.+\\.ts$': ['ts-jest', { 'useESM': false }]
+        '^.+\\.ts$': ['ts-jest', { 'useESM': true }]
     },
     testMatch: [
         '**/*.spec.(ts|js|mjs)'

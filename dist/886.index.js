@@ -1,7 +1,6 @@
-"use strict";
-exports.id = 886;
-exports.ids = [886];
-exports.modules = {
+export const id = 886;
+export const ids = [886];
+export const modules = {
 
 /***/ 97886:
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
@@ -1254,8 +1253,8 @@ var public_default = public_exports;
 
 
 
-const prettier_require = (0,external_module_.createRequire)(prettier_require("url").pathToFileURL(prettier_filename).href);
-const prettier_filename = (0,external_url_.fileURLToPath)(prettier_require("url").pathToFileURL(prettier_filename).href);
+const prettier_require = (0,external_module_.createRequire)(import.meta.url);
+const prettier_filename = (0,external_url_.fileURLToPath)(import.meta.url);
 const prettier_dirname = (0,external_path_.dirname)(prettier_filename);
 
 var __create = Object.create;
@@ -23464,4 +23463,3 @@ var src_default = index_exports;
 /***/ })
 
 };
-;

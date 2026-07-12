@@ -1,7 +1,6 @@
-"use strict";
-exports.id = 427;
-exports.ids = [427];
-exports.modules = {
+export const id = 427;
+export const ids = [427];
+export const modules = {
 
 /***/ 21427:
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
@@ -20,4 +19,3 @@ var Ne=Object.defineProperty;var In=(n,e)=>{for(var u in e)Ne(n,u,{get:e[u],enum
 /***/ })
 
 };
-;
