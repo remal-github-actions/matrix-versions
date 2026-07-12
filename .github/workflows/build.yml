@@ -71,6 +71,10 @@ jobs:
       run: |
         "$PACKAGE_MANAGER" run compatibilities-update-gradle-wrapper
 
+    - name: Update kotlin-gradle-plugin compatibilities
+      run: |
+        "$PACKAGE_MANAGER" run compatibilities-update-kotlin-gradle-plugin
+
     # $$$sync-with-template-modifiable-end$$$
 
 

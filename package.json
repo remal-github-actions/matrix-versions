@@ -10,6 +10,7 @@
   "scripts": {
     "update-config-schema": "tsx config.schema-update.ts",
     "compatibilities-update-gradle-wrapper": "tsx compatibilities-update-gradle-wrapper.ts",
+    "compatibilities-update-kotlin-gradle-plugin": "tsx compatibilities-update-kotlin-gradle-plugin.ts",
     "generate-config": "npm run update-config-schema && json2ts config.schema.json > src/internal/config.ts",
     "generate": "npm run generate-config",
     "lint": "eslint --fix src/**/*",
