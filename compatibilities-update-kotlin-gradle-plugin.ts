@@ -14,7 +14,7 @@ import { normalizeSpaces } from './src/internal/utils.js'
 // to get the latest data, including not yet released Kotlin and Gradle versions.
 // The Gradle compatibility matrix (https://docs.gradle.org/current/userguide/compatibility.html) is NOT
 // a suitable source: it covers Embedded Kotlin only, not the Kotlin Gradle plugin.
-const kgpCompatibilityDocUrl = 'https://raw.githubusercontent.com/JetBrains/kotlin-web-site/master'
+const kotlinGradlePluginCompatibilityDocUrl = 'https://raw.githubusercontent.com/JetBrains/kotlin-web-site/master'
     + '/docs/topics/gradle/gradle-configure-project.md'
 
 // Defines values for the %variable% placeholders used across the doc (the newest table row is templated
@@ -22,7 +22,8 @@ const kgpCompatibilityDocUrl = 'https://raw.githubusercontent.com/JetBrains/kotl
 // <var name="maxGradleVersion" value="9.5.0" type="string"/>
 const kotlinDocVariablesUrl = 'https://raw.githubusercontent.com/JetBrains/kotlin-web-site/master/docs/v.list'
 
-const reviewMessage = `Review ${kgpCompatibilityDocUrl} and update compatibilities-update-kotlin-gradle-plugin.ts`
+const reviewMessage = `Review ${kotlinGradlePluginCompatibilityDocUrl}`
+    + ` and update compatibilities-update-kotlin-gradle-plugin.ts`
 
 
 // Network errors, timeouts, and 429/5xx responses are worth retrying; other HTTP errors fail immediately.
@@ -105,20 +106,21 @@ function majorMinorOf(version: string): string {
 }
 
 
-interface KgpCompatibilityRow {
-    kgpRowStart: string
+interface KotlinGradlePluginCompatibilityRow {
+    rowStart: string
     gradleMin: string
     gradleMaxWidened: string
 }
 
-// Translates the two 'KGP version' markdown tables (the main one and the collapsed 'Earlier KGP versions'
-// one) into rows of {KGP row start, Gradle min, widened Gradle max}, using only the 'KGP version' and
-// 'Gradle min and max versions' columns. The parser is deliberately strict: except for extra blank lines,
-// any deviation from the known table format must fail, so that every docs format change gets human eyes.
-function parseKgpCompatibilityTables(docContent: string): KgpCompatibilityRow[] {
+// Translates the two Kotlin Gradle plugin compatibility markdown tables (the main one and the collapsed
+// 'Earlier KGP versions' one) into rows of {row start, Gradle min, widened Gradle max}, using only the
+// 'KGP version' and 'Gradle min and max versions' columns. The parser is deliberately strict: except for
+// extra blank lines, any deviation from the known table format must fail, so that every docs format
+// change gets human eyes.
+function parseKotlinGradlePluginCompatibilityTables(docContent: string): KotlinGradlePluginCompatibilityRow[] {
     const lines = docContent.split('\n')
 
-    const kgpColumnName = 'KGP version'
+    const kotlinGradlePluginColumnName = 'KGP version'
     const gradleColumnName = 'Gradle min and max versions'
 
     // A row looks like '| 2.3.10 | 7.6.3–9.0.0 | 8.2.2–9.0.0 |': cells are separated by '|', with a
@@ -141,22 +143,22 @@ function parseKgpCompatibilityTables(docContent: string): KgpCompatibilityRow[] 
         }
     }
 
-    const rows: KgpCompatibilityRow[] = []
+    const rows: KotlinGradlePluginCompatibilityRow[] = []
     let tableCount = 0
     let lineIndex = 0
     while (lineIndex < lines.length) {
-        // Any '|' row whose cells include both consumed column names starts a KGP compatibility table.
-        // Other lines (prose, other tables) are skipped. The AGP column is not consumed, so its presence,
-        // absence, or position does not matter.
+        // Any '|' row whose cells include both consumed column names starts a Kotlin Gradle plugin
+        // compatibility table. Other lines (prose, other tables) are skipped. The AGP column is not
+        // consumed, so its presence, absence, or position does not matter.
         const headerLine = lines[lineIndex]
         if (!isTableRow(headerLine)) {
             ++lineIndex
             continue
         }
         const headerCells = splitCells(headerLine)
-        const kgpColumn = headerCells.indexOf(kgpColumnName)
+        const kotlinGradlePluginColumn = headerCells.indexOf(kotlinGradlePluginColumnName)
         const gradleColumn = headerCells.indexOf(gradleColumnName)
-        if (kgpColumn < 0 || gradleColumn < 0) {
+        if (kotlinGradlePluginColumn < 0 || gradleColumn < 0) {
             ++lineIndex
             continue
         }
@@ -190,14 +192,15 @@ function parseKgpCompatibilityTables(docContent: string): KgpCompatibilityRow[] 
                     + ` in the row '${rowLine}'. ${reviewMessage}`)
             }
 
-            const kgpCell = cells[kgpColumn]
-            assertNoUnsubstitutedVariable(kgpCell, rowLine)
-            // A KGP cell is a single three-segment version ('2.3.10') or an en-dash span of them
-            // ('2.3.20–2.3.21'). Only the span start matters: every entry built below extends up to the
-            // next newer row start anyway.
-            const kgpMatch = kgpCell.match(/^(\d+\.\d+\.\d+)(?:–(\d+\.\d+\.\d+))?$/)
-            if (!kgpMatch) {
-                throw new Error(`Unsupported '${kgpColumnName}' cell '${kgpCell}' in the row '${rowLine}'.`
+            const kotlinGradlePluginCell = cells[kotlinGradlePluginColumn]
+            assertNoUnsubstitutedVariable(kotlinGradlePluginCell, rowLine)
+            // A Kotlin Gradle plugin cell is a single three-segment version ('2.3.10') or an en-dash span
+            // of them ('2.3.20–2.3.21'). Only the span start matters: every entry built below extends up
+            // to the next newer row start anyway.
+            const kotlinGradlePluginMatch = kotlinGradlePluginCell.match(/^(\d+\.\d+\.\d+)(?:–(\d+\.\d+\.\d+))?$/)
+            if (!kotlinGradlePluginMatch) {
+                throw new Error(`Unsupported '${kotlinGradlePluginColumnName}' cell '${kotlinGradlePluginCell}'`
+                    + ` in the row '${rowLine}'.`
                     + ` Supported formats: '<major.minor.patch>', '<major.minor.patch>–<major.minor.patch>'.`
                     + ` ${reviewMessage}`)
             }
@@ -217,7 +220,7 @@ function parseKgpCompatibilityTables(docContent: string): KgpCompatibilityRow[] 
             // The Gradle max is widened to its whole 'major.minor' using the .9999 convention of
             // global-compatibilities.json: '9.3.0' and '8.14' both become '<major>.<minor>.9999'.
             rows.push({
-                kgpRowStart: kgpMatch[1],
+                rowStart: kotlinGradlePluginMatch[1],
                 gradleMin: gradleMatch[1],
                 gradleMaxWidened: `${majorMinorOf(gradleMatch[2])}.9999`,
             })
@@ -231,16 +234,16 @@ function parseKgpCompatibilityTables(docContent: string): KgpCompatibilityRow[] 
     }
 
     if (!tableCount) {
-        throw new Error(`No tables with the '${kgpColumnName}' and '${gradleColumnName}' columns found.`
-            + ` ${reviewMessage}`)
+        throw new Error(`No tables with the '${kotlinGradlePluginColumnName}' and '${gradleColumnName}'`
+            + ` columns found. ${reviewMessage}`)
     }
 
     // The doc lists rows newest first, both within and across the two tables; the entry chaining
     // below relies on this order.
     for (let index = 1; index < rows.length; ++index) {
-        if (compareVersions(rows[index].kgpRowStart, rows[index - 1].kgpRowStart) >= 0) {
-            throw new Error(`KGP versions in the tables are not strictly descending:`
-                + ` '${rows[index].kgpRowStart}' appears after '${rows[index - 1].kgpRowStart}'. ${reviewMessage}`)
+        if (compareVersions(rows[index].rowStart, rows[index - 1].rowStart) >= 0) {
+            throw new Error(`Kotlin Gradle plugin versions in the tables are not strictly descending:`
+                + ` '${rows[index].rowStart}' appears after '${rows[index - 1].rowStart}'. ${reviewMessage}`)
         }
     }
 
@@ -249,11 +252,12 @@ function parseKgpCompatibilityTables(docContent: string): KgpCompatibilityRow[] 
 
 
 // Builds the compatibility entries by strict global chaining: newest first, each entry spans from its
-// row start up to the next newer row start, so the entries tile the whole KGP version line without gaps.
-function buildCompatibilityItems(rows: KgpCompatibilityRow[]): CompatibilityItem[] {
-    // The top sentinel excludes KGP minors newer than the newest documented row from every Gradle version
-    // (via an impossible Gradle range) until the docs cover them.
-    const newestRowStart = rows[0].kgpRowStart
+// row start up to the next newer row start, so the entries tile the whole Kotlin Gradle plugin version
+// line without gaps.
+function buildCompatibilityItems(rows: KotlinGradlePluginCompatibilityRow[]): CompatibilityItem[] {
+    // The top sentinel excludes Kotlin Gradle plugin minors newer than the newest documented row from
+    // every Gradle version (via an impossible Gradle range) until the docs cover them.
+    const newestRowStart = rows[0].rowStart
     const [newestMajor, newestMinor] = newestRowStart.split('.').map(Number)
     const topSentinelLowerBound = `${newestMajor}.${newestMinor + 1}`
 
@@ -263,12 +267,13 @@ function buildCompatibilityItems(rows: KgpCompatibilityRow[]): CompatibilityItem
         const gradleRange = `[${row.gradleMin}, ${row.gradleMaxWidened})`
         const previousEntry = dataEntries[dataEntries.length - 1]
         if (previousEntry != null && previousEntry.gradleRange === gradleRange) {
-            // Consecutive rows with an identical Gradle range collapse into one entry, even across KGP minors.
-            previousEntry.lowerBound = row.kgpRowStart
+            // Consecutive rows with an identical Gradle range collapse into one entry, even across
+            // Kotlin Gradle plugin minors.
+            previousEntry.lowerBound = row.rowStart
         } else {
-            dataEntries.push({ lowerBound: row.kgpRowStart, upperBound: nextUpperBound, gradleRange })
+            dataEntries.push({ lowerBound: row.rowStart, upperBound: nextUpperBound, gradleRange })
         }
-        nextUpperBound = row.kgpRowStart
+        nextUpperBound = row.rowStart
     }
 
     // A fixed literal key order keeps the serialized output stable.
@@ -283,10 +288,10 @@ function buildCompatibilityItems(rows: KgpCompatibilityRow[]): CompatibilityItem
             dependency: 'gradle-wrapper',
             dependencyVersionRange: entry.gradleRange,
         })),
-        // The bottom sentinel excludes KGP versions older than the oldest documented row from every
-        // Gradle version.
+        // The bottom sentinel excludes Kotlin Gradle plugin versions older than the oldest documented
+        // row from every Gradle version.
         {
-            versionRange: `( , ${rows[rows.length - 1].kgpRowStart})`,
+            versionRange: `( , ${rows[rows.length - 1].rowStart})`,
             dependency: 'gradle-wrapper',
             dependencyVersionRange: '( , 0)',
         },
@@ -296,25 +301,28 @@ function buildCompatibilityItems(rows: KgpCompatibilityRow[]): CompatibilityItem
 
 const encoding = 'utf8'
 const globalCompatibilitiesFile = 'global-compatibilities.json'
-const kgpSectionKey = 'gradle-plugin:org.jetbrains.kotlin'
+const kotlinGradlePluginSectionKey = 'gradle-plugin:org.jetbrains.kotlin'
 const content = fs.readFileSync(globalCompatibilitiesFile, encoding)
 const json = JSON.parse(content)
 
 // The script only regenerates an existing section, so a missing or empty one means a broken file.
-const currentItems: CompatibilityItem[] = json.globalCompatibilities?.[kgpSectionKey]
+const currentItems: CompatibilityItem[] = json.globalCompatibilities?.[kotlinGradlePluginSectionKey]
 if (!Array.isArray(currentItems) || !currentItems.length) {
-    throw new Error(`'${kgpSectionKey}' of 'globalCompatibilities' in ${globalCompatibilitiesFile}`
+    throw new Error(`'${kotlinGradlePluginSectionKey}' of 'globalCompatibilities' in ${globalCompatibilitiesFile}`
         + ` must be a non-empty array`)
 }
 
 const docVariables = parseDocVariables(await fetchText(kotlinDocVariablesUrl))
-const docContent = substituteDocVariables(normalizeSpaces(await fetchText(kgpCompatibilityDocUrl)), docVariables)
-const rows = parseKgpCompatibilityTables(docContent)
+const docContent = substituteDocVariables(
+    normalizeSpaces(await fetchText(kotlinGradlePluginCompatibilityDocUrl)),
+    docVariables,
+)
+const rows = parseKotlinGradlePluginCompatibilityTables(docContent)
 const newItems = buildCompatibilityItems(rows)
 
-// Shrink check: a KGP minor disappearing from the docs tables requires a human decision.
+// Shrink check: a Kotlin Gradle plugin minor disappearing from the docs tables requires a human decision.
 // Range changes for still documented minors are the normal case and go through.
-const documentedMinors = new Set(rows.map(row => majorMinorOf(row.kgpRowStart)))
+const documentedMinors = new Set(rows.map(row => majorMinorOf(row.rowStart)))
 for (const currentItem of currentItems) {
     if (currentItem.dependencyVersionRange === '(9999, )') {
         continue // the top sentinel has no docs row by design
@@ -322,20 +330,20 @@ for (const currentItem of currentItems) {
     const lowerBoundMatch = currentItem.versionRange.match(/^[\[(]([^,]*),/)
     if (lowerBoundMatch == null) {
         throw new Error(`Cannot extract the lower bound of the version range '${currentItem.versionRange}'`
-            + ` of '${kgpSectionKey}' in ${globalCompatibilitiesFile}. ${reviewMessage}`)
+            + ` of '${kotlinGradlePluginSectionKey}' in ${globalCompatibilitiesFile}. ${reviewMessage}`)
     }
     const lowerBound = lowerBoundMatch[1].trim()
     if (!lowerBound.length) {
         continue // the bottom sentinel '( , <oldest row start>)' has no docs row by design
     }
     if (!documentedMinors.has(majorMinorOf(lowerBound))) {
-        throw new Error(`KGP ${majorMinorOf(lowerBound)} is present in ${globalCompatibilitiesFile}`
+        throw new Error(`Kotlin Gradle plugin ${majorMinorOf(lowerBound)} is present in ${globalCompatibilitiesFile}`
             + ` but not in the compatibility tables anymore. ${reviewMessage}`)
     }
 }
 
 // Assigning in place keeps the key order of the surrounding object.
-json.globalCompatibilities[kgpSectionKey] = newItems
+json.globalCompatibilities[kotlinGradlePluginSectionKey] = newItems
 
 // validateConfig mutates its argument (it deletes $schema), so it gets a clone to keep the object
 // that is serialized below intact.
@@ -348,19 +356,20 @@ if (newContent === content) {
     console.log(`${globalCompatibilitiesFile} is up-to-date`)
 } else {
     const currentGradleRanges = new Map(currentItems.map(item => [item.versionRange, item.dependencyVersionRange]))
-    const newKgpRanges = new Set(newItems.map(item => item.versionRange))
+    const newVersionRanges = new Set(newItems.map(item => item.versionRange))
     for (const newItem of newItems) {
         const currentGradleRange = currentGradleRanges.get(newItem.versionRange)
         if (currentGradleRange == null) {
-            console.log(`KGP ${newItem.versionRange}: added with Gradle range ${newItem.dependencyVersionRange}`)
+            console.log(`Kotlin Gradle plugin ${newItem.versionRange}:`
+                + ` added with Gradle range ${newItem.dependencyVersionRange}`)
         } else if (currentGradleRange !== newItem.dependencyVersionRange) {
-            console.log(`KGP ${newItem.versionRange}:`
+            console.log(`Kotlin Gradle plugin ${newItem.versionRange}:`
                 + ` Gradle range changed from ${currentGradleRange} to ${newItem.dependencyVersionRange}`)
         }
     }
     for (const currentItem of currentItems) {
-        if (!newKgpRanges.has(currentItem.versionRange)) {
-            console.log(`KGP ${currentItem.versionRange}: removed`
+        if (!newVersionRanges.has(currentItem.versionRange)) {
+            console.log(`Kotlin Gradle plugin ${currentItem.versionRange}: removed`
                 + ` (the Gradle range was ${currentItem.dependencyVersionRange})`)
         }
     }
