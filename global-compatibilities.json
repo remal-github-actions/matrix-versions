@@ -211,17 +211,72 @@
     ],
     "maven:org.springframework.boot:spring-boot-dependencies": [
       {
-        "versionRange": "[3, )",
+        "versionRange": "[4.2, )",
         "dependency": "java",
-        "dependencyVersionRange": "[17, )"
+        "dependencyVersionRange": "(9999, )"
       },
       {
-        "versionRange": "[2, 2.9999)",
+        "versionRange": "[4.1, 4.2)",
         "dependency": "java",
-        "dependencyVersionRange": "[8, )"
+        "dependencyVersionRange": "[17, 26.9999)"
       },
       {
-        "versionRange": "[1, 1.9999)",
+        "versionRange": "[3.5, 4.1)",
+        "dependency": "java",
+        "dependencyVersionRange": "[17, 25.9999)"
+      },
+      {
+        "versionRange": "[3.4, 3.5)",
+        "dependency": "java",
+        "dependencyVersionRange": "[17, 24.9999)"
+      },
+      {
+        "versionRange": "[3.3, 3.4)",
+        "dependency": "java",
+        "dependencyVersionRange": "[17, 23.9999)"
+      },
+      {
+        "versionRange": "[3.0, 3.3)",
+        "dependency": "java",
+        "dependencyVersionRange": "[17, 21.9999)"
+      },
+      {
+        "versionRange": "[2.7, 3.0)",
+        "dependency": "java",
+        "dependencyVersionRange": "[8, 21.9999)"
+      },
+      {
+        "versionRange": "[2.6, 2.7)",
+        "dependency": "java",
+        "dependencyVersionRange": "[8, 19.9999)"
+      },
+      {
+        "versionRange": "[2.5, 2.6)",
+        "dependency": "java",
+        "dependencyVersionRange": "[8, 18.9999)"
+      },
+      {
+        "versionRange": "[2.4, 2.5)",
+        "dependency": "java",
+        "dependencyVersionRange": "[8, 16.9999)"
+      },
+      {
+        "versionRange": "[2.2, 2.4)",
+        "dependency": "java",
+        "dependencyVersionRange": "[8, 15.9999)"
+      },
+      {
+        "versionRange": "[2.1, 2.2)",
+        "dependency": "java",
+        "dependencyVersionRange": "[8, 12.9999)"
+      },
+      {
+        "versionRange": "[2.0, 2.1)",
+        "dependency": "java",
+        "dependencyVersionRange": "[8, 9.9999)"
+      },
+      {
+        "versionRange": "[1, 2.0)",
         "dependency": "java",
         "dependencyVersionRange": "[6, 8.9999)"
       }
