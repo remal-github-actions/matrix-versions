@@ -117,12 +117,17 @@
     ],
     "gradle-plugin:org.jetbrains.kotlin": [
       {
-        "versionRange": "[2.4, )",
+        "versionRange": "[2.5, )",
         "dependency": "gradle-wrapper",
         "dependencyVersionRange": "(9999, )"
       },
       {
-        "versionRange": "[2.3.20, 2.3.9999)",
+        "versionRange": "[2.4.0, 2.5)",
+        "dependency": "gradle-wrapper",
+        "dependencyVersionRange": "[7.6.3, 9.5.9999)"
+      },
+      {
+        "versionRange": "[2.3.20, 2.4.0)",
         "dependency": "gradle-wrapper",
         "dependencyVersionRange": "[7.6.3, 9.3.9999)"
       },
@@ -132,12 +137,12 @@
         "dependencyVersionRange": "[7.6.3, 9.0.9999)"
       },
       {
-        "versionRange": "[2.2.0, 2.2.9999)",
+        "versionRange": "[2.2.0, 2.3.0)",
         "dependency": "gradle-wrapper",
         "dependencyVersionRange": "[7.6.3, 8.14.9999)"
       },
       {
-        "versionRange": "[2.1.20, 2.1.9999)",
+        "versionRange": "[2.1.20, 2.2.0)",
         "dependency": "gradle-wrapper",
         "dependencyVersionRange": "[7.6.3, 8.12.9999)"
       },
@@ -147,27 +152,22 @@
         "dependencyVersionRange": "[7.6.3, 8.10.9999)"
       },
       {
-        "versionRange": "[2.0.20, 2.1)",
+        "versionRange": "[2.0.20, 2.1.0)",
         "dependency": "gradle-wrapper",
         "dependencyVersionRange": "[6.8.3, 8.8.9999)"
       },
       {
-        "versionRange": "[2.0, 2.0.20)",
+        "versionRange": "[2.0.0, 2.0.20)",
         "dependency": "gradle-wrapper",
         "dependencyVersionRange": "[6.8.3, 8.5.9999)"
       },
       {
-        "versionRange": "[1.9.20, 1.9.9999)",
+        "versionRange": "[1.9.20, 2.0.0)",
         "dependency": "gradle-wrapper",
         "dependencyVersionRange": "[6.8.3, 8.1.9999)"
       },
       {
-        "versionRange": "[1.9.0, 1.9.20)",
-        "dependency": "gradle-wrapper",
-        "dependencyVersionRange": "[6.8.3, 7.6.9999)"
-      },
-      {
-        "versionRange": "[1.8.20, 1.8.9999)",
+        "versionRange": "[1.8.20, 1.9.20)",
         "dependency": "gradle-wrapper",
         "dependencyVersionRange": "[6.8.3, 7.6.9999)"
       },
@@ -177,7 +177,7 @@
         "dependencyVersionRange": "[6.8.3, 7.3.9999)"
       },
       {
-        "versionRange": "[1.7.20, 1.7.9999)",
+        "versionRange": "[1.7.20, 1.8.0)",
         "dependency": "gradle-wrapper",
         "dependencyVersionRange": "[6.7.1, 7.1.9999)"
       },
@@ -187,7 +187,7 @@
         "dependencyVersionRange": "[6.7.1, 7.0.9999)"
       },
       {
-        "versionRange": "[1.6.20, 1.6.9999)",
+        "versionRange": "[1.6.20, 1.7.0)",
         "dependency": "gradle-wrapper",
         "dependencyVersionRange": "[6.1.1, 7.0.9999)"
       },
