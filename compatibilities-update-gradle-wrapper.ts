@@ -1,3 +1,5 @@
+// Importing validateConfig transitively loads renovate; this flag makes renovate skip the native re2 module
+// (same as in config.schema-update.ts).
 process.env.RENOVATE_X_IGNORE_RE2 = 'true'
 
 
@@ -8,12 +10,15 @@ import { CompatibilityItem } from './src/internal/config.js'
 import { normalizeSpaces, substringBefore } from './src/internal/utils.js'
 
 
+// The asciidoc source of https://docs.gradle.org/current/userguide/compatibility.html, fetched from master
+// to get the latest data, including not yet released Gradle versions.
 const gradleCompatibilityDocUrl = 'https://raw.githubusercontent.com/gradle/gradle/master'
     + '/platforms/documentation/docs/src/docs/userguide/releases/compatibility.adoc'
 
 const reviewMessage = `Review ${gradleCompatibilityDocUrl} and update compatibilities-update-gradle-wrapper.ts`
 
 
+// Network errors, timeouts, and 429/5xx responses are worth retrying; other HTTP errors fail immediately.
 class RetriableFetchError extends Error {
 }
 
@@ -56,6 +61,9 @@ async function fetchGradleCompatibilityDoc(): Promise<string> {
 }
 
 
+// Translates the '.Java Compatibility' table into gradle-wrapper compatibility items, using only the
+// 'Support for running Gradle' column. The parser is deliberately strict: except for extra blank lines,
+// any deviation from the known table format must fail, so that every docs format change gets human eyes.
 function parseJavaCompatibilityTable(docContent: string): CompatibilityItem[] {
     const lines = normalizeSpaces(docContent).split('\n')
 
@@ -79,6 +87,8 @@ function parseJavaCompatibilityTable(docContent: string): CompatibilityItem[] {
             + ` got '${tableStartLine ?? '<end of file>'}'. ${reviewMessage}`)
     }
 
+    // A row looks like '| 8 | N/A | 2.0 to 8.14.x', sometimes without a space after the version ('| 10| ...').
+    // Splitting on '|' produces an empty first element for the leading '|'; trimming handles the spacing.
     function splitCells(line: string): string[] {
         return line.split('|').slice(1).map(cell => cell.trim())
     }
@@ -89,6 +99,7 @@ function parseJavaCompatibilityTable(docContent: string): CompatibilityItem[] {
         throw new Error(`Expected a '.Java Compatibility' table header row starting with '|',`
             + ` got '${headerLine ?? '<end of file>'}'. ${reviewMessage}`)
     }
+    // Resolve column positions by name, so that column reordering cannot silently break the mapping.
     const headerCells = splitCells(headerLine)
     const javaVersionColumn = headerCells.indexOf('Java version')
     if (javaVersionColumn < 0) {
@@ -134,6 +145,8 @@ function parseJavaCompatibilityTable(docContent: string): CompatibilityItem[] {
         }
 
         const runningGradleCell = cells[runningGradleColumn]
+        // '7.3 and after' becomes '[7.3, )'. '2.0 to 8.14.x' becomes '[2.0, 8.9999)': the upper bound is
+        // widened to the whole major using the .9999 convention of global-compatibilities.json.
         const sinceMatch = runningGradleCell.match(/^(\d+(?:\.\d+)*) and after$/)
         const rangeMatch = runningGradleCell.match(/^(\d+(?:\.\d+)*) to (\d+(?:\.\d+)*)\.x$/)
         if (sinceMatch) {
@@ -150,6 +163,8 @@ function parseJavaCompatibilityTable(docContent: string): CompatibilityItem[] {
         throw new Error(`No rows found in the '.Java Compatibility' table. ${reviewMessage}`)
     }
 
+    // Newest Java version first and a fixed literal key order: both keep the output byte-identical
+    // to the existing hand-maintained section.
     return [...gradleRangeByJavaVersion.entries()]
         .toSorted(([javaVersion1], [javaVersion2]) => javaVersion2 - javaVersion1)
         .map(([javaVersion, gradleRange]) => ({
@@ -165,6 +180,7 @@ const globalCompatibilitiesFile = 'global-compatibilities.json'
 const content = fs.readFileSync(globalCompatibilitiesFile, encoding)
 const json = JSON.parse(content)
 
+// The script only regenerates an existing section, so a missing or empty one means a broken file.
 const currentItems: CompatibilityItem[] = json.globalCompatibilities?.['gradle-wrapper']
 if (!Array.isArray(currentItems) || !currentItems.length) {
     throw new Error(`'gradle-wrapper' of 'globalCompatibilities' in ${globalCompatibilitiesFile}`
@@ -173,6 +189,8 @@ if (!Array.isArray(currentItems) || !currentItems.length) {
 
 const newItems = parseJavaCompatibilityTable(await fetchGradleCompatibilityDoc())
 
+// Shrink check: a Java version disappearing from the docs requires a human decision.
+// Range changes for existing versions are the normal case and go through.
 const newJavaVersions = new Set(newItems.map(item => item.dependencyVersionRange))
 for (const currentItem of currentItems) {
     if (!newJavaVersions.has(currentItem.dependencyVersionRange)) {
@@ -181,10 +199,15 @@ for (const currentItem of currentItems) {
     }
 }
 
+// Assigning in place keeps the key order of the surrounding object.
 json.globalCompatibilities['gradle-wrapper'] = newItems
 
+// validateConfig mutates its argument (it deletes $schema), so it gets a clone to keep the object
+// that is serialized below intact.
 validateConfig(structuredClone(json))
 
+// global-compatibilities.json round-trips byte-identically through JSON.parse and this serialization,
+// so comparing against the original content detects any real change.
 const newContent = JSON.stringify(json, null, 2) + '\n'
 if (newContent === content) {
     console.log(`${globalCompatibilitiesFile} is up-to-date`)
