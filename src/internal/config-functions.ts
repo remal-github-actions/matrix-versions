@@ -1,4 +1,3 @@
-import * as glob from '@actions/glob'
 import { Ajv2020, ValidateFunction } from 'ajv/dist/2020.js'
 import merge from 'deepmerge'
 import { promises as fs } from 'fs'
@@ -123,6 +122,8 @@ export async function parseConfigFiles(...configFileGlobs: string[]): Promise<Co
         return Promise.resolve(newEmptyConfig())
     }
 
+    // dynamic import: @actions/glob 0.6+ is ESM-only, and this package compiles to CommonJS
+    const glob = await import('@actions/glob')
     return glob.create(configFileGlobs.join('\n'))
         .then(globber => globber.glob())
         .then(paths => paths.map(path => parseConfigFile(path)))
