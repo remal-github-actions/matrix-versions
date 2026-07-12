@@ -1,4 +1,4 @@
-const fs = require('fs')
+import * as fs from 'fs'
 
 const encoding = 'utf8'
 
@@ -119,6 +119,9 @@ function writeJsonFile(path, json) {
         `$1// $$$$$sync-with-template-modifiable: constraints $$$$$\n$1constraints: {\n$1$1node: "^${nodeVersion}.9999.9999",\n$1},\n$1force: {\n$1$1constraints: {\n$1$1$1node: "^${nodeVersion}.9999.9999",\n$1$1},\n$1},\n$1// $$$$$sync-with-template-modifiable-end$$$$$`
     )
     if (modifiedContent !== content) {
+        console.log(`renovate.json5: updating node constraint to ^${nodeVersion}.9999.9999`)
         fs.writeFileSync('.github/renovate.json5', modifiedContent, encoding)
+    } else {
+        console.log(`renovate.json5: node constraint ^${nodeVersion}.9999.9999 (up to date)`)
     }
 })()
