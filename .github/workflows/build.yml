@@ -65,6 +65,15 @@ jobs:
         nodeVersion: '${{steps.read-node-version.outputs.result}}'
 
 
+    # $$$sync-with-template-modifiable: code generation $$$
+
+    - name: Update gradle-wrapper compatibilities
+      run: |
+        "$PACKAGE_MANAGER" run compatibilities-update-gradle-wrapper
+
+    # $$$sync-with-template-modifiable-end$$$
+
+
     - name: Build
       run: |
         "$PACKAGE_MANAGER" run build
