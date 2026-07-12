@@ -4,7 +4,6 @@ process.env.RENOVATE_X_IGNORE_RE2 = 'true'
 
 import * as fs from 'fs'
 import { getVersionings } from 'renovate/dist/modules/versioning/index.js'
-import { isVersioningApiConstructor } from 'renovate/dist/modules/versioning/common.js'
 import { isNotEmpty, isPlainObject } from './src/internal/utils.js'
 import { supportedVersionFetchers } from './src/internal/version-fetchers/version-fetcher-api.js'
 
@@ -18,7 +17,7 @@ const supportedVersionings = getVersionings()
 const supportedStaticVersionings: string[] = []
 const supportedDynamicVersionings: string[] = []
 supportedVersionings.forEach((api, key) => {
-    if (isVersioningApiConstructor(api)) {
+    if (typeof api === 'function') {
         supportedDynamicVersionings.push(key)
     } else {
         supportedStaticVersionings.push(key)

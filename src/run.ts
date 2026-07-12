@@ -124,7 +124,7 @@ export async function run(
 function initRenovateConfig(config: Config, githubToken?: string | null) {
     const renovateConfig: AllConfig = {}
     renovateConfig.githubTokenWarn = false
-    renovateConfig.fetchReleaseNotes = 'off'
+    renovateConfig.fetchChangeLogs = 'off'
     renovateConfig.vulnerabilityAlerts = { enabled: true }
     renovateConfig.osvVulnerabilityAlerts = false
     renovateConfig.constraintsFiltering = 'none'

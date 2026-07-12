@@ -24,6 +24,7 @@ export type VersionFilter = string;
  */
 export type Versioning = StaticVersioning | string;
 export type StaticVersioning =
+  | "apk"
   | "aws-eks-addon"
   | "aws-machine-image"
   | "azure-rest-api"
@@ -34,9 +35,13 @@ export type StaticVersioning =
   | "conda"
   | "deb"
   | "debian"
+  | "deno"
   | "devbox"
   | "docker"
+  | "elm"
+  | "exact"
   | "git"
+  | "github-actions"
   | "glasskube"
   | "go-mod-directive"
   | "gradle"
@@ -45,11 +50,13 @@ export type StaticVersioning =
   | "hex"
   | "ivy"
   | "kubernetes-api"
+  | "lambda-node"
   | "loose"
   | "maven"
   | "node"
   | "npm"
   | "nuget"
+  | "paket"
   | "pep440"
   | "perl"
   | "poetry"
@@ -59,12 +66,15 @@ export type StaticVersioning =
   | "rez"
   | "rpm"
   | "ruby"
+  | "rust-release-channel"
   | "same-major"
   | "semver"
   | "semver-coerced"
+  | "semver-partial"
   | "swift"
   | "ubuntu"
-  | "unity3d";
+  | "unity3d"
+  | "unity3d-packages";
 /**
  * This interface was referenced by `undefined`'s JSON-Schema definition
  * via the `patternProperty` "^(gradle-plugin:.+|gradle-wrapper|java|maven:.+|node)$".
