@@ -75,6 +75,10 @@ jobs:
       run: |
         "$PACKAGE_MANAGER" run compatibilities-update-kotlin-gradle-plugin
 
+    - name: Update spring-boot compatibilities
+      run: |
+        "$PACKAGE_MANAGER" run compatibilities-update-spring-boot
+
     - name: Update spring-cloud compatibilities
       run: |
         "$PACKAGE_MANAGER" run compatibilities-update-spring-cloud

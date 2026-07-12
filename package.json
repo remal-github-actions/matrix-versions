@@ -11,6 +11,7 @@
     "update-config-schema": "tsx config.schema-update.ts",
     "compatibilities-update-gradle-wrapper": "tsx compatibilities-update-gradle-wrapper.ts",
     "compatibilities-update-kotlin-gradle-plugin": "tsx compatibilities-update-kotlin-gradle-plugin.ts",
+    "compatibilities-update-spring-boot": "tsx compatibilities-update-spring-boot.ts",
     "compatibilities-update-spring-cloud": "tsx compatibilities-update-spring-cloud.ts",
     "generate-config": "npm run update-config-schema && json2ts config.schema.json > src/internal/config.ts",
     "generate": "npm run generate-config",
