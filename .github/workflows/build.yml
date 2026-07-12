@@ -75,6 +75,10 @@ jobs:
       run: |
         "$PACKAGE_MANAGER" run compatibilities-update-kotlin-gradle-plugin
 
+    - name: Update spring-cloud compatibilities
+      run: |
+        "$PACKAGE_MANAGER" run compatibilities-update-spring-cloud
+
     # $$$sync-with-template-modifiable-end$$$
 
 
