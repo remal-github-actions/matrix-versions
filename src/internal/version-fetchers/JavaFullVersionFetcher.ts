@@ -1,13 +1,13 @@
-import { JavaVersionDatasource } from 'renovate/dist/modules/datasource/java-version'
-import { GetReleasesConfig, Release, ReleaseResult } from 'renovate/dist/modules/datasource/types.js'
+import { JavaVersionDatasource } from 'renovate/dist/modules/datasource/java-version/index.js'
+import type { GetReleasesConfig, Release, ReleaseResult } from 'renovate/dist/modules/datasource/types.js'
 import {
     RenovateDatasourceSimple,
     RenovateDatasourceSimpleComposite,
     RenovateDatasourceSimpleWrapper,
-} from '../RenovateDatasource'
-import { RenovateReleaseFilter } from '../RenovateReleaseFilter'
-import { VersionFetchParams } from './VersionFetcher'
-import { VersionFetcherRenovateDatasource } from './VersionFetcherRenovateDatasource'
+} from '../RenovateDatasource.js'
+import { RenovateReleaseFilter } from '../RenovateReleaseFilter.js'
+import { VersionFetchParams } from './VersionFetcher.js'
+import { VersionFetcherRenovateDatasource } from './VersionFetcherRenovateDatasource.js'
 
 interface ReleaseWithLts extends Release {
     isLts?: boolean

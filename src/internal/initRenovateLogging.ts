@@ -1,5 +1,5 @@
 import * as core from '@actions/core'
-import { LogLevelString } from 'bunyan'
+import type { LogLevelString } from 'bunyan'
 import { logger as renovateLogger } from 'renovate/dist/logger/index.js'
 import { indent, isNotEmpty, normalizeSpaces, processObjectFieldsRecursively } from './utils.js'
 

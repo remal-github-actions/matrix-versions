@@ -1,5 +1,5 @@
 /* eslint-disable jest/valid-title */
-import { GradlePluginVersionFetcher } from './GradlePluginVersionFetcher'
+import { GradlePluginVersionFetcher } from './GradlePluginVersionFetcher.js'
 
 describe(GradlePluginVersionFetcher.name, () => {
 

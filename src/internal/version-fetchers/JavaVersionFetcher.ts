@@ -1,6 +1,6 @@
 import { onlyUnique } from '../utils.js'
 import { JavaFullVersionFetcher } from './JavaFullVersionFetcher.js'
-import { VersionFetchParams } from './VersionFetcher'
+import { VersionFetchParams } from './VersionFetcher.js'
 
 export class JavaVersionFetcher extends JavaFullVersionFetcher {
 
