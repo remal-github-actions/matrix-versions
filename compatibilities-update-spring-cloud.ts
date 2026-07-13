@@ -103,6 +103,13 @@ function collapseWhitespace(string: string): string {
     return string.replaceAll(/\s+/g, ' ').trim()
 }
 
+// Missing version segments compare as zero in version range matching (proven by
+// src/internal/version-utils.spec.ts: '[1,2)' matches '1.1'), so trailing '.0' segments carry no meaning
+// and generated bounds drop them: '3.0' becomes '3', '2.0.0' becomes '2'.
+function trimTrailingZeroSegments(version: string): string {
+    return version.replace(/(?:\.0)+$/, '')
+}
+
 
 interface SpringBootGenerationSegment {
     // A Spring Boot generation, taken from a '<major>.<minor>.x' segment of the 'Spring Boot Generation'
@@ -381,7 +388,10 @@ function buildCompatibilityItems(trains: SpringCloudTrain[]): CompatibilityItem[
             const lowerBound = segment.startingWith ?? train.trainLowerBound
             const upperBound = nextUpperBound
             nextUpperBound = lowerBound
-            const springBootRange = `[${firstGeneration}, ${segment.springBootGeneration}.9999)`
+            // The Spring Boot range doubles as the collapse comparison key below, so it is built
+            // already trimmed.
+            const springBootRange = `[${trimTrailingZeroSegments(firstGeneration)},`
+                + ` ${segment.springBootGeneration}.9999)`
 
             const previousEntry = dataEntries[dataEntries.length - 1]
             if (previousEntry != null
@@ -407,7 +417,8 @@ function buildCompatibilityItems(trains: SpringCloudTrain[]): CompatibilityItem[
             dependencyVersionRange: '(9999, )',
         },
         ...dataEntries.map(entry => ({
-            versionRange: `[${entry.lowerBound}, ${entry.upperBound})`,
+            versionRange: `[${trimTrailingZeroSegments(entry.lowerBound)},`
+                + ` ${trimTrailingZeroSegments(entry.upperBound)})`,
             dependency: springBootDependency,
             dependencyVersionRange: entry.springBootRange,
         })),
@@ -461,7 +472,8 @@ for (const currentItem of currentItems) {
     let documented: boolean
     if (lowerBound.match(/^\d/)) {
         // A calendar-versioned bound: its first two segments name the train, and a bare '<year>' bound
-        // (the current hand-maintained style, e.g. '[2022, 2023)') means the first train of the year.
+        // (a '<year>.0' train bound with its trailing '.0' trimmed, and the hand-maintained pre-automation
+        // style, e.g. '[2022, 2023)') means the first train of the year.
         const boundSegments = lowerBound.split('.')
         trainKey = boundSegments.length >= 2 ? boundSegments.slice(0, 2).join('.') : `${lowerBound}.0`
         documented = documentedCalendarTrainLowerBounds.has(trainKey)

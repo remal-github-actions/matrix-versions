@@ -105,6 +105,13 @@ function majorMinorOf(version: string): string {
     return version.split('.').slice(0, 2).join('.')
 }
 
+// Missing version segments compare as zero in version range matching (proven by
+// src/internal/version-utils.spec.ts: '[1,2)' matches '1.1'), so trailing '.0' segments carry no meaning
+// and generated bounds drop them: '3.0' becomes '3', '2.0.0' becomes '2'.
+function trimTrailingZeroSegments(version: string): string {
+    return version.replace(/(?:\.0)+$/, '')
+}
+
 
 interface KotlinGradlePluginCompatibilityRow {
     rowStart: string
@@ -264,7 +271,8 @@ function buildCompatibilityItems(rows: KotlinGradlePluginCompatibilityRow[]): Co
     const dataEntries: { lowerBound: string, upperBound: string, gradleRange: string }[] = []
     let nextUpperBound = topSentinelLowerBound
     for (const row of rows) {
-        const gradleRange = `[${row.gradleMin}, ${row.gradleMaxWidened})`
+        // The Gradle range doubles as the collapse comparison key below, so it is built already trimmed.
+        const gradleRange = `[${trimTrailingZeroSegments(row.gradleMin)}, ${row.gradleMaxWidened})`
         const previousEntry = dataEntries[dataEntries.length - 1]
         if (previousEntry != null && previousEntry.gradleRange === gradleRange) {
             // Consecutive rows with an identical Gradle range collapse into one entry, even across
@@ -284,14 +292,15 @@ function buildCompatibilityItems(rows: KotlinGradlePluginCompatibilityRow[]): Co
             dependencyVersionRange: '(9999, )',
         },
         ...dataEntries.map(entry => ({
-            versionRange: `[${entry.lowerBound}, ${entry.upperBound})`,
+            versionRange: `[${trimTrailingZeroSegments(entry.lowerBound)},`
+                + ` ${trimTrailingZeroSegments(entry.upperBound)})`,
             dependency: 'gradle-wrapper',
             dependencyVersionRange: entry.gradleRange,
         })),
         // The bottom sentinel excludes Kotlin Gradle plugin versions older than the oldest documented
         // row from every Gradle version.
         {
-            versionRange: `( , ${rows[rows.length - 1].rowStart})`,
+            versionRange: `( , ${trimTrailingZeroSegments(rows[rows.length - 1].rowStart)})`,
             dependency: 'gradle-wrapper',
             dependencyVersionRange: '( , 0)',
         },
@@ -336,8 +345,11 @@ for (const currentItem of currentItems) {
     if (!lowerBound.length) {
         continue // the bottom sentinel '( , <oldest row start>)' has no docs row by design
     }
-    if (!documentedMinors.has(majorMinorOf(lowerBound))) {
-        throw new Error(`Kotlin Gradle plugin ${majorMinorOf(lowerBound)} is present in ${globalCompatibilitiesFile}`
+    // A bare '<major>' bound is a '<major>.0.0' row start with its trailing '.0' segments trimmed,
+    // so it names the '<major>.0' minor.
+    const boundMinor = lowerBound.includes('.') ? majorMinorOf(lowerBound) : `${lowerBound}.0`
+    if (!documentedMinors.has(boundMinor)) {
+        throw new Error(`Kotlin Gradle plugin ${boundMinor} is present in ${globalCompatibilitiesFile}`
             + ` but not in the compatibility tables anymore. ${reviewMessage}`)
     }
 }

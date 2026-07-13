@@ -79,6 +79,13 @@ function compareVersions(version1: string, version2: string): number {
     return 0
 }
 
+// Missing version segments compare as zero in version range matching (proven by
+// src/internal/version-utils.spec.ts: '[1,2)' matches '1.1'), so trailing '.0' segments carry no meaning
+// and generated bounds drop them: '3.0' becomes '3', '2.0.0' becomes '2'.
+function trimTrailingZeroSegments(version: string): string {
+    return version.replace(/(?:\.0)+$/, '')
+}
+
 
 interface SpringBootReleaseCycle {
     // The release cycle name: the '<major>.<minor>' Spring Boot version line ('4.1').
@@ -197,7 +204,8 @@ function buildCompatibilityItems(cycles: SpringBootReleaseCycle[]): Compatibilit
             dependencyVersionRange: '(9999, )',
         },
         ...dataEntries.map(entry => ({
-            versionRange: `[${entry.lowerBound}, ${entry.upperBound})`,
+            versionRange: `[${trimTrailingZeroSegments(entry.lowerBound)},`
+                + ` ${trimTrailingZeroSegments(entry.upperBound)})`,
             dependency: 'java',
             dependencyVersionRange: entry.javaRange,
         })),
@@ -246,8 +254,9 @@ for (const currentItem of currentItems) {
         cycleKey = lowerBound.split('.').slice(0, 2).join('.')
         documented = documentedCycleNames.has(cycleKey)
     } else if (lowerBound.match(/^\d+$/)) {
-        // A bare '<major>' bound covers versions below the documented history (the extended oldest entry,
-        // and the hand-maintained pre-automation entries): any documented cycle of the major suffices.
+        // A bare '<major>' bound is either a '<major>.0' cycle bound with its trailing '.0' trimmed, or
+        // covers versions below the documented history (the extended oldest entry, and the hand-maintained
+        // pre-automation entries): any documented cycle of the major suffices.
         cycleKey = lowerBound
         documented = documentedCycleMajors.has(cycleKey)
     } else {

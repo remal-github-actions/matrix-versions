@@ -61,6 +61,14 @@ async function fetchGradleCompatibilityDoc(): Promise<string> {
 }
 
 
+// Missing version segments compare as zero in version range matching (proven by
+// src/internal/version-utils.spec.ts: '[1,2)' matches '1.1'), so trailing '.0' segments carry no meaning
+// and generated bounds drop them: '3.0' becomes '3', '2.0.0' becomes '2'.
+function trimTrailingZeroSegments(version: string): string {
+    return version.replace(/(?:\.0)+$/, '')
+}
+
+
 // Translates the '.Java Compatibility' table into gradle-wrapper compatibility items, using only the
 // 'Support for running Gradle' column. The parser is deliberately strict: except for extra blank lines,
 // any deviation from the known table format must fail, so that every docs format change gets human eyes.
@@ -145,14 +153,18 @@ function parseJavaCompatibilityTable(docContent: string): CompatibilityItem[] {
         }
 
         const runningGradleCell = cells[runningGradleColumn]
-        // '7.3 and after' becomes '[7.3, )'. '2.0 to 8.14.x' becomes '[2.0, 8.9999)': the upper bound is
-        // widened to the whole major using the .9999 convention of global-compatibilities.json.
+        // '7.3 and after' becomes '[7.3, )'. '2.0 to 8.14.x' becomes '[2, 8.9999)': the lower bound gets its
+        // trailing '.0' segments trimmed, and the upper bound is widened to the whole major using the .9999
+        // convention of global-compatibilities.json.
         const sinceMatch = runningGradleCell.match(/^(\d+(?:\.\d+)*) and after$/)
         const rangeMatch = runningGradleCell.match(/^(\d+(?:\.\d+)*) to (\d+(?:\.\d+)*)\.x$/)
         if (sinceMatch) {
-            gradleRangeByJavaVersion.set(javaVersion, `[${sinceMatch[1]}, )`)
+            gradleRangeByJavaVersion.set(javaVersion, `[${trimTrailingZeroSegments(sinceMatch[1])}, )`)
         } else if (rangeMatch) {
-            gradleRangeByJavaVersion.set(javaVersion, `[${rangeMatch[1]}, ${substringBefore(rangeMatch[2], '.')}.9999)`)
+            gradleRangeByJavaVersion.set(
+                javaVersion,
+                `[${trimTrailingZeroSegments(rangeMatch[1])}, ${substringBefore(rangeMatch[2], '.')}.9999)`,
+            )
         } else {
             throw new Error(`Unsupported 'Support for running Gradle' cell '${runningGradleCell}' in the row '${line}'.`
                 + ` Supported formats: '<version> and after', '<version> to <version>.x'. ${reviewMessage}`)
