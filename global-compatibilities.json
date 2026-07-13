@@ -3,12 +3,12 @@
   "globalCompatibilities": {
     "gradle-wrapper": [
       {
-        "versionRange": "[9.4.0, )",
+        "versionRange": "[9.4, )",
         "dependency": "java",
         "dependencyVersionRange": "26"
       },
       {
-        "versionRange": "[9.1.0, )",
+        "versionRange": "[9.1, )",
         "dependency": "java",
         "dependencyVersionRange": "25"
       },
@@ -53,7 +53,7 @@
         "dependencyVersionRange": "17"
       },
       {
-        "versionRange": "[7.0, 8.9999)",
+        "versionRange": "[7, 8.9999)",
         "dependency": "java",
         "dependencyVersionRange": "16"
       },
@@ -68,7 +68,7 @@
         "dependencyVersionRange": "14"
       },
       {
-        "versionRange": "[6.0, 8.9999)",
+        "versionRange": "[6, 8.9999)",
         "dependency": "java",
         "dependencyVersionRange": "13"
       },
@@ -78,7 +78,7 @@
         "dependencyVersionRange": "12"
       },
       {
-        "versionRange": "[5.0, 8.9999)",
+        "versionRange": "[5, 8.9999)",
         "dependency": "java",
         "dependencyVersionRange": "11"
       },
@@ -93,7 +93,7 @@
         "dependencyVersionRange": "9"
       },
       {
-        "versionRange": "[2.0, 8.9999)",
+        "versionRange": "[2, 8.9999)",
         "dependency": "java",
         "dependencyVersionRange": "8"
       }
@@ -122,47 +122,47 @@
         "dependencyVersionRange": "(9999, )"
       },
       {
-        "versionRange": "[2.4.0, 2.5)",
+        "versionRange": "[2.4, 2.5)",
         "dependency": "gradle-wrapper",
         "dependencyVersionRange": "[7.6.3, 9.5.9999)"
       },
       {
-        "versionRange": "[2.3.20, 2.4.0)",
+        "versionRange": "[2.3.20, 2.4)",
         "dependency": "gradle-wrapper",
         "dependencyVersionRange": "[7.6.3, 9.3.9999)"
       },
       {
-        "versionRange": "[2.3.0, 2.3.20)",
+        "versionRange": "[2.3, 2.3.20)",
         "dependency": "gradle-wrapper",
         "dependencyVersionRange": "[7.6.3, 9.0.9999)"
       },
       {
-        "versionRange": "[2.2.0, 2.3.0)",
+        "versionRange": "[2.2, 2.3)",
         "dependency": "gradle-wrapper",
         "dependencyVersionRange": "[7.6.3, 8.14.9999)"
       },
       {
-        "versionRange": "[2.1.20, 2.2.0)",
+        "versionRange": "[2.1.20, 2.2)",
         "dependency": "gradle-wrapper",
         "dependencyVersionRange": "[7.6.3, 8.12.9999)"
       },
       {
-        "versionRange": "[2.1.0, 2.1.20)",
+        "versionRange": "[2.1, 2.1.20)",
         "dependency": "gradle-wrapper",
         "dependencyVersionRange": "[7.6.3, 8.10.9999)"
       },
       {
-        "versionRange": "[2.0.20, 2.1.0)",
+        "versionRange": "[2.0.20, 2.1)",
         "dependency": "gradle-wrapper",
         "dependencyVersionRange": "[6.8.3, 8.8.9999)"
       },
       {
-        "versionRange": "[2.0.0, 2.0.20)",
+        "versionRange": "[2, 2.0.20)",
         "dependency": "gradle-wrapper",
         "dependencyVersionRange": "[6.8.3, 8.5.9999)"
       },
       {
-        "versionRange": "[1.9.20, 2.0.0)",
+        "versionRange": "[1.9.20, 2)",
         "dependency": "gradle-wrapper",
         "dependencyVersionRange": "[6.8.3, 8.1.9999)"
       },
@@ -172,22 +172,22 @@
         "dependencyVersionRange": "[6.8.3, 7.6.9999)"
       },
       {
-        "versionRange": "[1.8.0, 1.8.20)",
+        "versionRange": "[1.8, 1.8.20)",
         "dependency": "gradle-wrapper",
         "dependencyVersionRange": "[6.8.3, 7.3.9999)"
       },
       {
-        "versionRange": "[1.7.20, 1.8.0)",
+        "versionRange": "[1.7.20, 1.8)",
         "dependency": "gradle-wrapper",
         "dependencyVersionRange": "[6.7.1, 7.1.9999)"
       },
       {
-        "versionRange": "[1.7.0, 1.7.20)",
+        "versionRange": "[1.7, 1.7.20)",
         "dependency": "gradle-wrapper",
         "dependencyVersionRange": "[6.7.1, 7.0.9999)"
       },
       {
-        "versionRange": "[1.6.20, 1.7.0)",
+        "versionRange": "[1.6.20, 1.7)",
         "dependency": "gradle-wrapper",
         "dependencyVersionRange": "[6.1.1, 7.0.9999)"
       },
@@ -236,12 +236,12 @@
         "dependencyVersionRange": "[17, 23.9999)"
       },
       {
-        "versionRange": "[3.0, 3.3)",
+        "versionRange": "[3, 3.3)",
         "dependency": "java",
         "dependencyVersionRange": "[17, 21.9999)"
       },
       {
-        "versionRange": "[2.7, 3.0)",
+        "versionRange": "[2.7, 3)",
         "dependency": "java",
         "dependencyVersionRange": "[8, 21.9999)"
       },
@@ -271,12 +271,12 @@
         "dependencyVersionRange": "[8, 12.9999)"
       },
       {
-        "versionRange": "[2.0, 2.1)",
+        "versionRange": "[2, 2.1)",
         "dependency": "java",
         "dependencyVersionRange": "[8, 9.9999)"
       },
       {
-        "versionRange": "[1, 2.0)",
+        "versionRange": "[1, 2)",
         "dependency": "java",
         "dependencyVersionRange": "[6, 8.9999)"
       }
@@ -290,60 +290,60 @@
       {
         "versionRange": "[2025.1.2, 2025.2)",
         "dependency": "maven:org.springframework.boot:spring-boot-dependencies",
-        "dependencyVersionRange": "[4.0, 4.1.9999)"
+        "dependencyVersionRange": "[4, 4.1.9999)"
       },
       {
         "versionRange": "[2025.1, 2025.1.2)",
         "dependency": "maven:org.springframework.boot:spring-boot-dependencies",
-        "dependencyVersionRange": "[4.0, 4.0.9999)"
+        "dependencyVersionRange": "[4, 4.0.9999)"
       },
       {
-        "versionRange": "[2025.0, 2025.1)",
+        "versionRange": "[2025, 2025.1)",
         "dependency": "maven:org.springframework.boot:spring-boot-dependencies",
         "dependencyVersionRange": "[3.5, 3.5.9999)"
       },
       {
-        "versionRange": "[2024.0, 2025.0)",
+        "versionRange": "[2024, 2025)",
         "dependency": "maven:org.springframework.boot:spring-boot-dependencies",
         "dependencyVersionRange": "[3.4, 3.4.9999)"
       },
       {
-        "versionRange": "[2023.0.2, 2024.0)",
+        "versionRange": "[2023.0.2, 2024)",
         "dependency": "maven:org.springframework.boot:spring-boot-dependencies",
         "dependencyVersionRange": "[3.2, 3.3.9999)"
       },
       {
-        "versionRange": "[2023.0, 2023.0.2)",
+        "versionRange": "[2023, 2023.0.2)",
         "dependency": "maven:org.springframework.boot:spring-boot-dependencies",
         "dependencyVersionRange": "[3.2, 3.2.9999)"
       },
       {
-        "versionRange": "[2022.0.3, 2023.0)",
+        "versionRange": "[2022.0.3, 2023)",
         "dependency": "maven:org.springframework.boot:spring-boot-dependencies",
-        "dependencyVersionRange": "[3.0, 3.1.9999)"
+        "dependencyVersionRange": "[3, 3.1.9999)"
       },
       {
-        "versionRange": "[2022.0, 2022.0.3)",
+        "versionRange": "[2022, 2022.0.3)",
         "dependency": "maven:org.springframework.boot:spring-boot-dependencies",
-        "dependencyVersionRange": "[3.0, 3.0.9999)"
+        "dependencyVersionRange": "[3, 3.0.9999)"
       },
       {
-        "versionRange": "[2021.0.3, 2022.0)",
+        "versionRange": "[2021.0.3, 2022)",
         "dependency": "maven:org.springframework.boot:spring-boot-dependencies",
         "dependencyVersionRange": "[2.6, 2.7.9999)"
       },
       {
-        "versionRange": "[2021.0, 2021.0.3)",
+        "versionRange": "[2021, 2021.0.3)",
         "dependency": "maven:org.springframework.boot:spring-boot-dependencies",
         "dependencyVersionRange": "[2.6, 2.6.9999)"
       },
       {
-        "versionRange": "[2020.0.3, 2021.0)",
+        "versionRange": "[2020.0.3, 2021)",
         "dependency": "maven:org.springframework.boot:spring-boot-dependencies",
         "dependencyVersionRange": "[2.4, 2.5.9999)"
       },
       {
-        "versionRange": "[2020.0, 2020.0.3)",
+        "versionRange": "[2020, 2020.0.3)",
         "dependency": "maven:org.springframework.boot:spring-boot-dependencies",
         "dependencyVersionRange": "[2.4, 2.4.9999)"
       },
@@ -365,7 +365,7 @@
       {
         "versionRange": "[F, G)",
         "dependency": "maven:org.springframework.boot:spring-boot-dependencies",
-        "dependencyVersionRange": "[2.0, 2.0.9999)"
+        "dependencyVersionRange": "[2, 2.0.9999)"
       },
       {
         "versionRange": "[D, F)",
