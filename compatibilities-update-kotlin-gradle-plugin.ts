@@ -201,10 +201,11 @@ function parseKotlinGradlePluginCompatibilityTables(docContent: string): KotlinG
 
             const kotlinGradlePluginCell = cells[kotlinGradlePluginColumn]
             assertNoUnsubstitutedVariable(kotlinGradlePluginCell, rowLine)
-            // A Kotlin Gradle plugin cell is a single three-segment version ('2.3.10') or an en-dash span
-            // of them ('2.3.20–2.3.21'). Only the span start matters: every entry built below extends up
+            // A Kotlin Gradle plugin cell is a single three-segment version ('2.3.10') or a dash-separated
+            // span of them ('2.3.20–2.3.21'; the separator may be any dash variant, with optional spaces
+            // before and after). Only the span start matters: every entry built below extends up
             // to the next newer row start anyway.
-            const kotlinGradlePluginMatch = kotlinGradlePluginCell.match(/^(\d+\.\d+\.\d+)(?:–(\d+\.\d+\.\d+))?$/)
+            const kotlinGradlePluginMatch = kotlinGradlePluginCell.match(/^(\d+\.\d+\.\d+)(?:\s*[\p{Dash}−]\s*(\d+\.\d+\.\d+))?$/u)
             if (!kotlinGradlePluginMatch) {
                 throw new Error(`Unsupported '${kotlinGradlePluginColumnName}' cell '${kotlinGradlePluginCell}'`
                     + ` in the row '${rowLine}'.`
@@ -214,10 +215,11 @@ function parseKotlinGradlePluginCompatibilityTables(docContent: string): KotlinG
 
             const gradleCell = cells[gradleColumn]
             assertNoUnsubstitutedVariable(gradleCell, rowLine)
-            // A Gradle cell is an en-dash range, sometimes with a '*' footnote marker after the max
+            // A Gradle cell is a dash range (the separator may be any dash variant, with optional spaces
+            // before and after), sometimes with a '*' footnote marker after the max
             // ('6.8.3–8.8*'). Gradle versions of the 8.x era and older may omit the patch part ('8.14'),
             // while 9+ versions are three-segment ('9.5.0').
-            const gradleMatch = gradleCell.match(/^(\d+\.\d+(?:\.\d+)?)–(\d+\.\d+(?:\.\d+)?)\*?$/)
+            const gradleMatch = gradleCell.match(/^(\d+\.\d+(?:\.\d+)?)\s*[\p{Dash}−]\s*(\d+\.\d+(?:\.\d+)?)\*?$/u)
             if (!gradleMatch) {
                 throw new Error(`Unsupported '${gradleColumnName}' cell '${gradleCell}' in the row '${rowLine}'.`
                     + ` Supported format: '<min version>–<max version>' with an optional trailing '*'.`

@@ -129,10 +129,11 @@ function parseReleaseCycles(apiContent: string): SpringBootReleaseCycle[] {
                 + ` ${reviewMessage}`)
         }
 
-        // The value is a span of Java majors with spaces around the hyphen: '17 - 26'.
+        // The value is a span of Java majors separated by a dash: '17 - 26'. The separator may be any dash
+        // variant, with optional spaces before and after.
         const supportedJavaVersions = release?.custom?.supportedJavaVersions
         const javaVersionsMatch = typeof supportedJavaVersions === 'string'
-            ? supportedJavaVersions.match(/^(\d+) - (\d+)$/)
+            ? supportedJavaVersions.match(/^(\d+)\s*[\p{Dash}−]\s*(\d+)$/u)
             : null
         if (javaVersionsMatch == null) {
             throw new Error(`Unsupported 'custom.supportedJavaVersions' value '${supportedJavaVersions}'`
