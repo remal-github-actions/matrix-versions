@@ -23,6 +23,8 @@ describe(MavenVersionFetcher.name, () => {
         expect(versions).toContain('2.7.9')
         expect(versions).toContain('2.6.14')
         expect(versions).toContain('2.6.13')
+        // the mirror and Maven Central serve overlapping versions, so the merged output must be deduplicated
+        expect(versions).toEqual([...new Set(versions)])
     })
 
     it('with repository', async () => {
@@ -33,6 +35,7 @@ describe(MavenVersionFetcher.name, () => {
         expect(versions).toContain('3.0.0-RC1')
         expect(versions).toContain('2.7.0-M1')
         expect(versions).toContain('2.6.0-RC1')
+        expect(versions).toEqual([...new Set(versions)])
     })
 
 })
