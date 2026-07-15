@@ -6,7 +6,8 @@ paths:
 # Compatibilities Update Scripts
 
 - Be very strict: any deviation from the documented source format must fail loudly.
-- Empty lines are the only tolerated deviation: ignore them.
+- Empty lines are a tolerated deviation: ignore them.
+- A value range accepts any dash variant (match the separator with `[\p{Dash}−]` and the `u` flag), with optional whitespace before and after. Do not require a specific dash character or spacing.
 - Have inline comments.
 - Keep entries in the order of the source document. Do not sort them.
 - Trim trailing '.0' segments from every generated version bound ('3.0' becomes '3', '2.0.0' becomes '2'): missing segments compare as zero in version range matching, so they carry no meaning.
