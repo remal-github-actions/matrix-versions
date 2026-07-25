@@ -2386,10 +2386,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@opentelemetry/semantic-conventions@npm:1.41.1":
-  version: 1.41.1
-  resolution: "@opentelemetry/semantic-conventions@npm:1.41.1"
-  checksum: 10c0/c54b1edf845766e93026d30fd95e15da9dba8d7a5b58f8c320c5d36ab542c77b37868f3e8e3d78ec162da8ee2afd24781f0a65934c9bdbc1aea86b47b12f074c
+"@opentelemetry/semantic-conventions@npm:1.43.0, @opentelemetry/semantic-conventions@npm:^1.37.0, @opentelemetry/semantic-conventions@npm:^1.41.1":
+  version: 1.43.0
+  resolution: "@opentelemetry/semantic-conventions@npm:1.43.0"
+  checksum: 10c0/ea4b4b07c9414b0c5e7ce7349f608cb2572d16922d96077fb0882b59f173ec9b94aada74896bd5dd4aeb1759924503bd5a34b6dc2847a84c36f71626a0578ec4
   languageName: node
   linkType: hard
 
@@ -2404,13 +2404,6 @@ __metadata:
   version: 1.30.0
   resolution: "@opentelemetry/semantic-conventions@npm:1.30.0"
   checksum: 10c0/0bf99552e3b4b7e8b7eb504b678d52f59c6f259df88e740a2011a0d858e523d36fee86047ae1b7f45849c77f00f970c3059ba58e0a06a7d47d6f01dbe8c455bd
-  languageName: node
-  linkType: hard
-
-"@opentelemetry/semantic-conventions@npm:^1.37.0, @opentelemetry/semantic-conventions@npm:^1.41.1":
-  version: 1.43.0
-  resolution: "@opentelemetry/semantic-conventions@npm:1.43.0"
-  checksum: 10c0/ea4b4b07c9414b0c5e7ce7349f608cb2572d16922d96077fb0882b59f173ec9b94aada74896bd5dd4aeb1759924503bd5a34b6dc2847a84c36f71626a0578ec4
   languageName: node
   linkType: hard
 
@@ -2604,15 +2597,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@renovatebot/detect-tools@npm:4.0.8":
-  version: 4.0.8
-  resolution: "@renovatebot/detect-tools@npm:4.0.8"
+"@renovatebot/detect-tools@npm:4.0.10":
+  version: 4.0.10
+  resolution: "@renovatebot/detect-tools@npm:4.0.10"
   dependencies:
-    fs-extra: "npm:^11.3.5"
+    fs-extra: "npm:^11.3.6"
     toml-eslint-parser: "npm:^1.0.3"
-    upath: "npm:^3.0.7"
+    upath: "npm:^3.0.8"
     zod: "npm:^4.4.3"
-  checksum: 10c0/c0e1bc97ec46f2d555a9d242337741440b5c64be0b815fe73bc071df6c8445ea05b2e85aa5aa654f914a0ea374e97f48b7683fe79b56afb536481b63d5902516
+  checksum: 10c0/b031be1e1af24433061cd680b967503f556ed27ff72249fbd0a077040380e3c68e6a38bedd71ca0b3b70e74ed95856a197f9dd03638efdf4860ab6fbcd8acb8d
   languageName: node
   linkType: hard
 
@@ -2628,26 +2621,26 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@renovatebot/osv-offline-db@npm:3.0.8":
-  version: 3.0.8
-  resolution: "@renovatebot/osv-offline-db@npm:3.0.8"
+"@renovatebot/osv-offline-db@npm:3.0.9":
+  version: 3.0.9
+  resolution: "@renovatebot/osv-offline-db@npm:3.0.9"
   dependencies:
     debug: "npm:^4.4.3"
-  checksum: 10c0/4fe820f23a000b436402fca59dd4f78ecca89affed1b7c6468f1b6fd4288066c8346532f176373382b7cd37bd22a5844389f3ea4c60ed1b058febc9ee9e614e3
+  checksum: 10c0/96c186b015b2345f59ea95516e5541138cf6ff8427b806493db19d974513479018ab42a1b24760a9bb64b81ab68499e53424c345fae8cf6c75dc53824b9ed316
   languageName: node
   linkType: hard
 
-"@renovatebot/osv-offline@npm:3.0.8":
-  version: 3.0.8
-  resolution: "@renovatebot/osv-offline@npm:3.0.8"
+"@renovatebot/osv-offline@npm:3.0.9":
+  version: 3.0.9
+  resolution: "@renovatebot/osv-offline@npm:3.0.9"
   dependencies:
-    "@renovatebot/osv-offline-db": "npm:3.0.8"
-    adm-zip: "npm:~0.5.18"
+    "@renovatebot/osv-offline-db": "npm:3.0.9"
+    adm-zip: "npm:~0.6.0"
     debug: "npm:^4.4.3"
     fs-extra: "npm:^11.3.6"
     got: "npm:^15.1.0"
     luxon: "npm:^3.7.2"
-  checksum: 10c0/0ffd55915f9c7d87a4b30f5bf8d665b72d606760f6afa4946d48813e4abb4f604b8dd0923af4f2e4df694f30775bb3fd0fc3133e678d1c1fa175e179315095ac
+  checksum: 10c0/096321679eaa0b24e9f02289efa290eef55c59bf567f08a12db3a2cd89c189c812338916e4dacd6cad70971fdb0c82ecf18d8689a33566eff68b4da366239fe0
   languageName: node
   linkType: hard
 
@@ -2658,10 +2651,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@renovatebot/pgp@npm:1.3.15":
-  version: 1.3.15
-  resolution: "@renovatebot/pgp@npm:1.3.15"
-  checksum: 10c0/251948e1472d0f4c7f7899b20d774b4a27b610d8e47b77f3b843553c415bbabbc3643bd9659ed607e36eb836463884f15aed8e87f8a932182c745484ee8dd0f4
+"@renovatebot/pgp@npm:1.3.16":
+  version: 1.3.16
+  resolution: "@renovatebot/pgp@npm:1.3.16"
+  checksum: 10c0/1ff19bf4b9746217b18c37f5d83faa012924025652b2659135153dc9b93e8fa00db0330d43ac2e4b897da9e69adb1af66cc60aebbf8342e58b97c8093da1fba9
   languageName: node
   linkType: hard
 
@@ -3637,10 +3630,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"adm-zip@npm:0.5.18, adm-zip@npm:~0.5.18":
-  version: 0.5.18
-  resolution: "adm-zip@npm:0.5.18"
-  checksum: 10c0/9b734aa7126a01913baec02bf495d086b5d7e63315522b7087620e3fc8279c8ebd65109da4d99f16fcf873d87522ae6ffd913aef65449fd22c68777b772685e9
+"adm-zip@npm:0.6.0, adm-zip@npm:~0.6.0":
+  version: 0.6.0
+  resolution: "adm-zip@npm:0.6.0"
+  checksum: 10c0/440f37590c62255226f1db4cb1a5a618879347f5106ad5b9a24c67c20f9a54bd5b4efcd2b35af858e39c7885d05f4bd35f4c2f42378c98d13f779be380bc9ae4
   languageName: node
   linkType: hard
 
@@ -6411,7 +6404,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fs-extra@npm:11.3.6, fs-extra@npm:^11.3.5, fs-extra@npm:^11.3.6":
+"fs-extra@npm:11.3.6, fs-extra@npm:^11.3.6":
   version: 11.3.6
   resolution: "fs-extra@npm:11.3.6"
   dependencies:
@@ -7330,10 +7323,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ignore@npm:7.0.5, ignore@npm:^7.0.5":
-  version: 7.0.5
-  resolution: "ignore@npm:7.0.5"
-  checksum: 10c0/ae00db89fe873064a093b8999fe4cc284b13ef2a178636211842cceb650b9c3e390d3339191acb145d81ed5379d2074840cf0c33a20bdbd6f32821f79eb4ad5d
+"ignore@npm:7.0.6":
+  version: 7.0.6
+  resolution: "ignore@npm:7.0.6"
+  checksum: 10c0/fc01ef1d14efbe003439b60538726351e81483d1b6f55bdbb3a4465c6346d9481afad5b350dfbd604ddd7049618ef9093ff26dc147984aabc303c56ba53ea3b5
   languageName: node
   linkType: hard
 
@@ -7341,6 +7334,13 @@ __metadata:
   version: 5.2.0
   resolution: "ignore@npm:5.2.0"
   checksum: 10c0/7fb7b4c4c52c2555113ff968f8a83b8ac21b076282bfcb3f468c3fb429be69bd56222306c31de95dd452c647fc6ae24339b8047ebe3ef34c02591abfec58da01
+  languageName: node
+  linkType: hard
+
+"ignore@npm:^7.0.5":
+  version: 7.0.5
+  resolution: "ignore@npm:7.0.5"
+  checksum: 10c0/ae00db89fe873064a093b8999fe4cc284b13ef2a178636211842cceb650b9c3e390d3339191acb145d81ed5379d2074840cf0c33a20bdbd6f32821f79eb4ad5d
   languageName: node
   linkType: hard
 
@@ -8996,10 +8996,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lru-cache@npm:11.5.1":
-  version: 11.5.1
-  resolution: "lru-cache@npm:11.5.1"
-  checksum: 10c0/7b341cea79a8efe9c6a6f20c8757a77eca5b25d7ff983ccf4e11e547b81f6787824baa1c84705251dff84ab4ffac85717ac354b9d02e465f86a9f8b166409979
+"lru-cache@npm:11.5.2, lru-cache@npm:^11.1.0":
+  version: 11.5.2
+  resolution: "lru-cache@npm:11.5.2"
+  checksum: 10c0/ece1ad731f5b655e85d67047d04bfc13823dc77aa61c5454924a9869ba600a0104e39cc33d726021feef812bc347ca34a5608a5eb1972a5dd0870b7ecd42c3f2
   languageName: node
   linkType: hard
 
@@ -9014,13 +9014,6 @@ __metadata:
   version: 11.0.0
   resolution: "lru-cache@npm:11.0.0"
   checksum: 10c0/827ff0e0739f9b0f30f92f5a5fc97c6a2bd3ae32c0452bc58cb7411d6c589d49536073027293f2d1f02d0c2e72b63b162f238df7e9ff6f4cc0345f92afec4d1d
-  languageName: node
-  linkType: hard
-
-"lru-cache@npm:^11.1.0":
-  version: 11.5.2
-  resolution: "lru-cache@npm:11.5.2"
-  checksum: 10c0/ece1ad731f5b655e85d67047d04bfc13823dc77aa61c5454924a9869ba600a0104e39cc33d726021feef812bc347ca34a5608a5eb1972a5dd0870b7ecd42c3f2
   languageName: node
   linkType: hard
 
@@ -9173,7 +9166,7 @@ __metadata:
     jest-extended: "npm:7.0.0"
     json-schema-to-typescript: "npm:15.0.4"
     node-html-parser: "npm:9.0.0"
-    renovate: "npm:43.259.3"
+    renovate: "npm:43.270.0"
     rimraf: "npm:6.1.3"
     semver: "npm:7.8.5"
     ts-jest: "npm:29.4.11"
@@ -10763,12 +10756,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"protobufjs@npm:8.6.6":
-  version: 8.6.6
-  resolution: "protobufjs@npm:8.6.6"
+"protobufjs@npm:8.7.0":
+  version: 8.7.0
+  resolution: "protobufjs@npm:8.7.0"
   dependencies:
     long: "npm:^5.3.2"
-  checksum: 10c0/9bc4515089383ba0ce89bfa10cbe63fac02a1466a0a602fb853e5d8b1a17729547cd77e42b21e75b7a3b3ec052a8929c9c98bc0d4f1bd06440869f46ca3c3b2b
+  checksum: 10c0/d5fd41a726bfac92431b3ef5232a26ea1df0961216be318d17d58a6dace9cf2c4cbc63c63071087691c7394e36053cd7ea66b826d74dfc6158b7b5bd39ec08da
   languageName: node
   linkType: hard
 
@@ -11005,9 +10998,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"renovate@npm:43.259.3":
-  version: 43.259.3
-  resolution: "renovate@npm:43.259.3"
+"renovate@npm:43.270.0":
+  version: 43.270.0
+  resolution: "renovate@npm:43.270.0"
   dependencies:
     "@aws-sdk/client-codecommit": "npm:3.1075.0"
     "@aws-sdk/client-ec2": "npm:3.1075.0"
@@ -11033,20 +11026,20 @@ __metadata:
     "@opentelemetry/resources": "npm:2.9.0"
     "@opentelemetry/sdk-trace-base": "npm:2.9.0"
     "@opentelemetry/sdk-trace-node": "npm:2.9.0"
-    "@opentelemetry/semantic-conventions": "npm:1.41.1"
+    "@opentelemetry/semantic-conventions": "npm:1.43.0"
     "@pnpm/parse-overrides": "npm:1001.0.4"
     "@qnighy/marshal": "npm:0.1.3"
     "@redis/client": "npm:5.12.1"
-    "@renovatebot/detect-tools": "npm:4.0.8"
+    "@renovatebot/detect-tools": "npm:4.0.10"
     "@renovatebot/good-enough-parser": "npm:2.0.1"
-    "@renovatebot/osv-offline": "npm:3.0.8"
+    "@renovatebot/osv-offline": "npm:3.0.9"
     "@renovatebot/pep440": "npm:5.0.0"
-    "@renovatebot/pgp": "npm:1.3.15"
+    "@renovatebot/pgp": "npm:1.3.16"
     "@renovatebot/ruby-semver": "npm:5.0.0"
     "@sindresorhus/is": "npm:8.1.0"
     "@yarnpkg/core": "npm:4.9.0"
     "@yarnpkg/parsers": "npm:3.0.3"
-    adm-zip: "npm:0.5.18"
+    adm-zip: "npm:0.6.0"
     ae-cvss-calculator: "npm:1.0.13"
     agentkeepalive: "npm:4.6.0"
     async-mutex: "npm:0.5.0"
@@ -11080,7 +11073,7 @@ __metadata:
     got: "npm:14.6.6"
     graph-data-structure: "npm:4.5.0"
     handlebars: "npm:4.7.9"
-    ignore: "npm:7.0.5"
+    ignore: "npm:7.0.6"
     ini: "npm:6.0.0"
     json-dup-key-validator: "npm:1.0.3"
     json-stringify-pretty-compact: "npm:4.0.0"
@@ -11088,7 +11081,7 @@ __metadata:
     jsonata: "npm:2.2.1"
     jsonc-weaver: "npm:0.2.4"
     klona: "npm:2.0.6"
-    lru-cache: "npm:11.5.1"
+    lru-cache: "npm:11.5.2"
     luxon: "npm:3.7.2"
     markdown-it: "npm:14.3.0"
     markdown-table: "npm:3.0.4"
@@ -11104,9 +11097,9 @@ __metadata:
     p-throttle: "npm:8.1.0"
     parse-link-header: "npm:2.0.0"
     prettier: "npm:3.8.1"
-    protobufjs: "npm:8.6.6"
+    protobufjs: "npm:8.7.0"
     punycode: "npm:2.3.1"
-    re2: "npm:1.25.0"
+    re2: "npm:1.26.0"
     remark: "npm:15.0.1"
     remark-gfm: "npm:4.0.1"
     remark-github: "npm:12.0.0"
@@ -11122,7 +11115,7 @@ __metadata:
     strip-json-comments: "npm:5.0.3"
     toml-eslint-parser: "npm:1.0.3"
     tslib: "npm:2.8.1"
-    upath: "npm:3.0.7"
+    upath: "npm:3.0.8"
     url-join: "npm:5.0.0"
     validate-npm-package-name: "npm:7.0.2"
     xmldoc: "npm:2.0.3"
@@ -11136,7 +11129,7 @@ __metadata:
   bin:
     renovate: dist/renovate.js
     renovate-config-validator: dist/config-validator.js
-  checksum: 10c0/ab0148b2d88aebf67f5852403c3aa5285156bd6883547b59df23e6217e691bff3b8159eac17bd8feb38ecce66e0612f6935c6600f95136f8c01de3764001aa64
+  checksum: 10c0/01c53ef38b46402885c2eff963ab9747552484a14227a2945fa61a2b669fe6613759309fb9eae93bbb68da821e74d283e568b9426f21bff74223dba6194602dd
   languageName: node
   linkType: hard
 
@@ -12865,14 +12858,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"upath@npm:3.0.7":
-  version: 3.0.7
-  resolution: "upath@npm:3.0.7"
-  checksum: 10c0/3b0464cc761a898fa7d8eb3f034af5eeb31acc31c33a4c2523adbdd7d520db715317bb6f821dfb9db2acaa587f0f632e78bb133ac67c7d98d365844a0122fd61
-  languageName: node
-  linkType: hard
-
-"upath@npm:^3.0.7":
+"upath@npm:3.0.8, upath@npm:^3.0.8":
   version: 3.0.8
   resolution: "upath@npm:3.0.8"
   checksum: 10c0/5d956961e88265332c7a672fb01524f66d6c1a19dfbf36c69222fd5762985df277b36af53679fe5f3e884c666fe91a3da831f59b20c4ecd1ed5540c54e5e89e2
