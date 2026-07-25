@@ -835,8 +835,8 @@ var PrettyStdoutStream = class extends external_node_stream_.Writable {
 
 
 //# sourceMappingURL=pretty-stdout.js.map
-// EXTERNAL MODULE: ./node_modules/renovate/node_modules/fs-extra/lib/index.js
-var lib = __webpack_require__(92196);
+// EXTERNAL MODULE: ./node_modules/fs-extra/lib/index.js
+var lib = __webpack_require__(72136);
 // EXTERNAL MODULE: ./node_modules/renovate/node_modules/upath/dist/index.js
 var dist = __webpack_require__(83002);
 ;// CONCATENATED MODULE: ./node_modules/renovate/dist/logger/bunyan.js
