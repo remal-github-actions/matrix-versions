@@ -49,9 +49,10 @@ function errSerializer(err) {
 //# sourceMappingURL=err-serializer.js.map
 ;// CONCATENATED MODULE: ./node_modules/renovate/dist/logger/cmd-serializer.js
 
+
 //#region lib/logger/cmd-serializer.ts
 function cmdSerializer(cmd) {
-	if (typeof cmd === "string") return cmd.replace((0,regex/* regEx */.U$)(/https:\/\/[^@]*@/g), "https://**redacted**@");
+	if ((0,distribution/* isString */.KgX)(cmd)) return cmd.replace((0,regex/* regEx */.U$)(/https:\/\/[^@]*@/g), "https://**redacted**@");
 	return cmd;
 }
 //#endregion
@@ -871,7 +872,7 @@ function createDefaultStreams(stdoutLevel, problems, logFile) {
 			type: "raw"
 		},
 		(0,distribution/* isString */.KgX)(logFile) ? createLogFileStream(logFile) : void 0
-	].filter(Boolean);
+	].filter(distribution/* isTruthy */.zzB);
 }
 function createLogFileStream(logFile) {
 	const directoryName = dist/* default.dirname */.Ay.dirname(logFile);
