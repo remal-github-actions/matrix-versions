@@ -9045,7 +9045,7 @@ __metadata:
     jest-extended: "npm:7.0.0"
     json-schema-to-typescript: "npm:15.0.4"
     node-html-parser: "npm:9.0.1"
-    renovate: "npm:44.14.12"
+    renovate: "npm:44.30.3"
     rimraf: "npm:6.1.3"
     semver: "npm:7.8.5"
     ts-jest: "npm:29.4.12"
@@ -10515,6 +10515,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"pend@npm:~1.2.0":
+  version: 1.2.0
+  resolution: "pend@npm:1.2.0"
+  checksum: 10c0/8a87e63f7a4afcfb0f9f77b39bb92374afc723418b9cb716ee4257689224171002e07768eeade4ecd0e86f1fa3d8f022994219fb45634f2dbd78c6803e452458
+  languageName: node
+  linkType: hard
+
 "picocolors@npm:^1.1.1":
   version: 1.1.1
   resolution: "picocolors@npm:1.1.1"
@@ -10886,9 +10893,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"renovate@npm:44.14.12":
-  version: 44.14.12
-  resolution: "renovate@npm:44.14.12"
+"renovate@npm:44.30.3":
+  version: 44.30.3
+  resolution: "renovate@npm:44.30.3"
   dependencies:
     "@aws-sdk/client-codecommit": "npm:3.1095.0"
     "@aws-sdk/client-ec2": "npm:3.1095.0"
@@ -11009,6 +11016,7 @@ __metadata:
     validate-npm-package-name: "npm:7.0.2"
     xmldoc: "npm:2.0.3"
     yaml: "npm:2.9.0"
+    yauzl: "npm:3.4.0"
     zod: "npm:4.4.3"
   dependenciesMeta:
     openpgp:
@@ -11018,7 +11026,7 @@ __metadata:
   bin:
     renovate: dist/renovate.js
     renovate-config-validator: dist/config-validator.js
-  checksum: 10c0/e7a8fa0fd6fda888f64bfa5379fa2fd42db34552853bb7e7758994e17b131b0e9aed6b5a7c85138b3052fc3a10c16c3aa2ecac8a00de7bc3bd28b550681b3a1c
+  checksum: 10c0/3fe887d23ca2c6e181c000a6f67317f35fe9354a05a36617e99dc60eb5e0472279d14ed9698efa2298c00ebfc054966f9959695168d01270ecd71073c9ea12dd
   languageName: node
   linkType: hard
 
@@ -13136,6 +13144,15 @@ __metadata:
     y18n: "npm:^5.0.5"
     yargs-parser: "npm:^21.1.1"
   checksum: 10c0/ccd7e723e61ad5965fffbb791366db689572b80cca80e0f96aad968dfff4156cd7cd1ad18607afe1046d8241e6fb2d6c08bf7fa7bfb5eaec818735d8feac8f05
+  languageName: node
+  linkType: hard
+
+"yauzl@npm:3.4.0":
+  version: 3.4.0
+  resolution: "yauzl@npm:3.4.0"
+  dependencies:
+    pend: "npm:~1.2.0"
+  checksum: 10c0/17a98c42c0065e8af429eb8a61f7a0e4562181ed54080366b838f34f741b6829f167f804787c86b7646bb042707f35871739f053de0548285e405a2eae4da025
   languageName: node
   linkType: hard
 
