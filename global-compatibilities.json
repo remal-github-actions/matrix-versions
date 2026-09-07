@@ -127,7 +127,12 @@
         "dependencyVersionRange": "(9999, )"
       },
       {
-        "versionRange": "[2.4, 2.5)",
+        "versionRange": "[2.4.20, 2.5)",
+        "dependency": "gradle-wrapper",
+        "dependencyVersionRange": "[7.6.3, 9.7.9999)"
+      },
+      {
+        "versionRange": "[2.4, 2.4.20)",
         "dependency": "gradle-wrapper",
         "dependencyVersionRange": "[7.6.3, 9.5.9999)"
       },
