@@ -756,13 +756,17 @@ const bunyanFields = [
 	"msg",
 	"start_time"
 ];
+/**
+* If a log contains any of these meta fields in the meta, promote them up to the log line, rather than rendering them with other meta fields.
+*
+* This only applies when these fields have a string value, otherwise they are treated as a regular meta field.
+*/
 const metaFields = [
 	"repository",
 	"baseBranch",
 	"packageFile",
 	"depType",
 	"dependency",
-	"dependencies",
 	"branch"
 ];
 const levels = {
@@ -787,7 +791,7 @@ function indent(str, leading = false) {
 function getMeta(rec, colorize = true) {
 	if (!rec) return "";
 	let res = rec.module ? ` [${rec.module}]` : ``;
-	const filteredMeta = metaFields.filter((elem) => rec[elem]);
+	const filteredMeta = metaFields.filter((elem) => (0,distribution/* isString */.KgX)(rec[elem]));
 	if (!filteredMeta.length) return res;
 	res = ` (${filteredMeta.map((field) => `${field}=${String(rec[field])}`).join(", ")})${res}`;
 	return colorize ? external_node_util_.styleText("gray", res) : res;
@@ -797,7 +801,7 @@ function getDetails(rec) {
 	const recFiltered = { ...rec };
 	delete recFiltered.module;
 	Object.keys(recFiltered).forEach((key) => {
-		if (key === "logContext" || bunyanFields.includes(key) || metaFields.includes(key)) delete recFiltered[key];
+		if (key === "logContext" || bunyanFields.includes(key) || metaFields.includes(key) && (0,distribution/* isString */.KgX)(recFiltered[key])) delete recFiltered[key];
 	});
 	const remainingKeys = Object.keys(recFiltered);
 	if (remainingKeys.length === 0) return "";
