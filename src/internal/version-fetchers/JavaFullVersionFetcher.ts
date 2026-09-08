@@ -1,5 +1,9 @@
+import { adoptiumRegistryUrl } from 'renovate/dist/modules/datasource/java-version/adoptium.js'
+import { parsePackage } from 'renovate/dist/modules/datasource/java-version/common.js'
 import { JavaVersionDatasource } from 'renovate/dist/modules/datasource/java-version/index.js'
+import { AdoptiumJavaResponse } from 'renovate/dist/modules/datasource/java-version/schema.js'
 import type { GetReleasesConfig, Release, ReleaseResult } from 'renovate/dist/modules/datasource/types.js'
+import { RequestError } from 'renovate/dist/util/http/got.js'
 import {
     RenovateDatasourceSimple,
     RenovateDatasourceSimpleComposite,
@@ -13,13 +17,86 @@ interface ReleaseWithLts extends Release {
     isLts?: boolean
 }
 
-function createDatasource(lts: boolean): RenovateDatasourceSimple {
-    const datasource = new JavaVersionDatasource()
-    const originalGetPageReleases = datasource['getPageReleases']
-    datasource['getPageReleases'] = async function(url, page) {
-        url = url.replace('?', `?lts=${lts ? 'true' : 'false'}&`)
-        return originalGetPageReleases.call(datasource, url, page)
+const adoptiumPageSize = 50
+
+// renovate ships no type declarations for its java-version datasource,
+// so the base class members used here are typed via this cast
+type JavaVersionDatasourceBase = new () => RenovateDatasourceSimple & {
+    http: {
+        getJson(url: string, schema?: unknown): Promise<{ body: any }>
     }
+    handleGenericErrors(err: unknown): never
+}
+
+// Mirrors renovate's adoptium fetching (modules/datasource/java-version/adoptium.js, renovate 44.53.0)
+// with the `lts` query parameter added, which renovate does not expose
+class LtsFilteringJavaVersionDatasource extends (JavaVersionDatasource as JavaVersionDatasourceBase) {
+
+    constructor(private readonly lts: boolean) {
+        super()
+
+        // Fail loudly when renovate changes its adoptium internals
+        // instead of silently diverging from them
+        const renovateGetReleases = JavaVersionDatasource.prototype._getReleases.toString()
+        if (!renovateGetReleases.includes('getAdoptiumReleases')) {
+            throw new Error(
+                'renovate JavaVersionDatasource no longer fetches via getAdoptiumReleases,'
+                + ' review LtsFilteringJavaVersionDatasource',
+            )
+        }
+    }
+
+    async _getReleases({ packageName }: GetReleasesConfig): Promise<ReleaseResult | null> {
+        const pkgConfig = parsePackage(packageName)
+        let url = `${adoptiumRegistryUrl}v3/info/release_versions`
+            + `?page_size=${adoptiumPageSize}`
+            + `&image_type=${pkgConfig.imageType}&project=jdk&release_type=ga`
+            + `&sort_method=DATE&sort_order=DESC`
+            + `&lts=${this.lts}`
+        if (pkgConfig.architecture) url += `&architecture=${pkgConfig.architecture}`
+        if (pkgConfig.os) url += `&os=${pkgConfig.os}`
+
+        const result: ReleaseResult = {
+            homepage: 'https://adoptium.net',
+            releases: [],
+        }
+
+        try {
+            let page = 0
+            let releases = await this.getPageReleases(url, page)
+            while (releases) {
+                result.releases.push(...releases)
+                if (releases.length !== adoptiumPageSize || page >= adoptiumPageSize) {
+                    break
+                }
+                page += 1
+                releases = await this.getPageReleases(url, page)
+            }
+        } catch (err) {
+            this.handleGenericErrors(err)
+            return null
+        }
+
+        return result.releases.length ? result : null
+    }
+
+    private async getPageReleases(url: string, page: number): Promise<Release[] | null> {
+        try {
+            const body = (await this.http.getJson(`${url}&page=${page}`, AdoptiumJavaResponse))?.body
+            return body?.versions?.map(({ semver }: any) => ({ version: semver })) ?? null
+        } catch (err) {
+            // Adoptium returns 404 for pages beyond the last one
+            if (page !== 0 && err instanceof RequestError && (err as any).response?.statusCode === 404) {
+                return null
+            }
+            throw err
+        }
+    }
+
+}
+
+function createDatasource(lts: boolean): RenovateDatasourceSimple {
+    const datasource = new LtsFilteringJavaVersionDatasource(lts)
 
     class WrappedDatasource extends RenovateDatasourceSimpleWrapper {
         constructor(delegate: RenovateDatasourceSimple) {
