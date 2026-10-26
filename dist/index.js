@@ -393283,7 +393283,7 @@ var GradleVersionDatasource = class GradleVersionDatasource extends datasource/*
 
 /***/ }),
 
-/***/ 46512:
+/***/ 7408:
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __nccwpck_require__) => {
 
 // ESM COMPAT FLAG
@@ -394489,7 +394489,7 @@ var ApkDatasource = class ApkDatasource extends datasource/* Datasource */.y {
 
 
 //# sourceMappingURL=index.js.map
-;// CONCATENATED MODULE: ./node_modules/node-html-parser/dist/index.mjs
+;// CONCATENATED MODULE: ./node_modules/renovate/node_modules/node-html-parser/dist/index.mjs
 //#region \0rolldown/runtime.js
 var __create = Object.create;
 var __defProp = Object.defineProperty;
@@ -403962,7 +403962,7 @@ const allToolConfig = {
 };
 let _getPkgReleases = null;
 async function getPkgReleases(toolConfig) {
-	_getPkgReleases ??= Promise.resolve(/* import() */).then(__nccwpck_require__.bind(__nccwpck_require__, 46512));
+	_getPkgReleases ??= Promise.resolve(/* import() */).then(__nccwpck_require__.bind(__nccwpck_require__, 7408));
 	const { getPkgReleases } = await _getPkgReleases;
 	return getPkgReleases(toolConfig);
 }
@@ -486534,7 +486534,7 @@ var host_rules = __nccwpck_require__(80269);
 // EXTERNAL MODULE: ./node_modules/renovate/dist/util/regex.js
 var regex = __nccwpck_require__(8766);
 // EXTERNAL MODULE: ./node_modules/renovate/dist/modules/datasource/index.js + 298 modules
-var datasource = __nccwpck_require__(46512);
+var datasource = __nccwpck_require__(7408);
 ;// CONCATENATED MODULE: ./node_modules/renovate/dist/workers/global/config/parse/host-rules-from-env.js
 
 
