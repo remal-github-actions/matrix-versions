@@ -37,7 +37,7 @@ class LtsFilteringJavaVersionDatasource extends (JavaVersionDatasource as JavaVe
 
         // Fail loudly when renovate changes its adoptium internals
         // instead of silently diverging from them
-        const renovateGetReleases = JavaVersionDatasource.prototype._getReleases.toString()
+        const renovateGetReleases = JavaVersionDatasource.prototype.fetchReleases.toString()
         if (!renovateGetReleases.includes('getAdoptiumReleases')) {
             throw new Error(
                 'renovate JavaVersionDatasource no longer fetches via getAdoptiumReleases,'
@@ -46,7 +46,7 @@ class LtsFilteringJavaVersionDatasource extends (JavaVersionDatasource as JavaVe
         }
     }
 
-    async _getReleases({ packageName }: GetReleasesConfig): Promise<ReleaseResult | null> {
+    async fetchReleases({ packageName }: GetReleasesConfig): Promise<ReleaseResult | null> {
         const pkgConfig = parsePackage(packageName)
         let url = `${adoptiumRegistryUrl}v3/info/release_versions`
             + `?page_size=${adoptiumPageSize}`

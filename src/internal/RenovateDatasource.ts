@@ -4,7 +4,7 @@ export interface RenovateDatasourceSimple {
 
     getReleases(config: GetReleasesConfig): Promise<ReleaseResult | null>
 
-    defaultRegistryUrls?: string[] | (() => string[])
+    getDefaultRegistryUrls?(packageName: string): string[] | undefined
 
     defaultVersioning?: string
 
@@ -21,8 +21,8 @@ export class RenovateDatasourceSimpleWrapper implements RenovateDatasourceSimple
         return this.delegate.getReleases(config)
     }
 
-    get defaultRegistryUrls(): string[] | (() => string[]) | undefined {
-        return this.delegate.defaultRegistryUrls
+    getDefaultRegistryUrls(packageName: string): string[] | undefined {
+        return this.delegate.getDefaultRegistryUrls?.(packageName)
     }
 
     get defaultVersioning(): string | undefined {
@@ -68,8 +68,8 @@ export class RenovateDatasourceSimpleComposite implements RenovateDatasourceSimp
         )
     }
 
-    get defaultRegistryUrls(): string[] | (() => string[]) | undefined {
-        return this.primaryDatasource.defaultRegistryUrls
+    getDefaultRegistryUrls(packageName: string): string[] | undefined {
+        return this.primaryDatasource.getDefaultRegistryUrls?.(packageName)
     }
 
     get defaultVersioning(): string | undefined {
