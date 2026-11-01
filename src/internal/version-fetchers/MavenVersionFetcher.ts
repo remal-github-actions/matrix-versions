@@ -1,6 +1,5 @@
 import { MavenDatasource } from 'renovate/dist/modules/datasource/maven/index.js'
 import { RenovateDatasourceSimple, RenovateDatasourceSimpleWrapper } from '../RenovateDatasource.js'
-import { isFunction } from '../utils.js'
 import { VersionFetcherRenovateDatasource } from './VersionFetcherRenovateDatasource.js'
 
 // Google's Maven Central mirror, queried before Maven Central itself.
@@ -10,10 +9,8 @@ function createDatasource(): RenovateDatasourceSimple {
     const datasource = new MavenDatasource()
 
     class WrappedDatasource extends RenovateDatasourceSimpleWrapper {
-        get defaultRegistryUrls(): string[] | (() => string[]) | undefined {
-            const delegateUrls = super.defaultRegistryUrls ?? []
-            const urls = isFunction(delegateUrls) ? delegateUrls() : delegateUrls
-            return [GOOGLE_MAVEN_CENTRAL_MIRROR, ...urls]
+        getDefaultRegistryUrls(packageName: string): string[] | undefined {
+            return [GOOGLE_MAVEN_CENTRAL_MIRROR, ...super.getDefaultRegistryUrls(packageName) ?? []]
         }
     }
 

@@ -3,7 +3,7 @@ import * as versionings from 'renovate/dist/modules/versioning/index.js'
 import { Versioning } from '../config.js'
 import { RenovateDatasourceSimple } from '../RenovateDatasource.js'
 import { RenovateReleaseFilter } from '../RenovateReleaseFilter.js'
-import { isFunction, isNotEmpty, onlyUniqueBy } from '../utils.js'
+import { isNotEmpty, onlyUniqueBy } from '../utils.js'
 import { VersionFetcher, VersionFetchParams } from './VersionFetcher.js'
 
 export abstract class VersionFetcherRenovateDatasource extends VersionFetcher {
@@ -31,12 +31,7 @@ export abstract class VersionFetcherRenovateDatasource extends VersionFetcher {
 
         let repositories = params.repositories ?? []
         if (!repositories.length) {
-            const defaultRepositories = this.renovateDatasource.defaultRegistryUrls ?? []
-            if (isFunction(defaultRepositories)) {
-                repositories = defaultRepositories()
-            } else {
-                repositories = defaultRepositories
-            }
+            repositories = this.renovateDatasource.getDefaultRegistryUrls?.(dependency ?? '') ?? []
         }
         if (!isNotEmpty(repositories)) {
             throw new Error('No repositories passed')

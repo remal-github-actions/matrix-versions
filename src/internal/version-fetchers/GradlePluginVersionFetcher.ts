@@ -16,7 +16,7 @@ function createDatasource(): RenovateDatasourceSimple {
             return super.getReleases(config)
         }
 
-        get defaultRegistryUrls(): string[] | (() => string[]) | undefined {
+        getDefaultRegistryUrls(_packageName: string): string[] | undefined {
             return ['https://plugins.gradle.org/m2']
         }
     }
