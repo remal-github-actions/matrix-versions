@@ -44,6 +44,7 @@ export type StaticVersioning =
   | "github-actions"
   | "glasskube"
   | "go-mod-directive"
+  | "gomod"
   | "gradle"
   | "hashicorp"
   | "helm"
