@@ -378105,7 +378105,7 @@ const globalConfigOptionDefaults = {
 	"detectHostRulesFromEnv": false,
 	"dockerChildPrefix": "renovate_",
 	"dockerMaxPages": 20,
-	"dockerSidecarImage": "ghcr.io/renovatebot/base-image:13.142.11",
+	"dockerSidecarImage": "ghcr.io/renovatebot/base-image:13.149.0",
 	"dockerUser": "12021",
 	"executionTimeout": 15,
 	"exitCodeForErrors": false,
@@ -379705,7 +379705,7 @@ var GradleVersionDatasource = class GradleVersionDatasource extends datasource/*
 
 /***/ }),
 
-/***/ 40526:
+/***/ 14417:
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __nccwpck_require__) => {
 
 // ESM COMPAT FLAG
@@ -380913,9 +380913,12 @@ var ApkDatasource = class ApkDatasource extends datasource/* Datasource */.y {
 			namespace: `datasource-${ApkDatasource.id}`,
 			key: componentUrl,
 			ttlMinutes: 60,
-			fallback: true,
-			shouldCacheResult: distribution/* isNonEmptyObject */.u7p
-		}, () => this._getPackages(componentUrl));
+			fallback: true
+		}, async (ctx) => {
+			const packages = await this._getPackages(componentUrl);
+			ctx.cacheable = (0,distribution/* isNonEmptyObject */.u7p)(packages);
+			return packages;
+		});
 	}
 	/**
 	* Gets releases for a specific package from APK repositories
@@ -386600,7 +386603,7 @@ var AzureBicepResourceDatasource = class AzureBicepResourceDatasource extends da
 		return this.cached({
 			key: (0,package_key/* buildCacheKey */.S)("getReleases", config.packageName),
 			fallback: true,
-			cacheable: true
+			public: true
 		}, () => this.fetchReleases(config));
 	}
 	async fetchResourceVersionIndex() {
@@ -386611,7 +386614,7 @@ var AzureBicepResourceDatasource = class AzureBicepResourceDatasource extends da
 		return this.cached({
 			key: "getResourceVersionIndex",
 			ttlMinutes: 1440,
-			cacheable: true
+			public: true
 		}, () => this.fetchResourceVersionIndex());
 	}
 };
@@ -386853,25 +386856,21 @@ var GitHostTagsDatasource = class extends datasource/* Datasource */.y {
 		return registryUrl ?? this.getDefaultRegistryUrls("")[0];
 	}
 	/**
-	* Whether the lookups against `registryUrl` may be stored in the package
-	* cache. `registryUrl` is always the URL returned by
-	* {@link GitHostTagsDatasource.getRegistryUrl}.
+	* Whether data from `registryUrl` may be shared through the package cache.
+	* Accepts the URL returned by {@link GitHostTagsDatasource.getRegistryUrl}.
 	*/
-	isCacheable(_registryUrl) {
+	isPublic(_registryUrl) {
 		return true;
 	}
 	/**
-	* Returns the result of `fn`, stored in the package cache under `key` when
-	* {@link GitHostTagsDatasource.isCacheable} or `cachePrivatePackages` allows
-	* it. A subclass whose API client caches the lookups itself overrides it to
-	* call `fn` directly.
+	* Override to bypass package caching when the API client already caches responses.
 	*/
 	cachedLookup(registryUrl, key, fn) {
-		const cacheable = this.isCacheable(this.getRegistryUrl(registryUrl));
+		const isPublic = this.isPublic(this.getRegistryUrl(registryUrl));
 		return this.cached({
 			key,
 			fallback: true,
-			cacheable
+			public: isPublic
 		}, fn);
 	}
 	getCacheKey(registryUrl, repo, type, tag) {
@@ -388484,6 +388483,12 @@ const GithubError = schemas/* object */.Ikc({
 * into an array of error objects, dropping anything that doesn't fit.
 */
 const GithubErrors = schemas/* union */.KCZ([(0,schema_utils/* LooseArray */.e$)(GithubError), GithubError.transform((error) => [error])]).catch([]);
+/**
+* Whether `err` is GitHub's response to creating a PR for a branch which already has one, usually because a different user created it so Renovate could not find it.
+*/
+function isPrAlreadyExistsError(err) {
+	return err?.response?.statusCode === 422 && GithubErrors.parse(err.response.body?.errors).some((e) => e.message?.startsWith("A pull request already exists"));
+}
 function handleGotError(err, url, opts) {
 	const path = url.toString();
 	let message = err.message || "";
@@ -388548,7 +388553,7 @@ function handleGotError(err, url, opts) {
 			dist_logger/* logger */.vF.debug({ err }, "Received invalid response - aborting");
 			return new Error(error_messages/* REPOSITORY_CHANGED */.uh);
 		}
-		if (errors.some((e) => e.message?.startsWith("A pull request already exists"))) return err;
+		if (isPrAlreadyExistsError(err)) return err;
 		dist_logger/* logger */.vF.debug({ err }, "422 Error thrown from GitHub");
 		return new external_host_error/* ExternalHostError */.q(err, "github");
 	}
@@ -389140,7 +389145,7 @@ var BuildpacksRegistryDatasource = class BuildpacksRegistryDatasource extends da
 		return (0,with_cache/* withCache */.n)({
 			namespace: `datasource-${BuildpacksRegistryDatasource.id}`,
 			key: (0,package_key/* buildCacheKey */.S)(config.registryUrl, config.packageName),
-			cacheable: true,
+			public: true,
 			fallback: true
 		}, () => this._getReleases(config));
 	}
@@ -389242,7 +389247,7 @@ var CdnjsDatasource = class CdnjsDatasource extends datasource/* Datasource */.y
 		return (0,with_cache/* withCache */.n)({
 			namespace: `datasource-${CdnjsDatasource.id}`,
 			key: (0,package_key/* buildCacheKey */.S)("getReleases", library),
-			cacheable: true,
+			public: true,
 			fallback: true
 		}, () => this._getReleases(config));
 	}
@@ -389259,7 +389264,7 @@ var CdnjsDatasource = class CdnjsDatasource extends datasource/* Datasource */.y
 		return (0,with_cache/* withCache */.n)({
 			namespace: `datasource-${CdnjsDatasource.id}`,
 			key: (0,package_key/* buildCacheKey */.S)("getDigest", config.registryUrl, config.packageName, newValue),
-			cacheable: true,
+			public: true,
 			fallback: true
 		}, () => this._getDigest(config, newValue));
 	}
@@ -389771,7 +389776,7 @@ var CpanDatasource = class CpanDatasource extends datasource/* Datasource */.y {
 		return (0,with_cache/* withCache */.n)({
 			namespace: `datasource-${CpanDatasource.id}`,
 			key: config.packageName,
-			cacheable: true,
+			public: true,
 			fallback: true
 		}, () => this._getReleases(config));
 	}
@@ -390825,6 +390830,103 @@ async function validateContainerbaseVersion(file = containerbaseVersionFile) {
     return imageVersion;
 }
 
+;// CONCATENATED MODULE: ./node_modules/@containerbase/base/dist/logger.js
+const noop = () => {
+    // logging is off
+};
+const silentLogger = {
+    trace: noop,
+    debug: noop,
+    info: noop,
+    warn: noop,
+    error: noop,
+};
+let current = (/* unused pure expression or super */ null && (silentLogger));
+/**
+ * Configures the package, eg. sets the logger its functions log to. Options
+ * which are left out are reset to their defaults.
+ *
+ * @param options the options to set
+ */
+function configure(options = {}) {
+    current = options.logger ?? silentLogger;
+}
+/** The logger set by `configure`, a silent one by default. */
+function getLogger() {
+    return current;
+}
+
+// EXTERNAL MODULE: ./node_modules/semver/functions/gt.js
+var functions_gt = __nccwpck_require__(16599);
+// EXTERNAL MODULE: ./node_modules/semver/functions/valid.js
+var functions_valid = __nccwpck_require__(58780);
+;// CONCATENATED MODULE: ./node_modules/@containerbase/base/dist/min-cb.js
+
+
+
+
+/**
+ * Filters the versions of a tool by the `minCb` ranges of its data, to the
+ * releases the given containerbase version can install.
+ *
+ * The data lists the newest release first. A range covers its `version` and
+ * every version above it in the data, prereleases count for the position. A
+ * range whose `version` is not listed is ignored. A range is met when its `cb`
+ * is valid semver and the containerbase version is the same or newer, a `cb`
+ * which is not valid semver is never met. A containerbase version which is not
+ * a release, like the development build `0.0.0-PLACEHOLDER`, skips the filter.
+ * @param data - the tool-versions data of a tool
+ * @param cbVersion - the containerbase version
+ * @returns the installable `versions` in the order of the data, and the `cb`
+ * values of the unmet ranges as `needed`
+ */
+function filterByMinCb(data, cbVersion) {
+    // the versions up to this index need a newer containerbase: a range which
+    // isn't met covers all versions from its start up to the newest one
+    let unmet = -1;
+    const needed = [];
+    if (isReleaseVersion(cbVersion)) {
+        for (const range of data.minCb ?? []) {
+            const start = data.versions.findIndex((v) => v.version === range.version);
+            if (start >= 0 &&
+                !(semverValid(range.cb) !== null && semverGte(cbVersion, range.cb))) {
+                unmet = Math.max(unmet, start);
+                needed.push(range.cb);
+            }
+        }
+    }
+    return { versions: data.versions.slice(unmet + 1), needed };
+}
+/**
+ * Lists the containerbase version each tool version needs, by the `minCb`
+ * ranges of its data.
+ *
+ * The data lists the newest release first. A range covers its `version` and
+ * every version above it in the data, prereleases count for the position. A
+ * range whose `version` is not listed is ignored. A version covered by several
+ * ranges needs the newest `cb`, a `cb` which is not valid semver is never met
+ * and so wins over the valid ones, the first of several invalid ones is kept.
+ * @param data - the tool-versions data of a tool
+ * @returns the needed `cb` by version, versions without a covering range are
+ * not listed
+ */
+function minCbByVersion(data) {
+    const result = new Map();
+    for (const range of data.minCb ?? []) {
+        const start = data.versions.findIndex((v) => v.version === range.version);
+        for (let i = 0; i <= start; i++) {
+            const version = data.versions[i].version;
+            const current = result.get(version);
+            if (current === undefined ||
+                (semverValid(current) !== null &&
+                    (semverValid(range.cb) === null || semverGt(range.cb, current)))) {
+                result.set(version, range.cb);
+            }
+        }
+    }
+    return result;
+}
+
 ;// CONCATENATED MODULE: ./node_modules/@containerbase/base/dist/tool-versions-format.js
 /**
  * The major version of the tool-versions format the schemas of this package
@@ -390914,6 +391016,9 @@ function replaceUrl(url, replacements, cdn) {
 }
 
 ;// CONCATENATED MODULE: ./node_modules/@containerbase/base/dist/index.js
+
+
+
 
 
 
@@ -391200,6 +391305,11 @@ const allToolConfig = {
 		packageName: "npm",
 		versioning: "npm"
 	},
+	paket: {
+		datasource: "nuget",
+		packageName: "paket",
+		versioning: "paket"
+	},
 	pdm: {
 		datasource: "github-releases",
 		packageName: "pdm-project/pdm",
@@ -391290,7 +391400,7 @@ function getSupportedToolNames() {
 }
 let _getPkgReleases = null;
 async function getPkgReleases(toolConfig, resolvedTools = {}) {
-	_getPkgReleases ??= Promise.resolve(/* import() */).then(__nccwpck_require__.bind(__nccwpck_require__, 40526));
+	_getPkgReleases ??= Promise.resolve(/* import() */).then(__nccwpck_require__.bind(__nccwpck_require__, 14417));
 	const { getPkgReleases } = await _getPkgReleases;
 	if (Object.keys(resolvedTools).length) {
 		const compatible = await getPkgReleases({
@@ -398954,12 +399064,12 @@ const abortStream = stream => {
 // We take care of error handling on user behalf, so we do not want this to happen.
 const errorStream = (stream, error) => {
 	if (!stream.destroyed) {
-		stream.once('error', noop);
+		stream.once('error', merge_streams_noop);
 		stream.destroy(error);
 	}
 };
 
-const noop = () => {};
+const merge_streams_noop = () => {};
 
 const updateMaxListeners = (passThroughStream, increment) => {
 	const maxListeners = passThroughStream.getMaxListeners();
@@ -407329,7 +407439,7 @@ var CrateDatasource = class CrateDatasource extends datasource/* Datasource */.y
 		return (0,with_cache/* withCache */.n)({
 			namespace: `datasource-${CrateDatasource.id}`,
 			key: (0,package_key/* buildCacheKey */.S)(config.registryUrl, config.packageName),
-			cacheable: CrateDatasource.isCratesIo(config.registryUrl),
+			public: CrateDatasource.isCratesIo(config.registryUrl),
 			fallback: true
 		}, () => this._getReleases(config));
 	}
@@ -407438,7 +407548,7 @@ var CrateDatasource = class CrateDatasource extends datasource/* Datasource */.y
 		return (0,with_cache/* withCache */.n)({
 			namespace: `datasource-${CrateDatasource.id}-metadata`,
 			key: (0,package_key/* buildCacheKey */.S)(info.rawUrl, packageName),
-			cacheable: info.flavor === "crates.io",
+			public: info.flavor === "crates.io",
 			ttlMinutes: 1440
 		}, () => this._getCrateMetadata(info, packageName));
 	}
@@ -407644,7 +407754,7 @@ var CrateDatasource = class CrateDatasource extends datasource/* Datasource */.y
 			namespace: `datasource-crate`,
 			key: (0,package_key/* buildCacheKey */.S)("postprocessRelease", config.registryUrl, config.packageName, release.version),
 			ttlMinutes: 10080,
-			cacheable: CrateDatasource.isCratesIo(config.registryUrl ?? void 0)
+			public: CrateDatasource.isCratesIo(config.registryUrl ?? void 0)
 		}, () => this._postprocessRelease(config, release));
 	}
 };
@@ -409785,9 +409895,12 @@ var DockerDatasource = class DockerDatasource extends datasource/* Datasource */
 		return (0,with_cache/* withCache */.n)({
 			namespace: "datasource-docker-architecture",
 			key: (0,package_key/* buildCacheKey */.S)(registryHost, dockerRepository, currentDigest),
-			ttlMinutes: 40320,
-			shouldCacheResult: distribution/* isNonEmptyString */.uIM
-		}, () => this._getImageArchitecture(registryHost, dockerRepository, currentDigest));
+			ttlMinutes: 40320
+		}, async (ctx) => {
+			const architecture = await this._getImageArchitecture(registryHost, dockerRepository, currentDigest);
+			ctx.cacheable = (0,distribution/* isNonEmptyString */.uIM)(architecture);
+			return architecture;
+		});
 	}
 	async _getLabels(registryHost, dockerRepository, tag) {
 		dist_logger/* logger */.vF.debug(`getLabels(${registryHost}, ${dockerRepository}, ${tag})`);
@@ -410042,7 +410155,7 @@ var DockerDatasource = class DockerDatasource extends datasource/* Datasource */
 		return (0,with_cache/* withCache */.n)({
 			namespace: "datasource-docker-tags",
 			key: (0,package_key/* buildCacheKey */.S)(registryHost, dockerRepository),
-			cacheable: registryHost === DOCKER_HUB
+			public: registryHost === DOCKER_HUB
 		}, () => this._getTags(registryHost, dockerRepository));
 	}
 	/**
@@ -410140,9 +410253,12 @@ var DockerDatasource = class DockerDatasource extends datasource/* Datasource */
 		return (0,with_cache/* withCache */.n)({
 			namespace: "datasource-docker-digest",
 			key: (0,package_key/* buildCacheKey */.S)(registryHost, dockerRepository, newTag, config.currentDigest),
-			fallback: true,
-			shouldCacheResult: distribution/* isNonEmptyString */.uIM
-		}, () => this._getDigest(config, newValue));
+			fallback: true
+		}, async (ctx) => {
+			const digest = await this._getDigest(config, newValue);
+			ctx.cacheable = (0,distribution/* isNonEmptyString */.uIM)(digest);
+			return digest;
+		});
 	}
 	async _getDockerHubTags(dockerRepository) {
 		let url = `https://hub.docker.com/v2/repositories/${dockerRepository}/tags?page_size=1000&ordering=last_updated`;
@@ -410227,7 +410343,7 @@ var DockerDatasource = class DockerDatasource extends datasource/* Datasource */
 		return (0,with_cache/* withCache */.n)({
 			namespace: "datasource-docker-releases-v2",
 			key: (0,package_key/* buildCacheKey */.S)(registryHost, dockerRepository),
-			cacheable: registryHost === DOCKER_HUB,
+			public: registryHost === DOCKER_HUB,
 			fallback: true
 		}, () => this._getReleases(config));
 	}
@@ -410303,7 +410419,7 @@ var DotnetVersionDatasource = class DotnetVersionDatasource extends datasource/*
 			key: config.packageName,
 			ttlMinutes: 1440,
 			fallback: true,
-			cacheable: true
+			public: true
 		}, () => this.fetchReleases(config));
 	}
 	async fetchChannelReleases(releaseUrl, packageName) {
@@ -410314,7 +410430,7 @@ var DotnetVersionDatasource = class DotnetVersionDatasource extends datasource/*
 		return this.cached({
 			key: (0,package_key/* buildCacheKey */.S)(releaseUrl, packageName),
 			ttlMinutes: 1440,
-			cacheable: true
+			public: true
 		}, () => this.fetchChannelReleases(releaseUrl, packageName));
 	}
 };
@@ -410380,7 +410496,7 @@ var ElmPackageDatasource = class ElmPackageDatasource extends datasource/* Datas
 			namespace: `datasource-${ElmPackageDatasource.id}`,
 			key: (0,package_key/* buildCacheKey */.S)(config.registryUrl, config.packageName),
 			fallback: true,
-			cacheable: true
+			public: true
 		}, () => this._getReleases(config));
 	}
 };
@@ -410674,11 +410790,9 @@ var GiteaDatasource = class GiteaDatasource extends GitHostTagsDigestDatasource 
 		return util_getSourceUrl(packageName, this.getRegistryUrl(registryUrl));
 	}
 	/**
-	* Only results from the public default instance may be written to the
-	* shared package cache; a self-hosted instance may serve private
-	* repositories.
+	* Self-hosted instances can serve private repositories.
 	*/
-	isCacheable(registryUrl) {
+	isPublic(registryUrl) {
 		return (0,util_url/* parseUrl */.Dl)(registryUrl)?.hostname === (0,util_url/* parseUrl */.Dl)(this.getDefaultRegistryUrls("")[0])?.hostname;
 	}
 	async fetchTagCommit(registryUrl, repo, tag) {
@@ -410931,7 +411045,7 @@ var GalaxyDatasource = class GalaxyDatasource extends datasource/* Datasource */
 		return (0,with_cache/* withCache */.n)({
 			namespace: "datasource-galaxy",
 			key: config.packageName,
-			cacheable: true,
+			public: true,
 			fallback: true
 		}, () => this._getReleases(config));
 	}
@@ -413231,7 +413345,7 @@ const publicGoproxyUrl = "https://proxy.golang.org";
 *
 * An unset `GOPROXY` is the default, so it is public too.
 *
-* A `hostType: go` host rule with credentials for the module's host is also a declaration that the module is private, as it can't be read without them.
+* A `hostType: go` (or `go-proxy`) host rule with credentials for the module's host is also a declaration that the module is private, as it can't be read without them.
 *
 * @see https://go.dev/ref/mod#private-modules
 */
@@ -413240,7 +413354,7 @@ function isPublicProxy({ url }) {
 }
 function hasGoHostRuleCredentials(packageName) {
 	const url = `https://${packageName}`;
-	return (0,host_rules/* findAll */.JW)({ hostType: "go" }).some((rule) => (!rule.matchHost || (0,host_rules/* matchesHost */.qC)(url, rule.matchHost)) && [
+	return [...(0,host_rules/* findAll */.JW)({ hostType: "go" }), ...(0,host_rules/* findAll */.JW)({ hostType: "go-proxy" })].some((rule) => (!rule.matchHost || (0,host_rules/* matchesHost */.qC)(url, rule.matchHost)) && [
 		rule.token,
 		rule.password,
 		rule.httpsPrivateKey
@@ -413381,7 +413495,7 @@ var GoDirectDatasource = class GoDirectDatasource extends datasource/* Datasourc
 		return (0,with_cache/* withCache */.n)({
 			namespace: `datasource-${GoDirectDatasource.id}`,
 			key: config.packageName,
-			cacheable: isPublicGoPackage(config.packageName),
+			public: isPublicGoPackage(config.packageName),
 			fallback: true
 		}, () => this._getReleases(config));
 	}
@@ -413653,7 +413767,7 @@ var GoProxyDatasource = class GoProxyDatasource extends datasource/* Datasource 
 		return (0,with_cache/* withCache */.n)({
 			namespace: `datasource-${GoProxyDatasource.id}`,
 			key: GoProxyDatasource.getCacheKey(config),
-			cacheable: isPublicGoPackage(config.packageName),
+			public: isPublicGoPackage(config.packageName),
 			fallback: true
 		}, () => this._getReleases(config));
 	}
@@ -413695,7 +413809,7 @@ var GoProxyDatasource = class GoProxyDatasource extends datasource/* Datasource 
 			namespace: `datasource-${GoProxyDatasource.id}`,
 			key: GoProxyDatasource.getVersionedCacheKey(packageName, version),
 			ttlMinutes: 144e3,
-			cacheable: isPublicGoPackage(packageName)
+			public: isPublicGoPackage(packageName)
 		}, () => this._retrieveGoDirectiveForModule(baseUrl, packageName, version));
 	}
 	async _retrieveGoDirectiveForModule(baseUrl, packageName, version) {
@@ -413872,7 +413986,7 @@ var GoDatasource = class GoDatasource extends datasource/* Datasource */.y {
 		return (0,with_cache/* withCache */.n)({
 			namespace: `datasource-${GoDatasource.id}`,
 			key: (0,package_key/* buildCacheKey */.S)("getReleases", config.packageName, constraintsFilteringKey),
-			cacheable: isPublicGoPackage(config.packageName),
+			public: isPublicGoPackage(config.packageName),
 			fallback: true
 		}, () => this._getReleases(config));
 	}
@@ -413909,7 +414023,7 @@ var GoDatasource = class GoDatasource extends datasource/* Datasource */.y {
 		return (0,with_cache/* withCache */.n)({
 			namespace: `datasource-${GoDatasource.id}`,
 			key: (0,package_key/* buildCacheKey */.S)("getDigest", config.packageName, newValue),
-			cacheable: isPublicGoPackage(config.packageName),
+			public: isPublicGoPackage(config.packageName),
 			fallback: true
 		}, () => this._getDigest(config, newValue));
 	}
@@ -414886,7 +415000,7 @@ var HexDatasource = class HexDatasource extends datasource/* Datasource */.y {
 		return (0,with_cache/* withCache */.n)({
 			namespace: `datasource-${HexDatasource.id}`,
 			key: (0,package_key/* buildCacheKey */.S)(registryUrl, config.packageName),
-			cacheable: isDefault,
+			public: isDefault,
 			fallback: true
 		}, () => this._getReleases(config));
 	}
@@ -415237,7 +415351,7 @@ var JsrDatasource = class JsrDatasource extends datasource/* Datasource */.y {
 		return (0,with_cache/* withCache */.n)({
 			namespace: `datasource-${JsrDatasource.id}`,
 			key: (0,package_key/* buildCacheKey */.S)("getReleases", config.registryUrl, config.packageName),
-			cacheable: true,
+			public: true,
 			fallback: true
 		}, () => this._getReleases(config));
 	}
@@ -416039,7 +416153,7 @@ var PackagistDatasource = class PackagistDatasource extends datasource/* Datasou
 			namespace: `datasource-${PackagistDatasource.id}`,
 			key: (0,package_key/* buildCacheKey */.S)("getPackagistFile", PackagistDatasource.getPackagistFileUrl(regUrl, regFile)),
 			ttlMinutes: 1440,
-			cacheable: !PackagistDatasource.isPrivatePackage(regUrl)
+			public: !PackagistDatasource.isPrivatePackage(regUrl)
 		}, () => this._getPackagistFile(regUrl, regFile));
 	}
 	async fetchProviderPackages(regUrl, meta) {
@@ -417294,7 +417408,7 @@ var RubyVersionDatasource = class RubyVersionDatasource extends datasource/* Dat
 	getReleases(config) {
 		return this.cached({
 			key: "all",
-			cacheable: true,
+			public: true,
 			fallback: true
 		}, () => this.fetchReleases(config));
 	}
@@ -417760,7 +417874,7 @@ var RubygemsDatasource = class RubygemsDatasource extends datasource/* Datasourc
 		return this.cached({
 			key: (0,package_key/* buildCacheKey */.S)("releases", config.registryUrl, config.packageName),
 			fallback: true,
-			cacheable: registryHostname === "rubygems.org"
+			public: registryHostname === "rubygems.org"
 		}, () => this.fetchReleases(config));
 	}
 	getReleasesViaInfoEndpoint(registryUrl, packageName) {
@@ -417878,7 +417992,7 @@ var RustVersionDatasource = class RustVersionDatasource extends datasource/* Dat
 	getReleases(config) {
 		return this.cached({
 			key: config.registryUrl,
-			cacheable: true
+			public: true
 		}, () => this.fetchReleases(config));
 	}
 };
@@ -418887,7 +419001,7 @@ var TypstDatasource = class TypstDatasource extends datasource/* Datasource */.y
 			namespace: `datasource-${TypstDatasource.id}:registry-releases`,
 			key: config.packageName,
 			fallback: true,
-			cacheable: true
+			public: true
 		}, () => this._getReleases(config));
 	}
 };
@@ -419342,7 +419456,6 @@ function applyConstraintsFiltering(releaseResult, config) {
 		return releaseResult;
 	}
 	const versioningName = config.versioning ?? getDefaultVersioning(config.datasource);
-	const versioning = (0,modules_versioning.get)(versioningName);
 	const configConstraints = config.constraints;
 	const filteredReleases = [];
 	const startingLength = releaseResult.releases.length;
@@ -419422,13 +419535,7 @@ function applyConstraintsFiltering(releaseResult, config) {
 					versioning: constraintVersioningName,
 					releaseConstraint
 				}, `applyConstraintsFiltering(${release.version}): constraintVersioning.isValid(${releaseConstraint})=${isValidConstraintVersion}`);
-				const isValidVersion = versioning.isValid(releaseConstraint);
-				dist_logger/* logger */.vF.trace({
-					release,
-					versioning: constraintVersioningName,
-					releaseConstraint
-				}, `applyConstraintsFiltering(${release.version}): versioning.isValid(${releaseConstraint})=${isValidVersion}`);
-				if (!isValidVersion || !isValidConstraintVersion) {
+				if (!isValidConstraintVersion) {
 					dist_logger/* logger */.vF.once.debug({
 						packageName: config.packageName,
 						versioning: constraintVersioningName,
@@ -420162,7 +420269,7 @@ var JavaVersionDatasource = class extends datasource/* Datasource */.y {
 	getReleases(config) {
 		return this.cached({
 			key: (0,key/* buildCacheKey */.S)(config.registryUrl, config.packageName),
-			cacheable: true,
+			public: true,
 			fallback: true
 		}, () => this.fetchReleases(config));
 	}
@@ -429761,7 +429868,7 @@ var node_js_schedule_default = {
 	v27: {
 		"alpha": "2026-10-28",
 		"start": "2027-04-22",
-		"maintenance": "2027-10-20",
+		"lts": "2027-10-20",
 		"end": "2030-04-30",
 		"codename": ""
 	}
@@ -429831,8 +429938,7 @@ function isStable(version) {
 	if (!npm/* api */.FH.isStable(version)) return false;
 	const schedule = findScheduleForVersion(version);
 	if (!schedule) return false;
-	let ltsStart = schedule.lts;
-	if (schedule.alpha) ltsStart = schedule.maintenance;
+	const ltsStart = schedule.lts;
 	if (!ltsStart) return false;
 	return luxon/* DateTime */.c9.local() > luxon/* DateTime */.c9.fromISO(ltsStart);
 }
@@ -434382,7 +434488,7 @@ var external_node_module_ = __nccwpck_require__(98995);
 
 //#region \0rolldown/runtime.js
 var __defProp = Object.defineProperty;
-var __commonJSMin = (cb, mod) => () => (mod || (cb((mod = { exports: {} }).exports, mod), cb = null), mod.exports);
+var __commonJSMin = (cb, mod) => () => (mod || (cb((mod = { exports: {} }).exports, mod, mod.exports), cb = null), mod.exports);
 var __exportAll = (all, no_symbols) => {
 	let target = {};
 	for (var name in all) __defProp(target, name, {
@@ -435640,21 +435746,25 @@ function resolveTtlValues(namespace, ttlMinutes) {
 
 //#region lib/util/cache/package/with-cache.ts
 /**
-* Caches the result of an async function.
+* Caches the result of a function.
 *
 * @param options - Cache options
-* @param fn - The async function to cache
+* @param fn - The function to cache
 * @returns The cached or fresh result
 */
 async function withCache(options, fn) {
-	const { namespace, key, ttlMinutes = 30, cacheable = true, fallback = false } = options;
-	if (!(_config_global_js__WEBPACK_IMPORTED_MODULE_0__/* .GlobalConfig */ .e.get("cachePrivatePackages") || cacheable)) return fn();
-	function defaultShouldCacheResult(_value) {
-		return true;
+	const { namespace, key, ttlMinutes = 30, fallback = false } = options;
+	const ctx = {
+		public: options.public ?? true,
+		cacheable: true
+	};
+	const cachePrivatePackages = _config_global_js__WEBPACK_IMPORTED_MODULE_0__/* .GlobalConfig */ .e.get("cachePrivatePackages");
+	function canUseCache() {
+		return ctx.cacheable && (ctx.public || cachePrivatePackages);
 	}
-	const shouldCacheResult = options.shouldCacheResult ?? defaultShouldCacheResult;
+	if (!canUseCache()) return await fn(ctx);
 	// istanbul ignore if -- TODO: add test #40625
-	if (!namespace || !key) return fn();
+	if (!namespace || !key) return await fn(ctx);
 	const cacheKey = (0,_key_js__WEBPACK_IMPORTED_MODULE_5__/* .buildCacheKey */ .S)("cache-decorator", key);
 	const releaseLock = await (0,_mutex_js__WEBPACK_IMPORTED_MODULE_2__/* .acquireLock */ .IZ)(cacheKey, namespace);
 	try {
@@ -435662,7 +435772,7 @@ async function withCache(options, fn) {
 		const { softTtlMinutes, hardTtlMinutes: resolvedHardTtl } = (0,_ttl_js__WEBPACK_IMPORTED_MODULE_3__/* .resolveTtlValues */ .B)(namespace, ttlMinutes);
 		const hardTtlMinutes = fallback ? resolvedHardTtl : softTtlMinutes;
 		let fallbackValue;
-		if (cachedRecord && shouldCacheResult(cachedRecord.value)) {
+		if (cachedRecord) {
 			const now = luxon__WEBPACK_IMPORTED_MODULE_6__/* .DateTime */ .c9.local();
 			const cachedAt = luxon__WEBPACK_IMPORTED_MODULE_6__/* .DateTime */ .c9.fromISO(cachedRecord.cachedAt);
 			if (now < cachedAt.plus({ minutes: softTtlMinutes })) return cachedRecord.value;
@@ -435670,7 +435780,7 @@ async function withCache(options, fn) {
 		}
 		let newValue;
 		try {
-			newValue = await fn();
+			newValue = await fn(ctx);
 		} catch (err) {
 			if (!(0,_sindresorhus_is__WEBPACK_IMPORTED_MODULE_7__/* .isUndefined */ .b07)(fallbackValue)) {
 				_logger_index_js__WEBPACK_IMPORTED_MODULE_1__/* .logger */ .vF.debug({ err }, "Package cache: callback error, returning stale data");
@@ -435678,7 +435788,7 @@ async function withCache(options, fn) {
 			}
 			throw err;
 		}
-		if (!(0,_sindresorhus_is__WEBPACK_IMPORTED_MODULE_7__/* .isUndefined */ .b07)(newValue) && shouldCacheResult(newValue)) {
+		if (!(0,_sindresorhus_is__WEBPACK_IMPORTED_MODULE_7__/* .isUndefined */ .b07)(newValue) && canUseCache()) {
 			const newRecord = {
 				cachedAt: luxon__WEBPACK_IMPORTED_MODULE_6__/* .DateTime */ .c9.local().toISO(),
 				value: newValue
@@ -481331,8 +481441,8 @@ var proxy = __nccwpck_require__(98536);
 var host_rules = __nccwpck_require__(80269);
 // EXTERNAL MODULE: ./node_modules/renovate/dist/util/regex.js
 var regex = __nccwpck_require__(8766);
-// EXTERNAL MODULE: ./node_modules/renovate/dist/modules/datasource/index.js + 410 modules
-var datasource = __nccwpck_require__(40526);
+// EXTERNAL MODULE: ./node_modules/renovate/dist/modules/datasource/index.js + 412 modules
+var datasource = __nccwpck_require__(14417);
 ;// CONCATENATED MODULE: ./node_modules/renovate/dist/workers/global/config/parse/host-rules-from-env.js
 
 
