@@ -378105,7 +378105,7 @@ const globalConfigOptionDefaults = {
 	"detectHostRulesFromEnv": false,
 	"dockerChildPrefix": "renovate_",
 	"dockerMaxPages": 20,
-	"dockerSidecarImage": "ghcr.io/renovatebot/base-image:13.142.5",
+	"dockerSidecarImage": "ghcr.io/renovatebot/base-image:13.142.11",
 	"dockerUser": "12021",
 	"executionTimeout": 15,
 	"exitCodeForErrors": false,
@@ -385615,26 +385615,90 @@ const kElementsClosedByOpening = {
 	td: {
 		td: true,
 		th: true,
+		tr: true,
+		tbody: true,
+		tfoot: true,
 		TD: true,
-		TH: true
+		TH: true,
+		TR: true,
+		TBODY: true,
+		TFOOT: true
 	},
 	TD: {
 		td: true,
 		th: true,
+		tr: true,
+		tbody: true,
+		tfoot: true,
 		TD: true,
-		TH: true
+		TH: true,
+		TR: true,
+		TBODY: true,
+		TFOOT: true
 	},
 	th: {
 		td: true,
 		th: true,
+		tr: true,
+		tbody: true,
+		tfoot: true,
 		TD: true,
-		TH: true
+		TH: true,
+		TR: true,
+		TBODY: true,
+		TFOOT: true
 	},
 	TH: {
 		td: true,
 		th: true,
+		tr: true,
+		tbody: true,
+		tfoot: true,
 		TD: true,
-		TH: true
+		TH: true,
+		TR: true,
+		TBODY: true,
+		TFOOT: true
+	},
+	tr: {
+		tr: true,
+		tbody: true,
+		tfoot: true,
+		TR: true,
+		TBODY: true,
+		TFOOT: true
+	},
+	TR: {
+		tr: true,
+		tbody: true,
+		tfoot: true,
+		TR: true,
+		TBODY: true,
+		TFOOT: true
+	},
+	thead: {
+		tbody: true,
+		tfoot: true,
+		TBODY: true,
+		TFOOT: true
+	},
+	THEAD: {
+		tbody: true,
+		tfoot: true,
+		TBODY: true,
+		TFOOT: true
+	},
+	tbody: {
+		tbody: true,
+		tfoot: true,
+		TBODY: true,
+		TFOOT: true
+	},
+	TBODY: {
+		tbody: true,
+		tfoot: true,
+		TBODY: true,
+		TFOOT: true
 	},
 	h1: {
 		h1: true,
@@ -385757,25 +385821,85 @@ const kElementsClosedByClosing = {
 	td: {
 		tr: true,
 		table: true,
+		thead: true,
+		tbody: true,
+		tfoot: true,
 		TR: true,
-		TABLE: true
+		TABLE: true,
+		THEAD: true,
+		TBODY: true,
+		TFOOT: true
 	},
 	TD: {
 		tr: true,
 		table: true,
+		thead: true,
+		tbody: true,
+		tfoot: true,
 		TR: true,
-		TABLE: true
+		TABLE: true,
+		THEAD: true,
+		TBODY: true,
+		TFOOT: true
 	},
 	th: {
 		tr: true,
 		table: true,
+		thead: true,
+		tbody: true,
+		tfoot: true,
 		TR: true,
-		TABLE: true
+		TABLE: true,
+		THEAD: true,
+		TBODY: true,
+		TFOOT: true
 	},
 	TH: {
 		tr: true,
 		table: true,
+		thead: true,
+		tbody: true,
+		tfoot: true,
 		TR: true,
+		TABLE: true,
+		THEAD: true,
+		TBODY: true,
+		TFOOT: true
+	},
+	tr: {
+		table: true,
+		thead: true,
+		tbody: true,
+		tfoot: true,
+		TABLE: true,
+		THEAD: true,
+		TBODY: true,
+		TFOOT: true
+	},
+	TR: {
+		table: true,
+		thead: true,
+		tbody: true,
+		tfoot: true,
+		TABLE: true,
+		THEAD: true,
+		TBODY: true,
+		TFOOT: true
+	},
+	tbody: {
+		table: true,
+		TABLE: true
+	},
+	TBODY: {
+		table: true,
+		TABLE: true
+	},
+	tfoot: {
+		table: true,
+		TABLE: true
+	},
+	TFOOT: {
+		table: true,
 		TABLE: true
 	},
 	dt: {
@@ -385891,9 +386015,9 @@ function base_parse(data, options = {}) {
 				const isQuoted = val[0] === `'` || val[0] === `"`;
 				attrs[key.toLowerCase()] = isQuoted ? val.slice(1, val.length - 1) : val;
 			}
-			const parentTagName = currentParent.rawTagName;
-			if (!closingSlash && !options.preserveTagNesting && kElementsClosedByOpening[parentTagName]) {
-				if (kElementsClosedByOpening[parentTagName][tagName]) {
+			if (!closingSlash && !options.preserveTagNesting) {
+				var _kElementsClosedByOpe;
+				while ((_kElementsClosedByOpe = kElementsClosedByOpening[currentParent.rawTagName]) === null || _kElementsClosedByOpe === void 0 ? void 0 : _kElementsClosedByOpe[tagName]) {
 					stack.pop();
 					currentParent = arr_back(stack);
 				}
@@ -385985,20 +386109,24 @@ function parse$1(data, options = {}) {
 			if (last.parentNode === oneBefore && last.tagName === oneBefore.tagName) {
 				if (options.parseNoneClosedTags !== true) {
 					oneBefore.removeChild(last);
-					last.childNodes.forEach((child) => {
-						oneBefore.parentNode.appendChild(child);
-					});
+					reparentChildren(last, oneBefore.parentNode);
 					stack.pop();
 				}
 			} else if (options.parseNoneClosedTags !== true) {
 				oneBefore.removeChild(last);
-				last.childNodes.forEach((child) => {
-					oneBefore.appendChild(child);
-				});
+				reparentChildren(last, oneBefore);
 			}
 		}
 	}
 	return root;
+}
+function reparentChildren(source, parent) {
+	const children = source.childNodes;
+	source.childNodes = [];
+	for (const child of children) {
+		child.parentNode = null;
+		parent.appendChild(child);
+	}
 }
 /**
 * Resolves a list of {@link NodeInsertable} to a list of nodes,
