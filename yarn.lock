@@ -1056,9 +1056,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@containerbase/base@npm:14.52.5":
-  version: 14.52.5
-  resolution: "@containerbase/base@npm:14.52.5"
+"@containerbase/base@npm:14.52.7":
+  version: 14.52.7
+  resolution: "@containerbase/base@npm:14.52.7"
   dependencies:
     semver: "npm:^7.8.5"
   peerDependencies:
@@ -1066,7 +1066,7 @@ __metadata:
   peerDependenciesMeta:
     zod:
       optional: true
-  checksum: 10c0/eca0f7b1daeb1b1a2dacc154688062b4111e985934358b7e1178e7893975e2ee3ba1712a0b99e8864d9dd4634960df41057ddff68a56eb1364c5635abc4a6caa
+  checksum: 10c0/31452f92186e968499c214dd31349a76fb74347908d836489c308b073eba364d1c38c78e2da200b3f1dc31d16f2b089cb6c4c0d37896587ee259e2526f686384
   languageName: node
   linkType: hard
 
@@ -2860,17 +2860,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@renovatebot/base-image@npm:13.142.5":
-  version: 13.142.5
-  resolution: "@renovatebot/base-image@npm:13.142.5"
+"@renovatebot/base-image@npm:13.142.11":
+  version: 13.142.11
+  resolution: "@renovatebot/base-image@npm:13.142.11"
   dependencies:
-    "@containerbase/base": "npm:14.52.5"
+    "@containerbase/base": "npm:14.52.7"
   peerDependencies:
     zod: ^4.0.0
   peerDependenciesMeta:
     zod:
       optional: true
-  checksum: 10c0/df4532d0b86a7012bd75861b6d9206983d7e61c12284d7b31b0707d10a925b04ed253bf24bfae49670c459749a7fbdcddaad2187b0d1406c90c6d0aab89566dd
+  checksum: 10c0/0228467b417fc3de117f2d18f027898984b098d0e2451aa91513fc5d0d295cf4554c99145ba7793100797dcdef9d761593de5839a93cfb16bc533269112bbd6f
   languageName: node
   linkType: hard
 
@@ -5176,12 +5176,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cronstrue@npm:3.32.0":
-  version: 3.32.0
-  resolution: "cronstrue@npm:3.32.0"
+"cronstrue@npm:3.33.0":
+  version: 3.33.0
+  resolution: "cronstrue@npm:3.33.0"
   bin:
     cronstrue: bin/cli.js
-  checksum: 10c0/b60f29538b2bb3bf03d20df1c318e6dbcb441a95a183557bbcffa02cb85da6ada27e805a62bb95484db72f8dbe836f5bb8e9ab8edd0738a1c79357254acd3b97
+  checksum: 10c0/8e66abbb6a901adbe8e9bb0e19a6fc12639d0501f042c7c5612a70279e9db7d4dec819a5d0f13a7d0c9a751c576320097d9c586780514848bd697191296ba513
   languageName: node
   linkType: hard
 
@@ -9643,7 +9643,7 @@ __metadata:
     jest-extended: "npm:7.0.0"
     json-schema-to-typescript: "npm:16.0.0"
     node-html-parser: "npm:9.0.6"
-    renovate: "npm:44.181.5"
+    renovate: "npm:44.181.12"
     rimraf: "npm:6.1.3"
     semver: "npm:7.8.5"
     ts-jest: "npm:29.4.15"
@@ -10567,13 +10567,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"node-html-parser@npm:9.0.4":
-  version: 9.0.4
-  resolution: "node-html-parser@npm:9.0.4"
+"node-html-parser@npm:9.0.5":
+  version: 9.0.5
+  resolution: "node-html-parser@npm:9.0.5"
   dependencies:
     css-select: "npm:^5.1.0"
     entities: "npm:^8.0.0"
-  checksum: 10c0/129752b901d30d16137729817a7042546e5f603b58ac57d6339b0cefad82630196e1a5f16fd374b22a83dc0d127b0bf743b05a1840d0d8beaa80f6dbcd17c487
+  checksum: 10c0/7bca03fe415afb1117e1c2e36e49630f624156cc378cff8c866114f9f80b3787579d1eafa377ed89cb9504ee2c72a7f1401ebe9587db4df0d9405a1984d12063
   languageName: node
   linkType: hard
 
@@ -11525,9 +11525,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"renovate@npm:44.181.5":
-  version: 44.181.5
-  resolution: "renovate@npm:44.181.5"
+"renovate@npm:44.181.12":
+  version: 44.181.12
+  resolution: "renovate@npm:44.181.12"
   dependencies:
     "@aws-sdk/client-codecommit": "npm:3.1139.0"
     "@aws-sdk/client-ec2": "npm:3.1139.0"
@@ -11560,7 +11560,7 @@ __metadata:
     "@pnpm/parse-overrides": "npm:1001.0.4"
     "@qnighy/marshal": "npm:0.1.3"
     "@redis/client": "npm:6.3.0"
-    "@renovatebot/base-image": "npm:13.142.5"
+    "@renovatebot/base-image": "npm:13.142.11"
     "@renovatebot/detect-tools": "npm:4.0.23"
     "@renovatebot/good-enough-parser": "npm:2.0.1"
     "@renovatebot/osv-offline": "npm:3.0.12"
@@ -11583,7 +11583,7 @@ __metadata:
     commander: "npm:15.0.0"
     common-tags: "npm:1.8.2"
     croner: "npm:10.0.1"
-    cronstrue: "npm:3.32.0"
+    cronstrue: "npm:3.33.0"
     deepmerge: "npm:4.3.1"
     dequal: "npm:2.0.3"
     detect-indent: "npm:7.0.2"
@@ -11620,7 +11620,7 @@ __metadata:
     moo: "npm:0.5.3"
     ms: "npm:2.1.3"
     neotraverse: "npm:1.0.1"
-    node-html-parser: "npm:9.0.4"
+    node-html-parser: "npm:9.0.5"
     openpgp: "npm:6.3.2"
     p-all: "npm:5.0.1"
     p-map: "npm:7.1.1"
@@ -11661,7 +11661,7 @@ __metadata:
   bin:
     renovate: dist/renovate.js
     renovate-config-validator: dist/config-validator.js
-  checksum: 10c0/37740288a32c92328862bca2aacf15c4740b442a9a2e42e9ef69a3cecd649dd4eb438b0b6b899cbd667dc8fb44cb74f8e3437d25846a6ad530e38e4c9d03aa60
+  checksum: 10c0/dc4297ddbc0a9f7907bc489419cf3c47e67b138641ed60667f042bb41390f38ae23d2f7d109939cf807fd21ffbdbcab4b2ccad92e6ec239baa84b86faccbaa40
   languageName: node
   linkType: hard
 
