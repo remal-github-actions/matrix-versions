@@ -369885,7 +369885,7 @@ function assertWhitespaceString(value, message) {
 
 /***/ }),
 
-/***/ 10825:
+/***/ 9540:
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __nccwpck_require__) => {
 
 
@@ -369896,7 +369896,7 @@ __nccwpck_require__.d(__webpack_exports__, {
 
 // UNUSED EXPORTS: EXPANSION_MAX, EXPANSION_MAX_LENGTH
 
-;// CONCATENATED MODULE: ./node_modules/brace-expansion/node_modules/balanced-match/dist/esm/index.js
+;// CONCATENATED MODULE: ./node_modules/balanced-match/dist/esm/index.js
 const balanced = (a, b, str) => {
     const ma = a instanceof RegExp ? maybeMatch(a, str) : a;
     const mb = b instanceof RegExp ? maybeMatch(b, str) : b;
@@ -465760,7 +465760,7 @@ __nccwpck_require__.d(__webpack_exports__, {
 // UNUSED EXPORTS: AST, GLOBSTAR, defaults, escape, filter, makeRe, match, minimatch, sep, unescape
 
 // EXTERNAL MODULE: ./node_modules/brace-expansion/dist/esm/index.js + 1 modules
-var esm = __nccwpck_require__(10825);
+var esm = __nccwpck_require__(9540);
 ;// CONCATENATED MODULE: ./node_modules/renovate/node_modules/minimatch/dist/esm/assert-valid-pattern.js
 const MAX_PATTERN_LENGTH = 1024 * 64;
 const assertValidPattern = (pattern) => {
@@ -482599,7 +482599,7 @@ function internal_pattern_helper_partialMatch(patterns, itemPath) {
 }
 //# sourceMappingURL=internal-pattern-helper.js.map
 // EXTERNAL MODULE: ./node_modules/brace-expansion/dist/esm/index.js + 1 modules
-var esm = __nccwpck_require__(10825);
+var esm = __nccwpck_require__(9540);
 ;// CONCATENATED MODULE: ./node_modules/minimatch/dist/esm/assert-valid-pattern.js
 const MAX_PATTERN_LENGTH = 1024 * 64;
 const assertValidPattern = (pattern) => {
