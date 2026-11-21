@@ -221,9 +221,14 @@
     ],
     "maven:org.springframework.boot:spring-boot-dependencies": [
       {
-        "versionRange": "[4.2, )",
+        "versionRange": "[4.3, )",
         "dependency": "java",
         "dependencyVersionRange": "(9999, )"
+      },
+      {
+        "versionRange": "[4.2, 4.3)",
+        "dependency": "java",
+        "dependencyVersionRange": "[17, 27.9999)"
       },
       {
         "versionRange": "[4.1, 4.2)",
